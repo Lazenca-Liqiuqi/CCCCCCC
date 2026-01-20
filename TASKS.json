@@ -1,68 +1,73 @@
 {
     "ProjectName": "Claude Code Chinese Commentary Collection",
-    "Stage": "更新日志翻译",
+    "Stage": "Engineering文章翻译",
     "Tasks": [
         {
             "ID": "1",
-            "TaskName": "创建项目记忆系统",
+            "TaskName": "创建翻译模板和配置文件",
             "Status": "completed",
-            "Description": "创建 CLAUDE.md, README.md, CHANGELOG.md, TASKS.json, LAST_CLAUDE_PROGRESS.md 和子目录 CLAUDE.md",
+            "Description": "创建 engineering_translate_request.md、article-urls.json，更新 terminology.md",
             "File": [
-                "CLAUDE.md",
-                "README.md",
-                "CHANGELOG.md",
-                "TASKS.json",
-                "LAST_CLAUDE_PROGRESS.md",
-                "anthropic-engineering-articles/CLAUDE.md"
+                ".claude/engineering_translate_request.md",
+                ".claude/article-urls.json",
+                ".claude/terminology.md"
             ],
             "Deliverables": [
-                "CLAUDE.md",
-                "README.md",
-                "CHANGELOG.md",
-                "TASKS.json",
-                "LAST_CLAUDE_PROGRESS.md",
-                "anthropic-engineering-articles/CLAUDE.md"
+                "翻译模板文件",
+                "URL映射表",
+                "更新的术语表（含Engineering专用术语）"
             ],
-            "Acceptance Criteria": "所有文件符合项目记忆技能的格式规范，内容准确反映项目现状"
+            "AcceptanceCriteria": "所有文件创建完成，格式规范",
+            "CompletedDate": "2025-01-20"
         },
         {
             "ID": "2",
-            "TaskName": "完成待翻译版本的更新日志翻译",
-            "Status": "pending",
-            "Description": "完成 Claude Code CHANGELOG 版本 2.1.6, 2.1.5, 2.1.4, 2.1.3, 2.1.2 的翻译",
+            "TaskName": "拉取6篇新文章",
+            "Status": "completed",
+            "Description": "使用 WebReader 拉取待新增的6篇文章：03, 05, 07, 12, 14, 16",
             "File": [
-                "Claude Code CHANGELOG - 双语对照.md"
+                "anthropic-engineering-articles/03-swe-bench-verified-claude-3.5-sonnet.md",
+                "anthropic-engineering-articles/05-think-tool-complex-situations.md",
+                "anthropic-engineering-articles/07-desktop-extensions-mcp-server-installation.md",
+                "anthropic-engineering-articles/12-writing-effective-tools-for-agents.md",
+                "anthropic-engineering-articles/14-beyond-permission-prompts.md",
+                "anthropic-engineering-articles/16-advanced-tool-use-on-claude-developer-platform.md"
             ],
             "Deliverables": [
-                "完成版本 2.1.6, 2.1.5, 2.1.4, 2.1.3, 2.1.2 的双语对照翻译"
+                "6篇新文章的原始内容文件"
             ],
-            "Acceptance Criteria": "翻译准确、术语一致、格式规范"
+            "AcceptanceCriteria": "文章内容完整，Markdown格式正确",
+            "CompletedDate": "2025-01-20"
         },
         {
             "ID": "3",
-            "TaskName": "持续跟进 Claude Code 新版本更新日志",
+            "TaskName": "翻译16篇文章（双语对照格式）",
             "Status": "pending",
-            "Description": "持续跟进 Claude Code 新版本的更新日志翻译，保持双语对照文档的时效性",
+            "Description": "使用 Codex 协作翻译所有16篇文章，分4批执行",
             "File": [
-                "Claude Code CHANGELOG - 双语对照.md"
+                "anthropic-engineering-articles/*.md"
             ],
             "Deliverables": [
-                "及时更新的双语对照文档"
+                "16篇双语对照文章"
             ],
-            "Acceptance Criteria": "新版本发布后及时完成翻译"
+            "AcceptanceCriteria": "双语对照格式正确，术语一致，翻译准确"
         },
         {
             "ID": "4",
-            "TaskName": "补充更多 Anthropic 工程文章翻译",
+            "TaskName": "质量检查和版本控制",
             "Status": "pending",
-            "Description": "选择并翻译更多 Anthropic 官方工程博客文章，丰富中文资源",
+            "Description": "执行自动化检查、术语一致性验证、人工审校，完成 Git 提交",
             "File": [
-                "anthropic-engineering-articles/"
+                "TASKS.json",
+                "CHANGELOG.md",
+                "LAST_CLAUDE_PROGRESS.md",
+                "anthropic-engineering-articles/CLAUDE.md"
             ],
             "Deliverables": [
-                "新增翻译文章"
+                "更新的项目记忆文件",
+                "Git 提交记录"
             ],
-            "Acceptance Criteria": "翻译准确、格式统一、符合术语表规范"
+            "AcceptanceCriteria": "所有文章通过质量检查，文档更新完整"
         }
     ]
 }

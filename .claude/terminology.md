@@ -1,6 +1,6 @@
-# Claude Code CHANGELOG 翻译术语表
+# Claude Code 翻译术语表
 
-本文档用于确保 CHANGELOG 双语对照翻译的一致性和准确性。
+本文档用于确保项目翻译的一致性和准确性，包含 Claude Code CHANGELOG 和 Anthropic Engineering Blog 两部分术语。
 
 ## 核心术语对照
 
@@ -137,6 +137,83 @@
 - [ ] 格式完整性（代码、链接等保持原样）
 - [ ] 无漏译（每个英文条目都有对应翻译）
 
+---
+
+# Anthropic Engineering Blog 专用术语
+
+本部分术语专门用于 Anthropic Engineering Blog 文章翻译。
+
+## AI 与代理系统术语
+
+| 英文术语 | 中文翻译 | 说明 |
+|---------|---------|------|
+| Retrieval-Augmented Generation | 检索增强生成 (RAG) | 也可简称为 RAG |
+| contextual retrieval | 上下文检索 | - |
+| embedding | 嵌入 / 向量嵌入 | 根据上下文选择 |
+| vector embedding | 向量嵌入 | - |
+| vector database | 向量数据库 | - |
+| semantic similarity | 语义相似度 | - |
+| BM25 | BM25 | 保持原文 |
+| TF-IDF | TF-IDF | 保持原文 |
+| knowledge base | 知识库 | - |
+| chunk | 文本块 / 块 | 文档分割的单位 |
+| corpus | 语料库 | - |
+| reranking | 重排序 | - |
+| prompt caching | 提示缓存 | - |
+| multi-agent | 多代理 | - |
+| agent system | 代理系统 | - |
+| tool use | 工具使用 | - |
+| function calling | 函数调用 | - |
+| long-running agent | 长运行代理 | - |
+| harness | 控制 / 管理 | 根据上下文 |
+| research system | 研究系统 | - |
+| cookbook | 食谱 / 示例代码 | 示例代码集合 |
+| postmortem | 复盘 / 事后分析 | - |
+| contextual embeddings | 上下文嵌入 | - |
+| lexical matching | 词法匹配 | - |
+| rank fusion | 排名融合 | - |
+| saturation function | 饱和函数 | - |
+| exact match | 精确匹配 | - |
+| downstream task | 下游任务 | - |
+| orchestrate | 编排 | 协调多个代理 |
+| equip | 装备 | 为代理提供工具 |
+| integrate | 集成 | 系统集成 |
+
+## 动词翻译（Engineering Blog）
+
+| 英文动词 | 中文翻译 | 示例 |
+|---------|---------|------|
+| enhance | 增强 / 增强...的能力 | enhance model's knowledge → 增强模型的知识 |
+| retrieve | 检索 | retrieve information → 检索信息 |
+| encode | 编码 | encode meaning → 编码含义 |
+| append | 附加 / 追加 | append to prompt → 附加到提示词 |
+| leverage | 利用 / 借助 | leverage both techniques → 利用两种技术 |
+| scale | 扩展 / 规模化 | scale to larger bases → 扩展到更大的知识库 |
+| refine | 改进 / 优化 | refine this concept → 改进这一概念 |
+| deploy | 部署 | deploy solution → 部署解决方案 |
+
+## 文章标题对照
+
+| 英文标题 | 中文标题 |
+|---------|---------|
+| Introducing Contextual Retrieval | 上下文检索技术介绍 |
+| Building effective agents | 构建有效代理 |
+| Claude Code Best Practices | Claude Code 最佳实践 |
+| How We Built Our Multi-Agent Research System | 我们如何构建多代理研究系统 |
+| A Postmortem of Three Recent Issues | 三个近期问题的复盘 |
+| Effective Context Engineering for AI Agents | AI 代理的有效上下文工程 |
+| Building Agents with the Claude Agent SDK | 使用 Claude Agent SDK 构建代理 |
+| Equipping Agents for the Real World with Agent Skills | 为现实世界装备代理技能 |
+| Code Execution with MCP | 使用 MCP 执行代码 |
+| Effective Harnesses for Long-Running Agents | 长运行代理的有效管理 |
+| Introducing SWE Bench Verified | SWE Bench Verified 介绍 |
+| Think tool: Helping Claude navigate complex situations | Think 工具：帮助 Claude 处理复杂情况 |
+| Desktop extensions: MCP server installation | 桌面扩展：MCP 服务器安装 |
+| Writing Effective Tools for Agents | 为代理编写有效的工具 |
+| Beyond Permission Prompts | 超越权限提示词 |
+| Advanced Tool Use on the Claude Developer Platform | Claude 开发者平台上的高级工具使用 |
+
 ## 更新日志
 
+- **2025-01-20**: 添加 Engineering Blog 专用术语，扩展为通用术语表
 - **2025-01-18**: 创建术语表，用于 2.1.2-2.1.6 版本翻译
