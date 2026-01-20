@@ -9,21 +9,7 @@
 ```
 Claude Code Chinese Commentary Collection/
 ├── .claude/                                    # Claude Code 配置目录
-│   ├── commands/                              # 自定义命令
-│   │   └── fetch-cc-changelog.md              # 获取 Claude Code 更新日志
-│   ├── terminology.md                         # 翻译术语表
-│   └── translate_request.md                   # 翻译请求模板
 ├── anthropic-engineering-articles/            # Anthropic 工程文章翻译
-│   ├── 01-contextual-retrieval.md             # 上下文检索技术
-│   ├── 02-building-effective-agents.md        # 构建有效代理
-│   ├── 04-claude-code-best-practices.md       # Claude Code 最佳实践
-│   ├── 06-how-we-built-our-multi-agent-research-system.md  # 多代理研究系统
-│   ├── 08-a-postmortem-of-three-recent-issues.md  # 三个问题的复盘
-│   ├── 09-effective-context-engineering-for-ai-agents.md  # AI 代理上下文工程
-│   ├── 10-building-agents-with-the-claude-agent-sdk.md   # 使用 Agent SDK 构建代理
-│   ├── 11-equipping-agents-for-the-real-world-with-agent-skills.md  # 为现实世界装备代理技能
-│   ├── 13-code-execution-with-mcp.md          # 使用 MCP 执行代码
-│   └── 15-effective-harnesses-for-long-running-agents.md  # 长运行代理的有效控制
 ├── Claude Code CHANGELOG - 双语对照.md        # Claude Code 更新日志双语版
 ├── CLAUDE.md                                  # 项目提示词（本文件）
 ├── README.md                                  # 项目说明文档

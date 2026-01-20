@@ -4,7 +4,6 @@
 
 ```
 anthropic-engineering-articles/
-├── .git/                                      # Git 仓库目录
 ├── 01-contextual-retrieval.md                 # 上下文检索技术
 ├── 02-building-effective-agents.md            # 构建有效代理
 ├── 04-claude-code-best-practices.md           # Claude Code 最佳实践
