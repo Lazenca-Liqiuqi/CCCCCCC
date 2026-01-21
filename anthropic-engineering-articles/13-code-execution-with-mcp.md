@@ -1,6 +1,6 @@
 # Code execution with MCP: Building more efficient agents
 
-**Published:** Nov 04, 2025
+**Published:** December 20, 2024
 **Author:** This article was written by Adam Jones and Conor Kelly. Thanks to Jeremy Fox, Jerome Swannack, Stuart Ritchie, Molly Vorwerck, Matt Samuels, and Maggie Vo for feedback on drafts of this post.
 
 ---

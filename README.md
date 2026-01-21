@@ -86,10 +86,7 @@ Claude Code Chinese Commentary Collection/
 
 ## TODO
 
-- [ ] 完成待翻译版本（2.1.6, 2.1.5, 2.1.4, 2.1.3, 2.1.2）的更新日志翻译
-- [ ] 持续跟进 Claude Code 新版本的更新日志翻译
-- [ ] 补充更多 Anthropic 工程文章翻译
-- [ ] 优化术语表，提升翻译一致性
+_暂无任务_
 
 ## 资源
 

@@ -1,187 +1,102 @@
 # How we built our multi-agent research system
 
-**Published:** Jun 13, 2025
-**Author:** Written by Alex Tamkin
+Claude now has Research capabilities that allow it to search across the web, Google Workspace, and any integrations to accomplish complex tasks.
 
----
+The journey of this multi-agent system from prototype to production taught us critical lessons about system architecture, tool design, and prompt engineering. A multi-agent system consists of multiple agents (LLMs autonomously using tools in a loop) working together. Our Research feature involves an agent that plans a research process based on user queries, and then uses tools to create parallel agents that search for information simultaneously. Systems with multiple agents introduce new challenges in agent coordination, evaluation, and reliability.
 
-Large language models have become remarkably capable researchers, able to synthesize information from across the web and PDFs. Yet they are limited to knowledge encoded in their training data or provided in their context window. In practice, this means they often cannot answer questions requiring current information or specialized knowledge that lies outside their training set.
+This post breaks down the principles that worked for us—we hope you'll find them useful to apply when building your own multi-agent systems.
 
-To unlock this next level of performance, we built a system that enables multiple instances of Claude to collaborate in researching complex questions. Each agent plays a specialized role—gathering context, performing deep research, and synthesizing findings—allowing them to collectively accomplish what no single agent could achieve alone.
+### Benefits of a multi-agent system
 
-This system has substantially outperformed single-agent approaches on our internal research benchmarks. In this post, we'll explain how we built it and share the principles behind its effectiveness.
+Research work involves open-ended problems where it's very difficult to predict the required steps in advance. You can't hardcode a fixed path for exploring complex topics, as the process is inherently dynamic and path-dependent. When people conduct research, they tend to continuously update their approach based on discoveries, following leads that emerge during investigation.
 
-## The problem with single-agent research
+This unpredictability makes AI agents particularly well-suited for research tasks. Research demands the flexibility to pivot or explore tangential connections as the investigation unfolds. The model must operate autonomously for many turns, making decisions about which directions to pursue based on intermediate findings. A linear, one-shot pipeline cannot handle these tasks.
 
-Before building our multi-agent system, we extensively evaluated single-agent approaches. Despite trying many variations of prompts and tools, we consistently observed three core limitations:
+The essence of search is compression: distilling insights from a vast corpus. Subagents facilitate compression by operating in parallel with their own context windows, exploring different aspects of the question simultaneously before condensing the most important tokens for the lead research agent. Each subagent also provides separation of concerns—distinct tools, prompts, and exploration trajectories—which reduces path dependency and enables thorough, independent investigations.
 
-### 1. Serial workflows are inefficient
+Once intelligence reaches a threshold, multi-agent systems become a vital way to scale performance. For instance, although individual humans have become more intelligent in the last 100,000 years, human societies have become _exponentially_ more capable in the information age because of our _collective_ intelligence and ability to coordinate. Even generally-intelligent agents face limits when operating as individuals; groups of agents can accomplish far more.
 
-A single agent must gather information sequentially: first retrieving documents, then reading them, then analyzing them, then synthesizing findings. This serial approach means that even if the agent can work on multiple pieces of information in parallel during its thinking process, it must ultimately make decisions about what to read and in what order. This creates bottlenecks where the agent spends time waiting for one step to complete before moving to the next.
+Our internal evaluations show that multi-agent research systems excel especially for breadth-first queries that involve pursuing multiple independent directions simultaneously. We found that a multi-agent system with Claude Opus 4 as the lead agent and Claude Sonnet 4 subagents outperformed single-agent Claude Opus 4 by 90.2% on our internal research eval. For example, when asked to identify all the board members of the companies in the Information Technology S&P 500, the multi-agent system found the correct answers by decomposing this into tasks for subagents, while the single agent system failed to find the answer with slow, sequential searches.
 
-### 2. Context windows are finite
+Multi-agent systems work mainly because they help spend enough tokens to solve the problem. In our analysis, three factors explained 95% of the performance variance in the BrowseComp evaluation (which tests the ability of browsing agents to locate hard-to-find information). We found that token usage by itself explains 80% of the variance, with the number of tool calls and the model choice as the two other explanatory factors. This finding validates our architecture that distributes work across agents with separate context windows to add more capacity for parallel reasoning. The latest Claude models act as large efficiency multipliers on token use, as upgrading to Claude Sonnet 4 is a larger performance gain than doubling the token budget on Claude Sonnet 3.7. Multi-agent architectures effectively scale token usage for tasks that exceed the limits of single agents.
 
-A single agent has limited context window capacity to work with. When researching complex topics that involve reading many documents, it must frequently summarize and compress information to stay within its token limits. This can lead to loss of important nuance and detail, especially when working with technical or specialized content.
+There is a downside: in practice, these architectures burn through tokens fast. In our data, agents typically use about 4× more tokens than chat interactions, and multi-agent systems use about 15× more tokens than chats. For economic viability, multi-agent systems require tasks where the value of the task is high enough to pay for the increased performance. Further, some domains that require all agents to share the same context or involve many dependencies between agents are not a good fit for multi-agent systems today. For instance, most coding tasks involve fewer truly parallelizable tasks than research, and LLM agents are not yet great at coordinating and delegating to other agents in real time. We've found that multi-agent systems excel at valuable tasks that involve heavy parallelization, information that exceeds single context windows, and interfacing with numerous complex tools.
 
-### 3. No division of labor
+### Architecture overview for Research
 
-A single agent must perform all aspects of the research process itself—information retrieval, reading, analysis, and synthesis. This means it can't specialize or optimize for any particular stage of the workflow. It also means that if it makes a mistake early on (e.g., choosing the wrong search terms or missing an important source), that mistake propagates through the entire process.
+Our Research system uses a multi-agent architecture with an orchestrator-worker pattern, where a lead agent coordinates the process while delegating to specialized subagents that operate in parallel.
 
-## How multi-agent systems solve these problems
+![Image 1](https://www-cdn.anthropic.com/images/4zrzovbb/website/1198befc0b33726c45692ac40f764022f4de1bf2-4584x2579.png)
 
-Our multi-agent system addresses each of these limitations by enabling specialization and parallelization:
+The multi-agent architecture in action: user queries flow through a lead agent that creates specialized subagents to search for different aspects in parallel.
 
-### 1. Parallel workflows are efficient
+When a user submits a query, the lead agent analyzes it, develops a strategy, and spawns subagents to explore different aspects simultaneously. As shown in the diagram above, the subagents act as intelligent filters by iteratively using search tools to gather information, in this case on AI agent companies in 2025, and then returning a list of companies to the lead agent so it can compile a final answer.
 
-Instead of a single agent working serially through the research process, our system uses multiple agents that can work in parallel. One agent can gather web results while another reads PDFs, while a third analyzes data from a previous step. This parallelization dramatically speeds up the research process—agents can explore multiple lines of inquiry simultaneously rather than waiting for each step to complete before starting the next.
+Traditional approaches using Retrieval Augmented Generation (RAG) use static retrieval. That is, they fetch some set of chunks that are most similar to an input query and use these chunks to generate a response. In contrast, our architecture uses a multi-step search that dynamically finds relevant information, adapts to new findings, and analyzes results to formulate high-quality answers.
 
-### 2. Focused context for each agent
+![Image 2](https://www-cdn.anthropic.com/images/4zrzovbb/website/3bde53c9578d74f6e05c3e515e20b910c5a8c20a-4584x4584.png)
 
-Because each agent has a specialized role, it only needs to maintain context for its specific task. An agent focused on reading PDFs doesn't need to worry about web search results, while an agent focused on synthesis doesn't need to maintain detailed context from source documents. This focused approach allows each agent to work more effectively within its context window limits.
+Process diagram showing the complete workflow of our multi-agent Research system. When a user submits a query, the system creates a LeadResearcher agent that enters an iterative research process. The LeadResearcher begins by thinking through the approach and saving its plan to Memory to persist the context, since if the context window exceeds 200,000 tokens it will be truncated and it is important to retain the plan. It then creates specialized Subagents (two are shown here, but it can be any number) with specific research tasks. Each Subagent independently performs web searches, evaluates tool results using interleaved thinking, and returns findings to the LeadResearcher. The LeadResearcher synthesizes these results and decides whether more research is needed—if so, it can create additional subagents or refine its strategy. Once sufficient information is gathered, the system exits the research loop and passes all findings to a CitationAgent, which processes the documents and research report to identify specific locations for citations. This ensures all claims are properly attributed to their sources. The final research results, complete with citations, are then returned to the user.
 
-### 3. Division of labor enables specialization
+### Prompt engineering and evaluations for research agents
 
-Different agents can specialize in different aspects of the research process. Some agents are optimized for information retrieval, using specialized prompts and tools for finding relevant sources. Others are optimized for reading and analysis, with prompts designed to help them extract key information efficiently. Still others focus on synthesis, combining findings from multiple sources into a coherent answer. This specialization allows each agent to be highly effective at its particular task.
+Multi-agent systems have key differences from single-agent systems, including a rapid growth in coordination complexity. Early agents made errors like spawning 50 subagents for simple queries, scouring the web endlessly for nonexistent sources, and distracting each other with excessive updates. Since each agent is steered by a prompt, prompt engineering was our primary lever for improving these behaviors. Below are some principles we learned for prompting agents:
 
-## System architecture
+1. __Think like your agents.__ To iterate on prompts, you must understand their effects. To help us do this, we built simulations using our Console with the exact prompts and tools from our system, then watched agents work step-by-step. This immediately revealed failure modes: agents continuing when they already had sufficient results, using overly verbose search queries, or selecting incorrect tools. Effective prompting relies on developing an accurate mental model of the agent, which can make the most impactful changes obvious.
+2. __Teach the orchestrator how to delegate.__ In our system, the lead agent decomposes queries into subtasks and describes them to subagents. Each subagent needs an objective, an output format, guidance on the tools and sources to use, and clear task boundaries. Without detailed task descriptions, agents duplicate work, leave gaps, or fail to find necessary information. We started by allowing the lead agent to give simple, short instructions like 'research the semiconductor shortage,' but found these instructions often were vague enough that subagents misinterpreted the task or performed the exact same searches as other agents. For instance, one subagent explored the 2021 automotive chip crisis while 2 others duplicated work investigating current 2025 supply chains, without an effective division of labor.
+3. __Scale effort to query complexity.__ Agents struggle to judge appropriate effort for different tasks, so we embedded scaling rules in the prompts. Simple fact-finding requires just 1 agent with 3-10 tool calls, direct comparisons might need 2-4 subagents with 10-15 calls each, and complex research might use more than 10 subagents with clearly divided responsibilities. These explicit guidelines help the lead agent allocate resources efficiently and prevent overinvestment in simple queries, which was a common failure mode in our early versions.
+4. __Tool design and selection are critical.__ Agent-tool interfaces are as critical as human-computer interfaces. Using the right tool is efficient—often, it's strictly necessary. For instance, an agent searching the web for context that only exists in Slack is doomed from the start. With MCP servers that give the model access to external tools, this problem compounds, as agents encounter unseen tools with descriptions of wildly varying quality. We gave our agents explicit heuristics: for example, examine all available tools first, match tool usage to user intent, search the web for broad external exploration, or prefer specialized tools over generic ones. Bad tool descriptions can send agents down completely wrong paths, so each tool needs a distinct purpose and a clear description.
+5. __Let agents improve themselves.__ We found that the Claude 4 models can be excellent prompt engineers. When given a prompt and a failure mode, they are able to diagnose why the agent is failing and suggest improvements. We even created a tool-testing agent—when given a flawed MCP tool, it attempts to use the tool and then rewrites the tool description to avoid failures. By testing the tool dozens of times, this agent found key nuances and bugs. This process for improving tool ergonomics resulted in a 40% decrease in task completion time for future agents using the new description, because they were able to avoid most mistakes.
+6. __Start wide, then narrow down.__ Search strategy should mirror expert human research: explore the landscape before drilling into specifics. Agents often default to overly long, specific queries that return few results. We counteracted this tendency by prompting agents to start with short, broad queries, evaluate what's available, then progressively narrow focus.
+7. __Guide the thinking process.__ Extended thinking mode, which leads Claude to output additional tokens in a visible thinking process, can serve as a controllable scratchpad. The lead agent uses thinking to plan its approach, assessing which tools fit the task, determining query complexity and subagent count, and defining each subagent's role. Our testing showed that extended thinking improved instruction-following, reasoning, and efficiency. Subagents also plan, then use interleaved thinking after tool results to evaluate quality, identify gaps, and refine their next query. This makes subagents more effective in adapting to any task.
+8. __Parallel tool calling transforms speed and performance.__ Complex research tasks naturally involve exploring many sources. Our early agents executed sequential searches, which was painfully slow. For speed, we introduced two kinds of parallelization: (1) the lead agent spins up 3-5 subagents in parallel rather than serially; (2) the subagents use 3+ tools in parallel. These changes cut research time by up to 90% for complex queries, allowing Research to do more work in minutes instead of hours while covering more information than other systems.
 
-Our multi-agent research system consists of three types of agents that work together:
+Our prompting strategy focuses on instilling good heuristics rather than rigid rules. We studied how skilled humans approach research tasks and encoded these strategies in our prompts—strategies like decomposing difficult questions into smaller tasks, carefully evaluating the quality of sources, adjusting search approaches based on new information, and recognizing when to focus on depth (investigating one topic in detail) vs. breadth (exploring many topics in parallel). We also proactively mitigated unintended side effects by setting explicit guardrails to prevent the agents from spiraling out of control. Finally, we focused on a fast iteration loop with observability and test cases.
 
-### 1. Context Gathering Agents
+### Effective evaluation of agents
 
-These agents are responsible for finding relevant information sources. They use web search, access code repositories, and query databases to locate documents, data, and other resources that might be relevant to the research question.
+Good evaluations are essential for building reliable AI applications, and agents are no different. However, evaluating multi-agent systems presents unique challenges. Traditional evaluations often assume that the AI follows the same steps each time: given input X, the system should follow path Y to produce output Z. But multi-agent systems don't work this way. Even with identical starting points, agents might take completely different valid paths to reach their goal. One agent might search three sources while another searches ten, or they might use different tools to find the same answer. Because we don't always know what the right steps are, we usually can't just check if agents followed the "correct" steps we prescribed in advance. Instead, we need flexible evaluation methods that judge whether agents achieved the right outcomes while also following a reasonable process.
 
-Context gathering agents are optimized for breadth over depth—they cast a wide net to find potentially relevant sources rather than diving deep into any particular source. They work in parallel, with each agent exploring different search strategies or sources.
+__Start evaluating immediately with small samples__. In early agent development, changes tend to have dramatic impacts because there is abundant low-hanging fruit. A prompt tweak might boost success rates from 30% to 80%. With effect sizes this large, you can spot changes with just a few test cases. We started with a set of about 20 queries representing real usage patterns. Testing these queries often allowed us to clearly see the impact of changes. We often hear that AI developer teams delay creating evals because they believe that only large evals with hundreds of test cases are useful. However, it's best to start with small-scale testing right away with a few examples, rather than delaying until you can build more thorough evals.
 
-### 2. Research Agents
+__LLM-as-judge evaluation scales when done well.__ Research outputs are difficult to evaluate programmatically, since they are free-form text and rarely have a single correct answer. LLMs are a natural fit for grading outputs. We used an LLM judge that evaluated each output against criteria in a rubric: factual accuracy (do claims match sources?), citation accuracy (do the cited sources match the claims?), completeness (are all requested aspects covered?), source quality (did it use primary sources over lower-quality secondary sources?), and tool efficiency (did it use the right tools a reasonable number of times?). We experimented with multiple judges to evaluate each component, but found that a single LLM call with a single prompt outputting scores from 0.0-1.0 and a pass-fail grade was the most consistent and aligned with human judgements. This method was especially effective when the eval test cases _did_ have a clear answer, and we could use the LLM judge to simply check if the answer was correct (i.e. did it accurately list the pharma companies with the top 3 largest R&D budgets?). Using an LLM as a judge allowed us to scalably evaluate hundreds of outputs.
 
-These agents are responsible for deeply reading and analyzing the sources found by the context gathering agents. Each research agent is assigned one or more sources and asked to extract key information, identify important findings, and note any limitations or caveats.
+__Human evaluation catches what automation misses.__ People testing agents find edge cases that evals miss. These include hallucinated answers on unusual queries, system failures, or subtle source selection biases. In our case, human testers noticed that our early agents consistently chose SEO-optimized content farms over authoritative but less highly-ranked sources like academic PDFs or personal blogs. Adding source quality heuristics to our prompts helped resolve this issue. Even in a world of automated evaluations, manual testing remains essential.
 
-Research agents are optimized for depth over breadth—they focus on thoroughly understanding their assigned sources rather than trying to cover many sources superficially. Like context gathering agents, they work in parallel, with each agent handling different sources.
+Multi-agent systems have emergent behaviors, which arise without specific programming. For instance, small changes to the lead agent can unpredictably change how subagents behave. Success requires understanding interaction patterns, not just individual agent behavior. Therefore, the best prompts for these agents are not just strict instructions, but frameworks for collaboration that define the division of labor, problem-solving approaches, and effort budgets. Getting this right relies on careful prompting and tool design, solid heuristics, observability, and tight feedback loops.See the open-source prompts in our Cookbook for example prompts from our system.
 
-### 3. Synthesis Agents
+### Production reliability and engineering challenges
 
-These agents are responsible for combining findings from the research agents into a coherent answer to the original research question. They read the outputs from all research agents, identify common themes and contradictions, weigh the evidence, and construct a final response.
+In traditional software, a bug might break a feature, degrade performance, or cause outages. In agentic systems, minor changes cascade into large behavioral changes, which makes it remarkably difficult to write code for complex agents that must maintain state in a long-running process.
 
-Synthesis agents work after the context gathering and research agents have completed their work. They see only the summarized outputs from previous agents, not the full sources, which allows them to focus on high-level integration rather than getting lost in details.
+__Agents are stateful and errors compound.__ Agents can run for long periods of time, maintaining state across many tool calls. This means we need to durably execute code and handle errors along the way. Without effective mitigations, minor system failures can be catastrophic for agents. When errors occur, we can't just restart from the beginning: restarts are expensive and frustrating for users. Instead, we built systems that can resume from where the agent was when the errors occurred. We also use the model's intelligence to handle issues gracefully: for instance, letting the agent know when a tool is failing and letting it adapt works surprisingly well. We combine the adaptability of AI agents built on Claude with deterministic safeguards like retry logic and regular checkpoints.
 
-## Information flow
+__Debugging benefits from new approaches.__ Agents make dynamic decisions and are non-deterministic between runs, even with identical prompts. This makes debugging harder. For instance, users would report agents "not finding obvious information," but we couldn't see why. Were the agents using bad search queries? Choosing poor sources? Hitting tool failures? Adding full production tracing let us diagnose why agents failed and fix issues systematically. Beyond standard observability, we monitor agent decision patterns and interaction structures—all without monitoring the contents of individual conversations, to maintain user privacy. This high-level observability helped us diagnose root causes, discover unexpected behaviors, and fix common failures.
 
-The system works in three phases:
+__Deployment needs careful coordination.__ Agent systems are highly stateful webs of prompts, tools, and execution logic that run almost continuously. This means that whenever we deploy updates, agents might be anywhere in their process. We therefore need to prevent our well-meaning code changes from breaking existing agents. We can't update every agent to the new version at the same time. Instead, we use rainbow deployments to avoid disrupting running agents, by gradually shifting traffic from old to new versions while keeping both running simultaneously.
 
-**Phase 1: Context Gathering**
+__Synchronous execution creates bottlenecks.__ Currently, our lead agents execute subagents synchronously, waiting for each set of subagents to complete before proceeding. This simplifies coordination, but creates bottlenecks in the information flow between agents. For instance, the lead agent can't steer subagents, subagents can't coordinate, and the entire system can be blocked while waiting for a single subagent to finish searching. Asynchronous execution would enable additional parallelism: agents working concurrently and creating new subagents when needed. But this asynchronicity adds challenges in result coordination, state consistency, and error propagation across the subagents. As models can handle longer and more complex research tasks, we expect the performance gains will justify the complexity.
 
-1. User provides a research question
-2. Multiple context gathering agents work in parallel, each using different search strategies and sources
-3. Each context gathering agent returns a list of potentially relevant sources with brief descriptions
+### Conclusion
 
-**Phase 2: Deep Research**
+When building AI agents, the last mile often becomes most of the journey. Codebases that work on developer machines require significant engineering to become reliable production systems. The compound nature of errors in agentic systems means that minor issues for traditional software can derail agents entirely. One step failing can cause agents to explore entirely different trajectories, leading to unpredictable outcomes. For all the reasons described in this post, the gap between prototype and production is often wider than anticipated.
 
-1. Research agents are assigned sources from the context gathering phase
-2. Each research agent reads and analyzes its assigned sources in depth
-3. Research agents extract key findings, identify important quotes or data points, and note limitations or caveats
-4. Each research agent produces a structured summary of its findings
+Despite these challenges, multi-agent systems have proven valuable for open-ended research tasks. Users have said that Claude helped them find business opportunities they hadn't considered, navigate complex healthcare options, resolve thorny technical bugs, and save up to days of work by uncovering research connections they wouldn't have found alone. Multi-agent research systems can operate reliably at scale with careful engineering, comprehensive testing, detail-oriented prompt and tool design, robust operational practices, and tight collaboration between research, product, and engineering teams who have a strong understanding of current agent capabilities. We're already seeing these systems transform how people solve complex problems.
 
-**Phase 3: Synthesis**
+![Image 3](https://www-cdn.anthropic.com/images/4zrzovbb/website/09a90e0aca54859553e93c18683e7fd33ff16d4c-2654x2148.png)
 
-1. One or more synthesis agents read the summaries from all research agents
-2. Synthesis agents identify patterns, contradictions, and gaps in the research
-3. Synthesis agents construct a comprehensive answer that integrates findings from all sources
-4. Final answer is presented to the user
+A Clio embedding plot showing the most common ways people are using the Research feature today. The top use case categories are developing software systems across specialized domains (10%), develop and optimize professional and technical content (8%), develop business growth and revenue generation strategies (8%), assist with academic research and educational material development (7%), and research and verify information about people, places, or organizations (5%).
 
-## Implementation details
+### Acknowlegements
 
-### Orchestration layer
+Written by Jeremy Hadfield, Barry Zhang, Kenneth Lien, Florian Scholz, Jeremy Fox, and Daniel Ford. This work reflects the collective efforts of several teams across Anthropic who made the Research feature possible. Special thanks go to the Anthropic apps engineering team, whose dedication brought this complex multi-agent system to production. We're also grateful to our early users for their excellent feedback.
 
-We built a custom orchestration layer that manages the flow of information between agents. This layer:
+## Appendix
 
-- Assigns tasks to agents based on their specialized roles
-- Collects and aggregates outputs from parallel agents
-- Passes information between phases
-- Handles error cases and retries when agents fail
-- Manages the overall workflow and timing
+Below are some additional miscellaneous tips for multi-agent systems.
 
-### Communication protocols
+__End-state evaluation of agents that mutate state over many turns.__ Evaluating agents that modify persistent state across multi-turn conversations presents unique challenges. Unlike read-only research tasks, each action can change the environment for subsequent steps, creating dependencies that traditional evaluation methods struggle to handle. We found success focusing on end-state evaluation rather than turn-by-turn analysis. Instead of judging whether the agent followed a specific process, evaluate whether it achieved the correct final state. This approach acknowledges that agents may find alternative paths to the same goal while still ensuring they deliver the intended outcome. For complex workflows, break evaluation into discrete checkpoints where specific state changes should have occurred, rather than attempting to validate every intermediate step.
 
-Agents communicate through structured outputs rather than free-form conversation. Each phase has a specific output format that agents must follow:
+__Long-horizon conversation management.__ Production agents often engage in conversations spanning hundreds of turns, requiring careful context management strategies. As conversations extend, standard context windows become insufficient, necessitating intelligent compression and memory mechanisms. We implemented patterns where agents summarize completed work phases and store essential information in external memory before proceeding to new tasks. When context limits approach, agents can spawn fresh subagents with clean contexts while maintaining continuity through careful handoffs. Further, they can retrieve stored context like the research plan from their memory rather than losing previous work when reaching the context limit. This distributed approach prevents context overflow while preserving conversation coherence across extended interactions.
 
-- Context gathering agents return lists of sources with URLs, titles, and relevance scores
-- Research agents return structured summaries with key findings, quotes, and limitations
-- Synthesis agents return final answers with citations and confidence levels
-
-This structured approach makes it easier to parse and process agent outputs, and helps agents focus on the information that will be most useful to downstream phases.
-
-### Tool access
-
-Different agents have access to different tools based on their specialized roles:
-
-- Context gathering agents: web search, code search, database queries
-- Research agents: PDF readers, web scrapers, code analysis tools
-- Synthesis agents: text processing tools, citation formatters
-
-By limiting tools to only what each agent type needs, we reduce the risk of tools being misused and make it easier to audit agent behavior.
-
-## Performance improvements
-
-Our multi-agent system substantially outperforms single-agent baselines on our internal research benchmarks:
-
-- **Accuracy:** +35 percentage point improvement on factual accuracy
-- **Comprehensiveness:** +50 percentage point improvement on coverage of relevant information
-- **Speed:** 2-3x faster due to parallelization
-- **Source quality:** +40 percentage point improvement in relevance of cited sources
-
-These improvements are consistent across different types of research questions—from factual queries to analytical questions to open-ended explorations.
-
-## Key design principles
-
-Based on our experience building this system, we've identified several key principles that contribute to its effectiveness:
-
-### 1. Specialization over generalization
-
-Agents perform better when they have specialized roles rather than trying to handle all aspects of a complex task. By giving each agent a clear, narrow focus, we enable them to develop deep expertise in their particular domain.
-
-### 2. Parallel over serial
-
-Wherever possible, design workflows that can be executed in parallel rather than serially. Parallelization not only speeds up the process but also enables exploration of multiple approaches simultaneously, increasing the chances of finding the best answer.
-
-### 3. Structured communication
-
-Use structured outputs and clear protocols for communication between agents. This reduces ambiguity and makes it easier to process agent outputs reliably.
-
-### 4. Context isolation
-
-Each agent should only have access to the information it needs for its specific task. This prevents agents from being overwhelmed by irrelevant information and helps them focus on what they do best.
-
-### 5. Human oversight
-
-Multi-agent systems are powerful but not infallible. Maintain human oversight at key decision points, especially when research findings will be used for important decisions.
-
-## Future directions
-
-We're continuing to iterate on this system and explore several directions for improvement:
-
-### Better agent specialization
-
-We're experimenting with even more specialized agent types—for example, agents that focus specifically on finding contradictory evidence, agents that specialize in quantitative analysis, or agents that are optimized for finding recent information.
-
-### Improved synthesis
-
-We're working on better ways for synthesis agents to weigh and integrate evidence from multiple sources. This includes developing more sophisticated methods for assessing source quality and identifying potential biases.
-
-### Interactive workflows
-
-We're exploring ways to make the research process more interactive, allowing users to provide feedback and guidance at intermediate stages rather than only at the beginning and end.
-
-### Broader applicability
-
-While we've focused on research use cases, the same multi-agent principles could be applied to other types of complex tasks—creative projects, technical implementation, or strategic planning.
-
-## Conclusion
-
-Multi-agent systems represent a powerful approach to building AI applications that can handle complex, multi-stage tasks. By enabling specialization and parallelization, they can substantially outperform single-agent approaches on tasks that require both breadth and depth of capability.
-
-The system we've built for research is just one example of how these principles can be applied. As AI capabilities continue to improve, we expect multi-agent systems to become increasingly important for unlocking the full potential of language models.
-
-## Acknowledgements
-
-Written by Alex Tamkin. This work builds on research and contributions from across Anthropic's applied AI and research teams.
+__Subagent output to a filesystem to minimize the 'game of telephone.'__ Direct subagent outputs can bypass the main coordinator for certain types of results, improving both fidelity and performance. Rather than requiring subagents to communicate everything through the lead agent, implement artifact systems where specialized agents can create outputs that persist independently. Subagents call tools to store their work in external systems, then pass lightweight references back to the coordinator. This prevents information loss during multi-stage processing and reduces token overhead from copying large outputs through conversation history. The pattern works particularly well for structured outputs like code, reports, or data visualizations where the subagent's specialized prompt produces better results than filtering through a general coordinator.

@@ -1,73 +1,150 @@
 {
     "ProjectName": "Claude Code Chinese Commentary Collection",
-    "Stage": "Engineering文章翻译",
+    "Stage": "Engineering文章审查",
     "Tasks": [
         {
             "ID": "1",
-            "TaskName": "创建翻译模板和配置文件",
-            "Status": "completed",
-            "Description": "创建 engineering_translate_request.md、article-urls.json，更新 terminology.md",
-            "File": [
-                ".claude/engineering_translate_request.md",
-                ".claude/article-urls.json",
-                ".claude/terminology.md"
+            "TaskName": "审查文章01-04：验证内容完整性",
+            "Status": "pending",
+            "Description": "审查前4篇Engineering文章，验证内容完整性和元数据准确性",
+            "SubTasks": [
+                {
+                    "ID": "1-01",
+                    "TaskName": "审查第1篇：Contextual Retrieval",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/01-contextual-retrieval.md"
+                },
+                {
+                    "ID": "1-02",
+                    "TaskName": "审查第2篇：Building Effective Agents",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/02-building-effective-agents.md"
+                },
+                {
+                    "ID": "1-03",
+                    "TaskName": "审查第3篇：SWE-bench Verified",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/03-swe-bench-verified-claude-3.5-sonnet.md"
+                },
+                {
+                    "ID": "1-04",
+                    "TaskName": "审查第4篇：Claude Code Best Practices",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/04-claude-code-best-practices.md"
+                }
             ],
             "Deliverables": [
-                "翻译模板文件",
-                "URL映射表",
-                "更新的术语表（含Engineering专用术语）"
+                "4篇文章的审查报告"
             ],
-            "AcceptanceCriteria": "所有文件创建完成，格式规范",
-            "CompletedDate": "2025-01-20"
+            "AcceptanceCriteria": "内容完整（标题、正文、图片、代码、链接），元数据准确，Markdown格式正确"
         },
         {
             "ID": "2",
-            "TaskName": "拉取6篇新文章",
-            "Status": "completed",
-            "Description": "使用 WebReader 拉取待新增的6篇文章：03, 05, 07, 12, 14, 16",
-            "File": [
-                "anthropic-engineering-articles/03-swe-bench-verified-claude-3.5-sonnet.md",
-                "anthropic-engineering-articles/05-think-tool-complex-situations.md",
-                "anthropic-engineering-articles/07-desktop-extensions-mcp-server-installation.md",
-                "anthropic-engineering-articles/12-writing-effective-tools-for-agents.md",
-                "anthropic-engineering-articles/14-beyond-permission-prompts.md",
-                "anthropic-engineering-articles/16-advanced-tool-use-on-claude-developer-platform.md"
+            "TaskName": "审查文章05-08：验证内容完整性",
+            "Status": "pending",
+            "Description": "审查第5-8篇Engineering文章，验证内容完整性和元数据准确性",
+            "SubTasks": [
+                {
+                    "ID": "2-05",
+                    "TaskName": "审查第5篇：Think Tool",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/05-think-tool-complex-situations.md"
+                },
+                {
+                    "ID": "2-06",
+                    "TaskName": "审查第6篇：Multi-Agent Research System",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/06-how-we-built-our-multi-agent-research-system.md"
+                },
+                {
+                    "ID": "2-07",
+                    "TaskName": "审查第7篇：Desktop Extensions",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/07-desktop-extensions-mcp-server-installation.md"
+                },
+                {
+                    "ID": "2-08",
+                    "TaskName": "审查第8篇：Postmortem of Three Issues",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/08-a-postmortem-of-three-recent-issues.md"
+                }
             ],
             "Deliverables": [
-                "6篇新文章的原始内容文件"
+                "4篇文章的审查报告"
             ],
-            "AcceptanceCriteria": "文章内容完整，Markdown格式正确",
-            "CompletedDate": "2025-01-20"
+            "AcceptanceCriteria": "内容完整（标题、正文、图片、代码、链接），元数据准确，Markdown格式正确"
         },
         {
             "ID": "3",
-            "TaskName": "翻译16篇文章（双语对照格式）",
+            "TaskName": "审查文章09-12：验证内容完整性",
             "Status": "pending",
-            "Description": "使用 Codex 协作翻译所有16篇文章，分4批执行",
-            "File": [
-                "anthropic-engineering-articles/*.md"
+            "Description": "审查第9-12篇Engineering文章，验证内容完整性和元数据准确性",
+            "SubTasks": [
+                {
+                    "ID": "3-09",
+                    "TaskName": "审查第9篇：Context Engineering",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/09-effective-context-engineering-for-ai-agents.md"
+                },
+                {
+                    "ID": "3-10",
+                    "TaskName": "审查第10篇：Claude Agent SDK",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/10-building-agents-with-the-claude-agent-sdk.md"
+                },
+                {
+                    "ID": "3-11",
+                    "TaskName": "审查第11篇：Agent Skills",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/11-equipping-agents-for-the-real-world-with-agent-skills.md"
+                },
+                {
+                    "ID": "3-12",
+                    "TaskName": "审查第12篇：Writing Tools",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/12-writing-effective-tools-for-agents.md"
+                }
             ],
             "Deliverables": [
-                "16篇双语对照文章"
+                "4篇文章的审查报告"
             ],
-            "AcceptanceCriteria": "双语对照格式正确，术语一致，翻译准确"
+            "AcceptanceCriteria": "内容完整（标题、正文、图片、代码、链接），元数据准确，Markdown格式正确"
         },
         {
             "ID": "4",
-            "TaskName": "质量检查和版本控制",
+            "TaskName": "审查文章13-16：验证内容完整性",
             "Status": "pending",
-            "Description": "执行自动化检查、术语一致性验证、人工审校，完成 Git 提交",
-            "File": [
-                "TASKS.json",
-                "CHANGELOG.md",
-                "LAST_CLAUDE_PROGRESS.md",
-                "anthropic-engineering-articles/CLAUDE.md"
+            "Description": "审查第13-16篇Engineering文章，验证内容完整性和元数据准确性",
+            "SubTasks": [
+                {
+                    "ID": "4-13",
+                    "TaskName": "审查第13篇：Code Execution with MCP",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/13-code-execution-with-mcp.md"
+                },
+                {
+                    "ID": "4-14",
+                    "TaskName": "审查第14篇：Beyond Permission Prompts",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/14-beyond-permission-prompts.md"
+                },
+                {
+                    "ID": "4-15",
+                    "TaskName": "审查第15篇：Long-Running Agents",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/15-effective-harnesses-for-long-running-agents.md"
+                },
+                {
+                    "ID": "4-16",
+                    "TaskName": "审查第16篇：Advanced Tool Use",
+                    "Status": "pending",
+                    "File": "anthropic-engineering-articles/16-advanced-tool-use-on-claude-developer-platform.md"
+                }
             ],
             "Deliverables": [
-                "更新的项目记忆文件",
-                "Git 提交记录"
+                "4篇文章的审查报告"
             ],
-            "AcceptanceCriteria": "所有文章通过质量检查，文档更新完整"
+            "AcceptanceCriteria": "内容完整（标题、正文、图片、代码、链接），元数据准确，Markdown格式正确"
         }
     ]
 }

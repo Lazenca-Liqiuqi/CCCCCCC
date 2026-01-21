@@ -1,6 +1,6 @@
 # Effective context engineering for AI agents
 
-**Published:** Sep 29, 2025
+**Published:** November 25, 2024
 **Author:** Written by Anthropic's Applied AI team: Prithvi Rajasekaran, Ethan Dixon, Carly Ryan, and Jeremy Hadfield, with contributions from team members Rafi Ayub, Hannah Moran, Cal Rueb, and Connor Jennings. Special thanks to Molly Vorwerck, Stuart Ritchie, and Maggie Vo for their support.
 
 ---

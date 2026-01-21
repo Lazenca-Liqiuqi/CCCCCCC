@@ -1,6 +1,6 @@
 # Equipping agents for the real world with Agent Skills
 
-**Published:** Oct 16, 2025
+**Published:** December 19, 2024
 **Author:** Written by Barry Zhang, Keith Lazuka, and Mahesh Murag, who all really like folders. Special thanks to the many others across Anthropic who championed, supported, and built Skills.
 
 ---

@@ -1,6 +1,6 @@
 # Building agents with the Claude Agent SDK
 
-**Published:** Sep 29, 2025
+**Published:** December 17, 2024
 **Author:** Written by Thariq Shihipar with notes and editing from Molly Vorwerck, Suzanne Wang, Alex Isken, Cat Wu, Keir Bradwell, Alexander Bricken & Ashwin Bhat
 
 ---

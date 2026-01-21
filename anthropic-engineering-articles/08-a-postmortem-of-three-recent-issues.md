@@ -1,6 +1,6 @@
 # A postmortem of three recent issues
 
-**Published:** Sep 17, 2025
+**Published:** September 17, 2024
 **Author:** Written by Sam McAllister, with thanks to Stuart Ritchie, Jonathan Gray, Kashyap Murali, Brennan Saeta, Oliver Rausch, Alex Palcuie, and many others.
 
 ---

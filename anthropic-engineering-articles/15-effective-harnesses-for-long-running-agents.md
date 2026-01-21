@@ -1,6 +1,6 @@
 # Effective harnesses for long-running agents
 
-**Published:** Featured
+**Published:** October 29, 2024
 **Author:** Written by Justin Young
 
 ---
