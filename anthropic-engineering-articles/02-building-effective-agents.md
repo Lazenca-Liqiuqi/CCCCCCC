@@ -23,16 +23,16 @@ When more complexity is warranted, workflows offer predictability and consistenc
 
 There are many frameworks that make agentic systems easier to implement, including:
 
-- The Claude Agent SDK;
-- Strands Agents SDK by AWS;
-- Rivet, a drag and drop GUI LLM workflow builder; and
-- Vellum, another GUI tool for building and testing complex workflows.
+- The [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview);
+- [Strands Agents SDK](https://strandsagents.com/latest/) by AWS;
+- [Rivet](https://rivet.ironcladapp.com/), a drag and drop GUI LLM workflow builder; and
+- [Vellum](https://www.vellum.ai/), another GUI tool for building and testing complex workflows.
 
 These frameworks make it easy to get started by simplifying standard low-level tasks like calling LLMs, defining and parsing tools, and chaining calls together. However, they often create extra layers of abstraction that can obscure the underlying prompts ​​and responses, making them harder to debug. They can also make it tempting to add complexity when a simpler setup would suffice.
 
 We suggest that developers start by using LLM APIs directly: many patterns can be implemented in a few lines of code. If you do use a framework, ensure you understand the underlying code. Incorrect assumptions about what's under the hood are a common source of customer error.
 
-See our cookbook for some sample implementations.
+See our [cookbook](https://platform.claude.com/cookbook/patterns-agents-basic-workflows) for some sample implementations.
 
 ## Building blocks, workflows, and agents
 
@@ -46,7 +46,7 @@ The basic building block of agentic systems is an LLM enhanced with augmentation
 
 The augmented LLM
 
-We recommend focusing on two key aspects of the implementation: tailoring these capabilities to your specific use case and ensuring they provide an easy, well-documented interface for your LLM. While there are many ways to implement these augmentations, one approach is through our recently released Model Context Protocol, which allows developers to integrate with a growing ecosystem of third-party tools with a simple client implementation.
+We recommend focusing on two key aspects of the implementation: tailoring these capabilities to your specific use case and ensuring they provide an easy, well-documented interface for your LLM. While there are many ways to implement these augmentations, one approach is through our recently released [Model Context Protocol](https://www.anthropic.com/news/model-context-protocol), which allows developers to integrate with a growing ecosystem of third-party tools with a simple client implementation.
 
 For the remainder of this post, we'll assume each LLM call has access to these augmented capabilities.
 

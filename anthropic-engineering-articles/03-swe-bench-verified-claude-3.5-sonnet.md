@@ -1,5 +1,7 @@
 # Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet
 
+> **Published**: Jan 06, 2025
+
 _Our latest model, the upgraded Claude 3.5 Sonnet, achieved 49% on SWE-bench Verified, a software engineering evaluation, beating the previous state-of-the-art model's 45%. This post explains the "agent" we built around the model, and is intended to help developers get the best possible performance out of Claude 3.5 Sonnet._
 
 SWE-bench is an AI evaluation benchmark that assesses a model's ability to complete real-world software engineering tasks. Specifically, it tests how the model can resolve GitHub issues from popular open-source Python repositories. For each task in the benchmark, the AI model is given a set up Python environment and the checkout (a local working copy) of the repository from just before the issue was resolved. The model then needs to understand, modify, and test the code before submitting its proposed solution.
@@ -26,9 +28,21 @@ The prompt outlines a suggested approach for the model, but it's not overly long
 
 The following code shows the prompt from our agent scaffold:
 
+> **Note**: The code block content is not available in the current version. Please refer to the original article for the complete code.
+
+```
+[Code block content unavailable - needs to be fetched from source]
+```
+
 The model's first tool executes Bash commands. The schema is simple, taking only the command to be run in the environment. However, the description of the tool carries more weight. It includes more detailed instructions for the model, including escaping inputs, lack of internet access, and how to run commands in the background.
 
 Next, we show the spec for the Bash Tool:
+
+> **Note**: The code block content is not available in the current version. Please refer to the original article for the complete code.
+
+```
+[Code block content unavailable - needs to be fetched from source]
+```
 
 The model's second tool (the Edit Tool) is much more complex, and contains everything the model needs for viewing, creating, and editing files. Again, our tool description contains detailed information for the model about how to use the tool.
 
@@ -36,11 +50,23 @@ We put a lot of effort into the descriptions and specs for these tools across a 
 
 The following code shows the description for our Edit Tool:
 
+> **Note**: The code block content is not available in the current version. Please refer to the original article for the complete code.
+
+```
+[Code block content unavailable - needs to be fetched from source]
+```
+
 One way we improved performance was to "error-proof" our tools. For instance, sometimes models could mess up relative file paths after the agent had moved out of the root directory. To prevent this, we simply made the tool always require an absolute path.
 
 We experimented with several different strategies for specifying edits to existing files and had the highest reliability with string replacement, where the model specifies `old_str` to replace with `new_str` in the given file. The replacement will only occur if there is exactly one match of `old_str`. If there are more or fewer matches, the model is shown an appropriate error message for it to retry.
 
 The spec for our Edit Tool is shown below:
+
+> **Note**: The code block content is not available in the current version. Please refer to the original article for the complete code.
+
+```
+[Code block content unavailable - needs to be fetched from source]
+```
 
 ## Results
 

@@ -56,7 +56,7 @@ Your `CLAUDE.md` files become part of Claude's prompts, so they should be refine
 
 You can add content to your `CLAUDE.md` manually or press the `#` key to give Claude an instruction that it will automatically incorporate into the relevant `CLAUDE.md`. Many engineers use `#` frequently to document commands, files, and style guidelines while coding, then include `CLAUDE.md` changes in commits so team members benefit as well.
 
-At Anthropic, we occasionally run `CLAUDE.md` files through the prompt improver and often tune instructions (e.g. adding emphasis with "IMPORTANT" or "YOU MUST") to improve adherence.
+At Anthropic, we occasionally run `CLAUDE.md` files through the [prompt improver](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/prompt-improver) and often tune instructions (e.g. adding emphasis with "IMPORTANT" or "YOU MUST") to improve adherence.
 
 ![Image 1](https://www-cdn.anthropic.com/images/4zrzovbb/website/6961243cc6409e41ba93895faded4f4bc1772366-1600x1231.png)
 
@@ -67,7 +67,7 @@ By default, Claude Code requests permission for any action that might modify you
 There are four ways to manage allowed tools:
 
 - __Select "Always allow"__ when prompted during a session.
-- __Use the`/permissions`command__ after starting Claude Code to add or remove tools from the allowlist. For example, you can add `Edit` to always allow file edits, `Bash(git commit:*)` to allow git commits, or `mcp__puppeteer__puppeteer_navigate` to allow navigating with the Puppeteer MCP server.
+- __Use the`/permissions`command__ after starting Claude Code to add or remove tools from the allowlist. For example, you can add `Edit` to always allow file edits, `Bash(git commit:*)` to allow git commits, or `mcp__puppeteer__puppeteer_navigate` to allow navigating with the [Puppeteer MCP server](https://github.com/modelcontextprotocol/servers/tree/c19925b8f0f2815ad72b08d2368f0007c86eb8e6/src/puppeteer).
 - __Manually edit__ your `.claude/settings.json` or `~/.claude.json` (we recommend checking the former into source control to share with your team)_._
 - __Use the `--allowedTools` CLI flag__ for session-specific permissions.
 
@@ -93,7 +93,7 @@ Claude Code functions as both an MCP server and client. As a client, it can conn
 
 - __In project config__ (available when running Claude Code in that directory)
 - __In global config__ (available in all projects)
-- __In a checked-in `.mcp.json` file__ (available to anyone working in your codebase). For example, you can add Puppeteer and Sentry servers to your `.mcp.json`, so that every engineer working on your repo can use these out of the box.
+- __In a checked-in `.mcp.json` file__ (available to anyone working in your codebase). For example, you can add [Puppeteer](https://github.com/modelcontextprotocol/servers/tree/c19925b8f0f2815ad72b08d2368f0007c86eb8e6/src/puppeteer) and Sentry servers to your `.mcp.json`, so that every engineer working on your repo can use these out of the box.
 
 When working with MCP, it can also be helpful to launch Claude with the `--mcp-debug` flag to help identify configuration issues.
 
@@ -158,7 +158,7 @@ Claude performs best when it has a clear target to iterate against—a visual mo
 
 Similar to the testing workflow, you can provide Claude with visual targets:
 
-1. __Give Claude a way to take browser screenshots__ (e.g., with the Puppeteer MCP server, an iOS simulator MCP server, or manually copy / paste screenshots into Claude).
+1. __Give Claude a way to take browser screenshots__ (e.g., with the [Puppeteer MCP server](https://github.com/modelcontextprotocol/servers/tree/c19925b8f0f2815ad72b08d2368f0007c86eb8e6/src/puppeteer), an [iOS simulator MCP server](https://github.com/joshuayoes/ios-simulator-mcp), or manually copy / paste screenshots into Claude).
 2. __Give Claude a visual mock__ by copying / pasting or drag-dropping an image, or giving Claude the image file path.
 3. __Ask Claude to implement the design__ in code, take screenshots of the result, and iterate until its result matches the mock.
 4. __Ask Claude to commit__ when you're satisfied.
@@ -373,3 +373,5 @@ What are your tips and best practices for working with Claude Code? Tag @Anthrop
 ## Acknowledgements
 
 Written by Boris Cherny. This work draws upon best practices from across the broader Claude Code user community, whose creative approaches and workflows continue to inspire us. Special thanks also to Daisy Hollman, Ashwin Bhat, Cat Wu, Sid Bidasaria, Cal Rueb, Nodir Turakulov, Barry Zhang, Drew Hodun and many other Anthropic engineers whose valuable insights and practical experience with Claude Code helped shape these recommendations.
+
+![Interlocking puzzle piece](https://www-cdn.anthropic.com/images/4zrzovbb/website/43abe7e54b56a891e74a8542944dfbd33f07f49c-1000x1000.svg)

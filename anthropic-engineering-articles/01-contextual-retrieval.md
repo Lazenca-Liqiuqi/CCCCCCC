@@ -6,13 +6,13 @@ Developers typically enhance an AI model's knowledge using Retrieval-Augmented G
 
 In this post, we outline a method that dramatically improves the retrieval step in RAG. The method is called "Contextual Retrieval" and uses two sub-techniques: Contextual Embeddings and Contextual BM25. This method can reduce the number of failed retrievals by 49% and, when combined with reranking, by 67%. These represent significant improvements in retrieval accuracy, which directly translates to better performance in downstream tasks.
 
-You can easily deploy your own Contextual Retrieval solution with Claude with our cookbook.
+You can easily deploy your own Contextual Retrieval solution with Claude with our [cookbook](https://platform.claude.com/cookbook/capabilities-contextual-embeddings-guide).
 
 ### A note on simply using a longer prompt
 
 Sometimes the simplest solution is the best. If your knowledge base is smaller than 200,000 tokens (about 500 pages of material), you can just include the entire knowledge base in the prompt that you give the model, with no need for RAG or similar methods.
 
-A few weeks ago, we released prompt caching for Claude, which makes this approach significantly faster and more cost-effective. Developers can now cache frequently used prompts between API calls, reducing latency by > 2x and costs by up to 90% (you can see how it works by reading our prompt caching cookbook).
+A few weeks ago, we released prompt caching for Claude, which makes this approach significantly faster and more cost-effective. Developers can now cache frequently used prompts between API calls, reducing latency by > 2x and costs by up to 90% (you can see how it works by reading our [prompt caching cookbook](https://platform.claude.com/cookbook/misc-prompt-caching)).
 
 However, as your knowledge base grows, you'll need a more scalable solution. That's where Contextual Retrieval comes in.
 
@@ -94,7 +94,7 @@ Here's what the preprocessing flow looks like in practice:
 
 _Contextual Retrieval is a preprocessing technique that improves retrieval accuracy._
 
-If you're interested in using Contextual Retrieval, you can get started with our cookbook.
+If you're interested in using Contextual Retrieval, you can get started with our [cookbook](https://platform.claude.com/cookbook/capabilities-contextual-embeddings-guide).
 
 ### Using Prompt Caching to reduce the costs of Contextual Retrieval
 
@@ -168,7 +168,7 @@ We ran a large number of tests, comparing different combinations of all the tech
 5. Reranking is better than no reranking;
 6. __All these benefits stack__: to maximize performance improvements, we can combine contextual embeddings (from Voyage or Gemini) with contextual BM25, plus a reranking step, and adding the 20 chunks to the prompt.
 
-We encourage all developers working with knowledge bases to use our cookbook to experiment with these approaches to unlock new levels of performance.
+We encourage all developers working with knowledge bases to use our [cookbook](https://platform.claude.com/cookbook/capabilities-contextual-embeddings-guide) to experiment with these approaches to unlock new levels of performance.
 
 ## Appendix I
 

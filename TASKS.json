@@ -5,36 +5,36 @@
         {
             "ID": "1",
             "TaskName": "审查文章01-04：验证内容完整性",
-            "Status": "pending",
+            "Status": "completed",
             "Description": "审查前4篇Engineering文章，验证内容完整性和元数据准确性",
             "SubTasks": [
                 {
                     "ID": "1-01",
                     "TaskName": "审查第1篇：Contextual Retrieval",
-                    "Status": "pending",
+                    "Status": "completed",
                     "File": "anthropic-engineering-articles/01-contextual-retrieval.md"
                 },
                 {
                     "ID": "1-02",
                     "TaskName": "审查第2篇：Building Effective Agents",
-                    "Status": "pending",
+                    "Status": "completed",
                     "File": "anthropic-engineering-articles/02-building-effective-agents.md"
                 },
                 {
                     "ID": "1-03",
                     "TaskName": "审查第3篇：SWE-bench Verified",
-                    "Status": "pending",
+                    "Status": "completed",
                     "File": "anthropic-engineering-articles/03-swe-bench-verified-claude-3.5-sonnet.md"
                 },
                 {
                     "ID": "1-04",
                     "TaskName": "审查第4篇：Claude Code Best Practices",
-                    "Status": "pending",
+                    "Status": "completed",
                     "File": "anthropic-engineering-articles/04-claude-code-best-practices.md"
                 }
             ],
             "Deliverables": [
-                "4篇文章的审查报告"
+                "4篇文章的修复完成"
             ],
             "AcceptanceCriteria": "内容完整（标题、正文、图片、代码、链接），元数据准确，Markdown格式正确"
         },

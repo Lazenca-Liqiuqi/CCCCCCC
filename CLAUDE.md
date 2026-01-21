@@ -28,21 +28,30 @@ Claude Code Chinese Commentary Collection/
 
 ## 当前状态
 
-- **进行中**：获取Anthropic Engineering文章（7/16篇已完成）
+- **已完成**：获取16篇Anthropic Engineering文章
+- **进行中**：审查并修复文章缺失内容（4/16篇已完成）
 - **已完成**：CHANGELOG 双语对照已更新至 2.1.12 版本
-- **待完成**：待翻译版本 2.1.6, 2.1.5, 2.1.4, 2.1.3, 2.1.2
+- **待完成**：继续审查修复剩余12篇文章
 
 ## TODO
 
-### 阶段1：获取Anthropic Engineering文章
+### 阶段1：获取Anthropic Engineering文章 ✅
 
-使用 WebReader 逐篇抓取16篇Anthropic Engineering文章的纯英文内容。
+使用 WebReader 逐篇抓取16篇Anthropic Engineering文章的纯英文内容。（已完成）
 
-### 阶段2：翻译16篇文章（双语对照格式）
+### 阶段2：审查并修复文章内容（进行中）
+
+根据 `.claude/review-report.md` 的审查结果，使用 WebReader 重新抓取并修复缺失内容：
+- ✅ 文章01-04：修复完成
+- ⏳ 文章05-08：待修复
+- ⏳ 文章09-12：待修复
+- ⏳ 文章13-16：待修复
+
+### 阶段3：翻译16篇文章（双语对照格式）
 
 使用 Codex 协作翻译所有16篇文章，分批执行。
 
-### 阶段3：质量检查和版本控制
+### 阶段4：质量检查和版本控制
 
 执行自动化检查、术语一致性验证、人工审校，完成 Git 提交。
 
