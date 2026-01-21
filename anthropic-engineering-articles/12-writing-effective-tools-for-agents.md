@@ -1,16 +1,12 @@
-# Writing effective tools for AI agents—using AI agents
-# 为 AI 代理编写有效的工具——使用 AI 代理
+# Writing effective tools for agents — with agents
 
-**Published:** Oct 30, 2024
-**发布日期：** 2024年10月30日
+**Published:** September 11, 2025
 
 **Author:** Ken Aizawa
-**作者：** Ken Aizawa
 
 ---
 
-The Model Context Protocol (MCP) can empower LLM agents with potentially hundreds of tools to solve real-world tasks. But how do we make those tools maximally effective?
-模型上下文协议（MCP）可以为 LLM 代理配备数百种工具来解决现实世界的任务。但我们如何使这些工具最大限度地有效？
+The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/docs/getting-started/intro) can empower LLM agents with potentially hundreds of tools to solve real-world tasks. But how do we make those tools maximally effective?
 
 In this post, we describe our most effective techniques for improving performance in a variety of agentic AI systems1.
 在本文中，我们描述了在各种代理 AI 系统中提高性能的最有效技术1。
@@ -39,11 +35,12 @@ We conclude with key principles for writing high-quality tools we've identified 
 - Prompt-engineering tool descriptions and specs
 - 提示词工程工具描述和规格
 
+![This is an image depicting how an engineer might use Claude Code to evaluate the efficacy of agentic tools.](https://www-cdn.anthropic.com/images/4zrzovbb/website/cdc027ad2730e4732168bb198fc9363678544f99-1920x1080.png)
+
 Building an evaluation allows you to systematically measure the performance of your tools. You can use Claude Code to automatically optimize your tools against this evaluation.
 构建评估使你能够系统地测量工具的性能。你可以使用 Claude Code 根据此评估自动优化你的工具。
 
 ## What is a tool?
-## 什么是工具？
 
 In computing, deterministic systems produce the same output every time given identical inputs, while _non-deterministic_ systems—like agents—can generate varied responses even with the same starting conditions.
 在计算中，确定性系统在给定相同输入时每次都产生相同的输出，而_非确定性_系统——如代理——即使在相同的起始条件下也可能产生不同的响应。
@@ -61,15 +58,13 @@ Our goal is to increase the surface area over which agents can be effective in s
 我们的目标是通过使用工具来追求各种成功的策略，从而增加代理在解决各种任务方面的有效范围。幸运的是，根据我们的经验，对代理来说最"符合人体工程学"的工具最终也对人类来说出奇地直观。
 
 ## How to write tools
-## 如何编写工具
 
 In this section, we describe how you can collaborate with agents both to write and to improve the tools you give them. Start by standing up a quick prototype of your tools and testing them locally. Next, run a comprehensive evaluation to measure subsequent changes. Working alongside agents, you can repeat the process of evaluating and improving your tools until your agents achieve strong performance on real-world tasks.
 在本节中，我们描述如何与代理协作来编写和改进你给它们的工具。首先，快速建立你的工具原型并在本地测试它们。接下来，运行综合评估来测量后续更改。与代理一起工作，你可以重复评估和改进工具的过程，直到你的代理在现实任务上实现强大的性能。
 
 ### Building a prototype
-### 构建原型
 
-It can be difficult to anticipate which tools agents will find ergonomic and which tools they won't without getting hands-on yourself. Start by standing up a quick prototype of your tools. If you're using Claude Code to write your tools (potentially in one-shot), it helps to give Claude documentation for any software libraries, APIs, or SDKs (including potentially the MCP SDK) your tools will rely on. LLM-friendly documentation can commonly be found in flat `llms.txt` files on official documentation sites (here's our API's).
+It can be difficult to anticipate which tools agents will find ergonomic and which tools they won't without getting hands-on yourself. Start by standing up a quick prototype of your tools. If you're using Claude Code to write your tools (potentially in one-shot), it helps to give Claude documentation for any software libraries, APIs, or SDKs (including potentially the MCP SDK) your tools will rely on. LLM-friendly documentation can commonly be found in flat `llms.txt` files on official documentation sites (see [our API's llms.txt](https://docs.anthropic.com/llms.txt)).
 如果不亲自动手，很难预测代理会觉得哪些工具符合人体工程学，哪些工具不会。首先，快速建立你的工具原型。如果你使用 Claude Code 编写工具（可能是一次性），最好为你的工具将依赖的任何软件库、API 或 SDK（可能包括 MCP SDK）提供 Claude 文档。对 LLM 友好的文档通常可以在官方文档站点上的平面 `llms.txt` 文件中找到（这是我们的 API 的）。
 
 Wrapping your tools in a local MCP server or Desktop extension (DXT) will allow you to connect and test your tools in Claude Code or the Claude Desktop app.
@@ -88,10 +83,10 @@ Test the tools yourself to identify any rough edges. Collect feedback from your 
 亲自测试工具以识别任何粗糙的边缘。收集用户的反馈，以建立对你期望工具启用的用例和提示词的直觉。
 
 ### Running an evaluation
-### 运行评估
 
-Next, you need to measure how well Claude uses your tools by running an evaluation. Start by generating lots of evaluation tasks, grounded in real world uses. We recommend collaborating with an agent to help analyze your results and determine how to improve your tools. See this process end-to-end in our tool evaluation cookbook.
-接下来，你需要通过运行评估来测量 Claude 使用你的工具的程度。首先，生成大量基于现实世界使用的评估任务。我们建议与代理协作，以帮助分析你的结果并确定如何改进你的工具。在我们的工具评估食谱中端到端地查看此过程。
+Next, you need to measure how well Claude uses your tools by running an evaluation. Start by generating lots of evaluation tasks, grounded in real world uses. We recommend collaborating with an agent to help analyze your results and determine how to improve your tools. See this process end-to-end in our [tool evaluation cookbook](https://platform.claude.com/cookbook/tool-evaluation-tool-evaluation).
+
+![This graph measures the test set accuracy of human-written vs. Claude-optimized Slack MCP servers.](https://www-cdn.anthropic.com/images/4zrzovbb/website/6e810aee67f3f3c955832fb7bf9033ffb0102000-1920x1080.png)
 
 Held-out test set performance of our internal Slack tools
 我们内部 Slack 工具的保留测试集性能
@@ -137,11 +132,12 @@ We recommend running your evaluation programmatically with direct LLM API calls.
 In your evaluation agents' system prompts, we recommend instructing agents to output not just structured response blocks (for verification), but also reasoning and feedback blocks. Instructing agents to output these _before_ tool call and response blocks may increase LLMs' effective intelligence by triggering chain-of-thought (CoT) behaviors.
 在评估代理的系统提示词中，我们建议指示代理不仅输出结构化响应块（用于验证），还输出推理和反馈块。指示代理在工具调用和响应块之前输出这些可能会通过触发思维链（CoT）行为来提高 LLM 的有效智能。
 
-If you're running your evaluation with Claude, you can turn on interleaved thinking for similar functionality "off-the-shelf". This will help you probe why agents do or don't call certain tools and highlight specific areas of improvement in tool descriptions and specs.
+If you're running your evaluation with Claude, you can turn on [interleaved thinking](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking#interleaved-thinking) for similar functionality "off-the-shelf". This will help you probe why agents do or don't call certain tools and highlight specific areas of improvement in tool descriptions and specs. We've also written about [tracing thoughts in language models](https://www.anthropic.com/research/tracing-thoughts-language-model).
 如果你使用 Claude 运行评估，你可以开启交错思考以获得类似的功能"开箱即用"。这将帮助你探索代理为什么调用或不调用某些工具，并突出工具描述和规格的特定改进领域。
 
 As well as top-level accuracy, we recommend collecting other metrics like the total runtime of individual tool calls and tasks, the total number of tool calls, the total token consumption, and tool errors. Tracking tool calls can help reveal common workflows that agents pursue and offer some opportunities for tools to consolidate.
-除了顶级准确性，我们还建议收集其他指标，例如单个工具调用和任务的总运行时间、工具调用的总数、总令牌消耗和工具错误。跟踪工具调用可以帮助揭示代理追求的常见工作流程，并为工具整合提供一些机会。
+
+![This graph measures the test set accuracy of human-written vs. Claude-optimized Asana MCP servers.](https://www-cdn.anthropic.com/images/4zrzovbb/website/3f1f47e80974750cd924bc51e42b6df1ad997fab-1920x1080.png)
 
 Held-out test set performance of our internal Asana tools
 我们内部 Asana 工具的保留测试集性能
@@ -155,7 +151,7 @@ Agents are your helpful partners in spotting issues and providing feedback on ev
 Observe where your agents get stumped or confused. Read through your evaluation agents' reasoning and feedback (or CoT) to identify rough edges. Review the raw transcripts (including tool calls and tool responses) to catch any behavior not explicitly described in the agent's CoT. Read between the lines; remember that your evaluation agents don't necessarily know the correct answers and strategies.
 观察你的代理在哪里被难住或困惑。仔细阅读你的评估代理的推理和反馈（或 CoT）以识别粗糙的边缘。审查原始记录（包括工具调用和工具响应）以捕获代理的 CoT 中未明确描述的任何行为。读懂言外之意；记住，你的评估代理不一定知道正确的答案和策略。
 
-Analyze your tool calling metrics. Lots of redundant tool calls might suggest some rightsizing of pagination or token limit parameters is warranted; lots of tool errors for invalid parameters might suggest tools could use clearer descriptions or better examples. When we launched Claude's web search tool, we identified that Claude was needlessly appending `2025` to the tool's `query` parameter, biasing search results and degrading performance (we steered Claude in the right direction by improving the tool description).
+Analyze your tool calling metrics. Lots of redundant tool calls might suggest some rightsizing of pagination or token limit parameters is warranted; lots of tool errors for invalid parameters might suggest tools could use clearer descriptions or better examples. When we launched Claude's [web search tool](https://www.anthropic.com/news/web-search), we identified that Claude was needlessly appending `2025` to the tool's `query` parameter, biasing search results and degrading performance (we steered Claude in the right direction by improving the tool description).
 分析你的工具调用指标。大量的冗余工具调用可能建议需要调整分页或令牌限制参数的大小；大量无效参数的工具错误可能建议工具可以使用更清晰的描述或更好的示例。当我们推出 Claude 的网络搜索工具时，我们确定 Claude 不必要地将 `2025` 附加到工具的 `query` 参数，从而使搜索结果产生偏差并降低性能（我们通过改进工具描述将 Claude 引向正确的方向）。
 
 ### Collaborating with agents
@@ -174,13 +170,11 @@ In the next section, we'll share some of what we learned from this process.
 在下一节中，我们将分享我们从这个过程中学到的一些东西。
 
 ## Principles for writing effective tools
-## 编写有效工具的原则
 
 In this section, we distill our learnings into a few guiding principles for writing effective tools.
 在本节中，我们将我们的学习提炼为编写有效工具的几个指导原则。
 
 ### Choosing the right tools for agents
-### 为代理选择正确的工具
 
 More tools don't always lead to better outcomes. A common error we've observed is tools that merely wrap existing software functionality or API endpoints—whether or not the tools are appropriate for agents. This is because agents have distinct "affordances" to traditional software—that is, they have different ways of perceiving the potential actions they can take with those tools
 更多的工具并不总是导致更好的结果。我们观察到的一个常见错误是工具仅仅包装现有的软件功能或 API 端点——无论这些工具是否适合代理。这是因为代理与传统软件有不同的"可供性"——也就是说，它们有不同的方式来感知它们可以用这些工具采取的潜在行动
@@ -214,7 +208,6 @@ Too many tools or overlapping tools can also distract agents from pursuing effic
 太多的工具或重叠的工具也可能分散代理对追求有效策略的注意力。仔细、有选择地规划你构建（或不构建）的工具确实会有回报。
 
 ### Namespacing your tools
-### 为你的工具命名空间
 
 Your AI agents will potentially gain access to dozens of MCP servers and hundreds of different tools–including those by other developers. When tools overlap in function or have a vague purpose, agents can get confused about which ones to use.
 你的 AI 代理可能获得访问数十个 MCP 服务器和数百种不同工具的权限——包括其他开发者的工具。当工具在功能上重叠或目的模糊时，代理可能会对使用哪些工具感到困惑。
@@ -229,7 +222,6 @@ Agents might call the wrong tools, call the right tools with the wrong parameter
 代理可能调用错误的工具，用错误的参数调用正确的工具，调用太少的工具，或错误地处理工具响应。通过选择性地实现名称反映任务自然细分的工具，你同时减少了加载到代理上下文中的工具和工具描述的数量，并将代理计算从代理的上下文卸载回工具调用本身。这降低了代理犯错的总体风险。
 
 ### Returning meaningful context from your tools
-### 从工具返回有意义的上下文
 
 In the same vein, tool implementations should take care to return only high signal information back to agents. They should prioritize contextual relevance over flexibility, and eschew low-level technical identifiers (for example: `uuid`, `256px_image_url`, `mime_type`). Fields like `name`, `image_url`, and `file_type` are much more likely to directly inform agents' downstream actions and responses.
 同样，工具实现应该注意只向代理返回高信号信息。它们应该优先考虑上下文相关性而不是灵活性，并避免低级技术标识符（例如：`uuid`、`256px_image_url`、`mime_type`）。像 `name`、`image_url` 和 `file_type` 这样的字段更有可能直接通知代理的下游行动和响应。
@@ -251,10 +243,12 @@ enum ResponseFormat {
 ```
 
 Here's an example of a detailed tool response (206 tokens):
-以下是详细工具响应的示例（206 个令牌）：
+
+![This code snippet depicts an example of a detailed tool response.](https://www-cdn.anthropic.com/images/4zrzovbb/website/5ed0d30526bf68624f335d075b8c1541be3bb595-1920x1006.png)
 
 Here's an example of a concise tool response (72 tokens):
-以下是简洁工具响应的示例（72 个令牌）：
+
+![This code snippet depicts a concise tool response.](https://www-cdn.anthropic.com/images/4zrzovbb/website/d4f649a66482efb5a80cf14ea85e84974ede1c49-1920x725.png)
 
 Slack threads and thread replies are identified by unique `thread_ts` which are required to fetch thread replies. `thread_ts` and other IDs (`channel_id`, `user_id`) can be retrieved from a `"detailed"` tool response to enable further tool calls that require these. `"concise"` tool responses return only thread content and exclude IDs. In this example, we use ~⅓ of the tokens with `"concise"` tool responses.
 Slack 线程和线程回复由唯一的 `thread_ts` 标识，获取线程回复需要这些标识。`thread_ts` 和其他 ID（`channel_id`、`user_id`）可以从 `"detailed"` 工具响应中检索，以启用需要这些 ID 的进一步工具调用。`"concise"` 工具响应仅返回线程内容并排除 ID。在这个示例中，我们使用 `"concise"` 工具响应时使用了约 ⅓ 的令牌。
@@ -263,7 +257,6 @@ Even your tool response structure—for example XML, JSON, or Markdown—can hav
 即使是你的工具响应结构——例如 XML、JSON 或 Markdown——也会影响评估性能：没有一刀切的解决方案。这是因为 LLM 是在下一个令牌预测上训练的，并且在与训练数据匹配的格式上表现得更好。最佳响应结构将因任务和代理而异。我们鼓励你根据自己的评估选择最佳响应结构。
 
 ### Optimizing tool responses for token efficiency
-### 优化工具响应以提高令牌效率
 
 Optimizing the quality of context is important. But so is optimizing the _quantity_ of context returned back to agents in tool responses.
 优化上下文的质量很重要。但优化工具响应中返回给代理的上下文_数量_也很重要。
@@ -275,19 +268,21 @@ If you choose to truncate responses, be sure to steer agents with helpful instru
 如果你选择截断响应，请确保通过有用的说明引导代理。你可以直接鼓励代理追求更节省令牌的策略，例如在知识检索任务中进行许多小型和有针对性的搜索，而不是单一的广泛搜索。同样，如果工具调用引发错误（例如，在输入验证期间），你可以提示工程你的错误响应，以清楚地传达具体和可操作的改进，而不是不透明的错误代码或跟踪。
 
 Here's an example of a truncated tool response:
-以下是截断工具响应的示例：
+
+![This image depicts an example of a truncated tool response.](https://www-cdn.anthropic.com/images/4zrzovbb/website/e440d6a69d0ca80e71f3bec5c2d00906ff03ce6d-1920x1162.png)
 
 Here's an example of an unhelpful error response:
-以下是无用错误响应的示例：
+
+![This image depicts an example of an unhelpful tool response.](https://www-cdn.anthropic.com/images/4zrzovbb/website/2445187904704fec8c50af0b950e310ba743fac2-1920x733.png)
 
 Here's an example of a helpful error response:
-以下是有用错误响应的示例：
+
+![This image depicts an example of a helpful error response.](https://www-cdn.anthropic.com/images/4zrzovbb/website/810661bd44a35fb273806ae95160040155978c3e-1920x850.png)
 
 Tool truncation and error responses can steer agents towards more token-efficient tool-use behaviors (using filters or pagination) or give examples of correctly formatted tool inputs.
 工具截断和错误响应可以将代理引向更节省令牌的工具使用行为（使用过滤器或分页），或者给出正确格式的工具输入示例。
 
 ### Prompt-engineering your tool descriptions
-### 提示词工程你的工具描述
 
 We now come to one of the most effective methods for improving tools: prompt-engineering your tool descriptions and specs. Because these are loaded into your agents' context, they can collectively steer agents toward effective tool-calling behaviors.
 我们现在来介绍改进工具的最有效方法之一：提示词工程你的工具描述和规格。因为这些被加载到你的代理的上下文中，它们可以共同引导代理实现有效的工具调用行为。
@@ -295,14 +290,24 @@ We now come to one of the most effective methods for improving tools: prompt-eng
 When writing tool descriptions and specs, think of how you would describe your tool to a new hire on your team. Consider the context that you might implicitly bring—specialized query formats, definitions of niche terminology, relationships between underlying resources—and make it explicit. Avoid ambiguity by clearly describing (and enforcing with strict data models) expected inputs and outputs. In particular, input parameters should be unambiguously named: instead of a parameter named `user`, try a parameter named `user_id`.
 在编写工具描述和规格时，想想你会如何向你团队的新员工描述你的工具。考虑你可能隐含带来的上下文——专门的查询格式、小众术语的定义、底层资源之间的关系——并使其明确化。通过清楚地描述（并通过严格的数据模型强制执行）预期的输入和输出来避免歧义。特别是，输入参数应该明确命名：不要使用名为 `user` 的参数，而是尝试使用名为 `user_id` 的参数。
 
-With your evaluation you can measure the impact of your prompt engineering with greater confidence. Even small refinements to tool descriptions can yield dramatic improvements. Claude Sonnet 3.5 achieved state-of-the-art performance on the SWE-bench Verified evaluation after we made precise refinements to tool descriptions, dramatically reducing error rates and improving task completion.
+With your evaluation you can measure the impact of your prompt engineering with greater confidence. Even small refinements to tool descriptions can yield dramatic improvements. Claude Sonnet 3.5 achieved state-of-the-art performance on the [SWE-bench Verified](https://www.anthropic.com/engineering/swe-bench-sonnet) evaluation after we made precise refinements to tool descriptions, dramatically reducing error rates and improving task completion.
 通过你的评估，你可以更自信地测量提示词工程的影响。即使对工具描述的小改进也能产生巨大的改进。Claude Sonnet 3.5 在我们对工具描述进行精确改进后，在 SWE-bench Verified 评估中达到了最先进的性能，大大降低了错误率并提高了任务完成。
 
-You can find other best practices for tool definitions in our Developer Guide. If you're building tools for Claude, we also recommend reading about how tools are dynamically loaded into Claude's system prompt. Lastly, if you're writing tools for an MCP server, tool annotations help disclose which tools require open-world access or make destructive changes.
+You can find other best practices for tool definitions in our [Developer Guide](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/implement-tool-use#best-practices-for-tool-definitions). If you're building tools for Claude, we also recommend reading about how tools are dynamically loaded into Claude's system prompt. Lastly, if you're writing tools for an MCP server, [tool annotations](https://modelcontextprotocol.io/specification/2025-06-18/server/tools) help disclose which tools require open-world access or make destructive changes. See also the [tool use system prompt guidance](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/implement-tool-use#tool-use-system-prompt).
 你可以在我们的开发者指南中找到工具定义的其他最佳实践。如果你正在为 Claude 构建工具，我们还建议阅读有关工具如何动态加载到 Claude 系统提示词中的内容。最后，如果你正在为 MCP 服务器编写工具，工具注释有助于披露哪些工具需要开放世界访问或进行破坏性更改。
 
+## Looking to learn more?
+
+If you're interested in learning more about building and deploying agentic systems, check out:
+
+- [Model Context Protocol](https://modelcontextprotocol.io/) - The open standard for connecting AI assistants to external systems
+- [MCP Documentation](https://modelcontextprotocol.io/docs/sdk) - Learn how to build MCP servers and clients
+- [MCP Developer Guide](https://modelcontextprotocol.io/docs/develop/connect-local-servers) - Connect local MCP servers to Claude
+- [Desktop Extensions](https://www.anthropic.com/engineering/desktop-extensions) - Build extensions for Claude Desktop
+- [Tool Use Overview](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview) - Claude's tool use capabilities
+- [Enterprise Documentation](https://anthropic.skilljar.com/) - Enterprise-grade guidance for deploying Claude
+
 ## Looking ahead
-## 展望未来
 
 To build effective tools for agents, we need to re-orient our software development practices from predictable, deterministic patterns to non-deterministic ones.
 为了为代理构建有效的工具，我们需要将我们的软件开发实践从可预测的确定性模式重新定位到非确定性模式。
@@ -314,10 +319,8 @@ In the future, we expect the specific mechanisms through which agents interact w
 在未来，我们期望代理与世界交互的具体机制会演变——从 MCP 协议的更新到底层 LLM 本身的升级。通过系统化的、评估驱动的方法来改进代理的工具，我们可以确保随着代理变得更有能力，它们使用的工具也会随之演变。
 
 ## Acknowledgements
-## 致谢
 
 Written by Ken Aizawa with valuable contributions from colleagues across Research (Barry Zhang, Zachary Witten, Daniel Jiang, Sami Al-Sheikh, Matt Bell, Maggie Vo), MCP (Theodora Chu, John Welsh, David Soria Parra, Adam Jones), Product Engineering (Santiago Seira), Marketing (Molly Vorwerck), Design (Drew Roper), and Applied AI (Christian Ryan, Alexander Bricken).
 由 Ken Aizawa 撰写，研究（Barry Zhang、Zachary Witten、Daniel Jiang、Sami Al-Sheikh、Matt Bell、Maggie Vo）、MCP（Theodora Chu、John Welsh、David Soria Parra、Adam Jones）、产品工程（Santiago Seira）、营销（Molly Vorwerck）、设计（Drew Roper）和应用 AI（Christian Ryan、Alexander Bricken）的同事提供了宝贵贡献。
 
 1Beyond training the underlying LLMs themselves.
-1除了训练底层的 LLM 本身。

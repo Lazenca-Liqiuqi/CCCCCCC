@@ -5,11 +5,11 @@
 
 ---
 
-Last year, we shared lessons in building effective agents alongside our customers. Since then, we've released Claude Code, an agentic coding solution that we originally built to support developer productivity at Anthropic.
+Last year, we shared lessons in [building effective agents](https://www.anthropic.com/engineering/building-effective-agents) alongside our customers. Since then, we've released Claude Code, an agentic coding solution that we originally built to support developer productivity at Anthropic.
 
 Over the past several months, Claude Code has become far more than a coding tool. At Anthropic, we've been using it for deep research, video creation, and note-taking, among countless other non-coding applications. In fact, it has begun to power almost all of our major agent loops.
 
-In other words, the agent harness that powers Claude Code (the Claude Code SDK) can power many other types of agents, too. To reflect this broader vision, we're renaming the Claude Code SDK to the Claude Agent SDK.
+In other words, the agent harness that powers [Claude Code](https://www.anthropic.com/claude-code) (the Claude Code SDK) can power many other types of agents, too. To reflect this broader vision, we're renaming the Claude Code SDK to the Claude Agent SDK.
 
 In this post, we'll highlight why we built the Claude Agent SDK, how to build your own agents with it, and share the best practices that have emerged from our team's own deployments.
 
@@ -76,9 +76,9 @@ Once you've gathered context, you'll want to give your agent flexible ways of ta
 
 ### __Tools__
 
-Tools are the primary building blocks of execution for your agent. Tools are prominent in Claude's context window, making them the primary actions Claude will consider when deciding how to complete a task. This means you should be conscious about how you design your tools to maximize context efficiency. You can see more best practices in our blog post, Writing effective tools for agents – with agents.
+Tools are the primary building blocks of execution for your agent. Tools are prominent in Claude's context window, making them the primary actions Claude will consider when deciding how to complete a task. This means you should be conscious about how you design your tools to maximize context efficiency. You can see more best practices in our blog post, [Writing effective tools for agents – with agents](https://www.anthropic.com/engineering/writing-tools-for-agents).
 
-As such, your tools should be primary actions you want your agent to take. Learn how to make custom tools in the Claude Agent SDK.
+As such, your tools should be primary actions you want your agent to take. Learn how to make [custom tools](https://docs.claude.com/en/api/agent-sdk/custom-tools) in the Claude Agent SDK.
 
 For our email agent, we might define tools like "`fetchInbox`" or "`searchEmails`" as the agent's primary, most frequent actions.
 
@@ -96,7 +96,7 @@ The Claude Agent SDK excels at code generation—and for good reason. Code is pr
 
 When building agents, consider: which tasks would benefit from being expressed as code? Often, the answer unlocks significant capabilities.
 
-For example, our recent launch of file creation in Claude.AI relies entirely on code generation. Claude writes Python scripts to create Excel spreadsheets, PowerPoint presentations, and Word documents, ensuring consistent formatting and complex functionality that would be difficult to achieve any other way.
+For example, our recent launch of [file creation in Claude.AI](https://www.anthropic.com/news/create-files) relies entirely on code generation. Claude writes Python scripts to create Excel spreadsheets, PowerPoint presentations, and Word documents, ensuring consistent formatting and complex functionality that would be difficult to achieve any other way.
 
 In our email agent, we might want to allow users to create rules for inbound emails. To achieve this, we could write code to run on that event:
 
@@ -108,7 +108,7 @@ The Model Context Protocol (MCP) provides standardized integrations to external 
 
 For our email agent, we might want to `search Slack messages` to understand team context, or `check Asana tasks` to see if someone has already been assigned to handle a customer request. With MCP servers, these integrations work out of the box—your agent can simply call tools like search_slack_messages or get_asana_tasks and the MCP handles the rest.
 
-The growing MCP ecosystem means you can quickly add new capabilities to your agents as pre-built integrations become available, letting you focus on agent behavior.
+The growing [MCP ecosystem](https://modelcontextprotocol.io/) means you can quickly add new capabilities to your agents as pre-built integrations become available, letting you focus on agent behavior. You can find many community MCP servers on [GitHub](https://github.com/modelcontextprotocol/servers).
 
 ## Verify your work
 
@@ -120,7 +120,7 @@ The key is giving Claude concrete ways to evaluate its work. Here are three appr
 
 The best form of feedback is providing clearly defined rules for an output, then explaining which rules failed and why.
 
-Code linting is an excellent form of rules-based feedback. The more in-depth in feedback the better. For instance, it is usually better to generate TypeScript and lint it than it is to generate pure JavaScript because it provides you with multiple additional layers of feedback.
+Code linting is an excellent form of rules-based feedback. The more in-depth in feedback the better. For instance, it is usually better to generate TypeScript and lint it than it is to generate pure JavaScript because it provides you with multiple additional layers of feedback. See [what is linting](https://stackoverflow.com/questions/8503559/what-is-linting) for more background.
 
 When generating an email, you may want Claude to check that the email address is valid (if not, throw an error) and that the user has sent an email to them before (if so, throw a warning).
 
@@ -164,7 +164,7 @@ The Claude Agent SDK makes it easier to build autonomous agents by giving Claude
 
 With the agent loop in mind (gathering context, taking action, and your verifying work), you can build reliable agents that are easy to deploy and iterate on.
 
-You can get started with the Claude Agent SDK today. For developers who are already building on the SDK, we recommend migrating to the latest version by following this guide.
+You can get started with the Claude Agent SDK today. For developers who are already building on the SDK, we recommend migrating to the latest version by following this [migration guide](https://docs.claude.com/en/docs/claude-code/sdk/migration-guide). You can find the [Agent SDK overview documentation here](https://docs.claude.com/en/api/agent-sdk/overview).
 
 ## Acknowledgements
 

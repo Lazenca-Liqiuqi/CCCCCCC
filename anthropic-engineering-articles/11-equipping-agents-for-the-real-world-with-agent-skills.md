@@ -7,9 +7,9 @@
 
 _Update: We've published_ _Agent Skills_ _as an open standard for cross-platform portability. (December 18, 2025)_
 
-As model capabilities improve, we can now build general-purpose agents that interact with full-fledged computing environments. Claude Code, for example, can accomplish complex tasks across domains using local code execution and filesystems. But as these agents become more powerful, we need more composable, scalable, and portable ways to equip them with domain-specific expertise.
+As model capabilities improve, we can now build general-purpose agents that interact with full-fledged computing environments. [Claude Code](https://claude.com/product/claude-code), for example, can accomplish complex tasks across domains using local code execution and filesystems. But as these agents become more powerful, we need more composable, scalable, and portable ways to equip them with domain-specific expertise.
 
-This led us to create __Agent Skills__: organized folders of instructions, scripts, and resources that agents can discover and load dynamically to perform better at specific tasks.Skills extend Claude's capabilities by packaging your expertise into composable resources for Claude, transforming general-purpose agents into specialized agents that fit your needs.
+This led us to create __Agent Skills__: organized folders of instructions, scripts, and resources that agents can discover and load dynamically to perform better at specific tasks. Skills extend Claude's capabilities by packaging your expertise into composable resources for Claude, transforming general-purpose agents into specialized agents that fit your needs. Learn more at [agentskills.io](https://agentskills.io).
 
 Building a skill for an agent is like putting together an onboarding guide for a new hire. Instead of building fragmented, custom-designed agents for each use case, anyone can now specialize their agents with composable capabilities by capturing and sharing their procedural knowledge. In this article, we explain what Skills are, show how they work, and share best practices for building your own.
 
@@ -29,7 +29,7 @@ This metadata is the __first level__ of _progressive disclosure_: it provides ju
 
 *A SKILL.md file must begin with YAML Frontmatter that contains a file name and description, which is loaded into its system prompt at startup.*
 
-As skills grow in complexity, they may contain too much context to fit into a single `SKILL.md`, or context that's relevant only in specific scenarios. In these cases, skills can bundle additional files within the skill directory and reference them by name from `SKILL.md`. These additional linked files are the __third level__ (and beyond) of detail, which Claude can choose to navigate and discover only as needed.
+As skills grow in complexity, they may contain too much context to fit into a single `SKILL.md`, or context that's relevant only in specific scenarios. For example, a [workflow redirect](http://claude.ai/redirect/website.v1.8d070a17-e400-44c1-a9da-84fb5775f18d) can help manage complex skill interactions. In these cases, skills can bundle additional files within the skill directory and reference them by name from `SKILL.md`. These additional linked files are the __third level__ (and beyond) of detail, which Claude can choose to navigate and discover only as needed.
 
 In the PDF skill shown below, the `SKILL.md` refers to two additional files (`reference.md` and `forms.md`) that the skill author chooses to bundle alongside the core `SKILL.md`. By moving the form-filling instructions to a separate file (`forms.md`), the skill author is able to keep the core of the skill lean, trusting that Claude will read `forms.md` only when filling out a form.
 
@@ -64,7 +64,7 @@ Skills can also include code for Claude to execute as tools at its discretion.
 
 Large language models excel at many tasks, but certain operations are better suited for traditional code execution. For example, sorting a list via token generation is far more expensive than simply running a sorting algorithm. Beyond efficiency concerns, many applications require the deterministic reliability that only code can provide.
 
-In our example, the PDF skill includes a pre-written Python script that reads a PDF and extracts all form fields. Claude can run this script without loading either the script or the PDF into context. And because code is deterministic, this workflow is consistent and repeatable.
+In our example, the PDF skill includes a pre-written Python script that reads a PDF and extracts all form fields. See the [PDF skill implementation](https://github.com/anthropics/skills/tree/main/document-skills/pdf) for reference. Claude can run this script without loading either the script or the PDF into context. And because code is deterministic, this workflow is consistent and repeatable.
 
 ![This image depicts how code is executed via Skills.](https://www-cdn.anthropic.com/images/4zrzovbb/website/c24b4a2ff77277c430f2c9ef1541101766ae5714-1650x929.jpg)
 
@@ -83,7 +83,7 @@ Here are some helpful guidelines for getting started with authoring and testing 
 
 Skills provide Claude with new capabilities through instructions and code. While this makes them powerful, it also means that malicious skills may introduce vulnerabilities in the environment where they're used or direct Claude to exfiltrate data and take unintended actions.
 
-We recommend installing skills only from trusted sources. When installing a skill from a less-trusted source, thoroughly audit it before use. Start by reading the contents of the files bundled in the skill to understand what it does, paying particular attention to code dependencies and bundled resources like images or scripts. Similarly, pay attention to instructions or code within the skill that instruct Claude to connect to potentially untrusted external network sources.
+We recommend installing skills only from trusted sources. When installing a skill from a less-trusted source, thoroughly audit it before use. See [news about Skills](https://www.anthropic.com/news/skills) for more information. Start by reading the contents of the files bundled in the skill to understand what it does, paying particular attention to code dependencies and bundled resources like images or scripts. Similarly, pay attention to instructions or code within the skill that instruct Claude to connect to potentially untrusted external network sources.
 
 ## The future of Skills
 
@@ -95,7 +95,7 @@ Looking further ahead, we hope to enable agents to create, edit, and evaluate Sk
 
 Skills are a simple concept with a correspondingly simple format. This simplicity makes it easier for organizations, developers, and end users to build customized agents and give them new capabilities.
 
-We're excited to see what people build with Skills. Get started today by checking out our Skills docs and cookbook.
+We're excited to see what people build with Skills. Get started today by checking out our [Skills documentation](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) and [cookbook](https://github.com/anthropics/claude-cookbooks/tree/main/skills). You can also explore the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) for extending agent capabilities.
 
 ## Acknowledgements
 
