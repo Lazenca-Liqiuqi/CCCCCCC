@@ -37,7 +37,7 @@ Below we describe the three bugs that caused the degradation, when they occurred
 
 ### 1. Context window routing error
 
-On August 5, some Sonnet 4 requests were misrouted to servers configured for the upcoming 1M token context window. This bug initially affected 0.8% of requests. On August 29, a routine load balancing change unintentionally increased the number of short-context requests routed to the 1M context servers. At the worst impacted hour on August 31, 16% of Sonnet 4 requests were affected.
+On August 5, some Sonnet 4 requests were misrouted to servers configured for the upcoming [1M token context window](https://docs.claude.com/en/docs/build-with-claude/context-windows#1m-token-context-window). This bug initially affected 0.8% of requests. On August 29, a routine load balancing change unintentionally increased the number of short-context requests routed to the 1M context servers. At the worst impacted hour on August 31, 16% of Sonnet 4 requests were affected.
 
 Approximately 30% of Claude Code users who made requests during this period had at least one message routed to the wrong server type, resulting in degraded responses. On Amazon Bedrock, misrouted traffic peaked at 0.18% of all Sonnet 4 requests from August 12. Incorrect routing affected less than 0.0004% of requests on Google Cloud's Vertex AI between August 27 and September 16.
 
@@ -69,7 +69,7 @@ To illustrate the complexity of these issues, here's how the XLA compiler bug ma
 
 When Claude generates text, it calculates probabilities for each possible next word, then randomly chooses a sample from this probability distribution. We use "top-p sampling" to avoid nonsensical outputs—only considering words whose cumulative probability reaches a threshold (typically 0.99 or 0.999). On TPUs, our models run across multiple chips, with probability calculations happening in different locations. To sort these probabilities, we need to coordinate data between chips, which is complex.[2]
 
-In December 2024, we discovered our TPU implementation would occasionally drop the most probable token when temperature was zero. We deployed a workaround to fix this case.
+In December 2024, we discovered our TPU implementation would occasionally drop the most probable token when [temperature](https://docs.claude.com/en/docs/about-claude/glossary#temperature) was zero. We deployed a workaround to fix this case.
 
 ![Code snippet of a December 2024 patch to work around the unexpected dropped token bug when temperature = 0.](https://www-cdn.anthropic.com/images/4zrzovbb/website/efee0d3d25f6b03cbfc57e70e0e364dcd8b82fe0-2000x500.png)
 
@@ -115,7 +115,7 @@ As we continue to improve our infrastructure, we're also improving the way we ev
 
 Evals and monitoring are important. But these incidents have shown that we also need continuous signal from users when responses from Claude aren't up to the usual standard. Reports of specific changes observed, examples of unexpected behavior encountered, and patterns across different use cases all helped us isolate the issues.
 
-It remains particularly helpful for users to continue to send us their feedback directly. You can use the `/bug` command in Claude Code or you can use the "thumbs down" button in the Claude apps to do so. Developers and researchers often create new and interesting ways to evaluate model quality that complement our internal testing. If you'd like to share yours, reach out to feedback@anthropic.com.
+It remains particularly helpful for users to continue to send us their feedback directly. You can use the `/bug` command in Claude Code or you can use the "thumbs down" button in the Claude apps to do so. Developers and researchers often create new and interesting ways to evaluate model quality that complement our internal testing. If you'd like to share yours, reach out to [feedback@anthropic.com](mailto:feedback@anthropic.com).
 
 We remain grateful to our community for these contributions.
 
@@ -123,10 +123,10 @@ We remain grateful to our community for these contributions.
 
 Written by Sam McAllister, with thanks to Stuart Ritchie, Jonathan Gray, Kashyap Murali, Brennan Saeta, Oliver Rausch, Alex Palcuie, and many others.
 
-[1] XLA:TPU is the optimizing compiler that translates XLA High Level Optimizing language—often written using JAX—to TPU machine instructions.
+[1] [XLA:TPU](https://openxla.org/xla/architecture) is the optimizing compiler that translates XLA High Level Optimizing language—often written using [JAX](https://docs.jax.dev/en/latest)—to TPU machine instructions.
 
-[2] Our models are too large for single chips and are partitioned across tens of chips or more, making our sorting operation a distributed sort. TPUs (just like GPUs and Trainium) also have different performance characteristics than CPUs, requiring different implementation techniques using vectorized operations instead of serial algorithms.
+[2] Our models are too large for single chips and are partitioned across tens of chips or more, making our sorting operation a distributed sort. TPUs (just like GPUs and Trainium) also have different performance characteristics than CPUs, requiring different implementation techniques using vectorized operations instead of serial algorithms. See [bfloat16.h](https://github.com/tensorflow/tensorflow/blob/f41959ccb2d9d4c722fe8fc3351401d53bcf4900/tensorflow/core/framework/bfloat16.h) for implementation details. For more on floating-point precision, see [BFloat16: The Secret to High-Performance AI Computing](https://dl.acm.org/doi/pdf/10.1145/3360307).
 
-[3] We had been using this approximate operation because it yielded substantial performance improvements. The approximation works by accepting potential inaccuracies in the lowest probability tokens, which shouldn't affect quality—except when the bug caused it to drop the highest probability token instead.
+[3] We had been using this [approximate operation](https://docs.jax.dev/en/latest/_autosummary/jax.lax.approx_max_k.html) because it yielded substantial performance improvements. The approximation works by accepting potential inaccuracies in the lowest probability tokens, which shouldn't affect quality—except when the bug caused it to drop the highest probability token instead.
 
-[4] Note that the now-correct top-k implementation may result in slight differences in the inclusion of tokens near the top-p threshold, and in rare cases users may benefit from re-tuning their choice of top-p.
+[4] Note that the now-correct top-k implementation may result in slight differences in the inclusion of tokens near the top-p threshold, and in rare cases users may benefit from re-tuning their choice of top-p. For more on top-p sampling, see [The Curious Case of Neural Text Degeneration](https://arxiv.org/pdf/2206.14286).

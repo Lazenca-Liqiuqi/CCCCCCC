@@ -4,11 +4,11 @@
 
   Dec 15, 2025
 
-  Extended thinking capabilities have improved since its initial release, such that we recommend using that feature instead of a dedicated think tool in most cases. Extended thinking provides similar benefits—giving Claude space to reason through complex problems—with better integration and performance. See our extended thinking documentation for implementation details.
+  Extended thinking capabilities have improved since its initial release, such that we recommend using that feature instead of a dedicated think tool in most cases. Extended thinking provides similar benefits—giving Claude space to reason through complex problems—with better integration and performance. See our [extended thinking documentation](https://platform.claude.com/docs/en/build-with-claude/extended-thinking) for implementation details.
 
 As we continue to enhance Claude's complex problem-solving abilities, we've discovered a particularly effective approach: a "think" tool that creates dedicated space for structured thinking during complex tasks.
 
-This simple yet powerful technique—which, as we'll explain below, is different from Claude's new "extended thinking" capability (see here for extended thinking implementation details)—has resulted in remarkable improvements in Claude's agentic tool use ability. This includes following policies, making consistent decisions, and handling multi-step problems, all with minimal implementation overhead.
+This simple yet powerful technique—which, as we'll explain below, is different from Claude's new "extended thinking" capability (see [here for extended thinking implementation details](https://www.anthropic.com/research/visible-extended-thinking))—has resulted in remarkable improvements in Claude's agentic tool use ability. This includes following policies, making consistent decisions, and handling multi-step problems, all with minimal implementation overhead.
 
 In this post, we'll explore how to implement the "think" tool on different applications, sharing practical guidance for developers based on verified benchmark results.
 
@@ -22,7 +22,7 @@ This makes the "think" tool more suitable for cases where Claude does not have a
 
 We recommend using extended thinking for simpler tool use scenarios like non-sequential tool calls or straightforward instruction following. Extended thinking is also useful for use cases, like coding, math, and physics, when you don't need Claude to call tools. The "think" tool is better suited for when Claude needs to call complex tools, analyze tool outputs carefully in long chains of tool calls, navigate policy-heavy environments with detailed guidelines, or make sequential decisions where each step builds on previous ones and mistakes are costly.
 
-Here's a sample implementation using the standard tool specification format that comes from τ-Bench:
+Here's a sample implementation using the standard tool specification format that comes from [τ-Bench](https://arxiv.org/abs/2406.12045):
 
 ```
 {

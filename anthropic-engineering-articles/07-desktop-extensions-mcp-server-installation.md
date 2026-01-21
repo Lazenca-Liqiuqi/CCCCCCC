@@ -234,9 +234,9 @@ A full `manifest.json` with most of the optional fields might look like this:
 }
 ```
 
-To see an extension and manifest, please refer to the examples in the MCPB repository.
+To see an extension and manifest, please refer to the [examples in the MCPB repository](https://github.com/anthropics/dxt/tree/main/examples).
 
-The full specification for all required and optional fields in the `manifest.json` can be found as part of our open-source toolchain.
+The full specification for all required and optional fields in the `manifest.json` can be found as part of our [open-source toolchain](https://github.com/anthropics/dxt/blob/main/MANIFEST.md).
 
 ### Building your first extension
 
@@ -379,7 +379,7 @@ While we expect both the Desktop Extension specification and the implementation 
 
 To submit your extension:
 
-1. Ensure it follows the guidelines found in the submission form
+1. Ensure it follows the guidelines found in the [submission form](https://docs.google.com/forms/d/14_Dmcig4z8NeRMB_e7TOyrKzuZ88-BLYdLvS6LPhiZU/edit)
 2. Test across Windows and macOS
 3. Submit your extension
 4. Our team reviews for quality and security
@@ -421,13 +421,13 @@ We understand that extensions introduce new security considerations, particularl
 - Disable the extension directory entirely
 - Deploy private extension directories
 
-For more information about how to manage extensions within your organization, see our documentation.
+For more information about how to manage extensions within your organization, see our [documentation](https://anthropic.skilljar.com/).
 
 ### Getting started
 
 Ready to build your own extension? Here's how to start:
 
-__For MCP server developers__: Review our developer documentation – or dive right in by running the following commands in your local MCP servers' directory:
+__For MCP server developers__: Review our [developer documentation](https://support.anthropic.com/en/articles/10949351-getting-started-with-model-context-protocol-mcp-on-claude-for-desktop) – or dive right in by running the following commands in your local MCP servers' directory:
 
 ```
 npm install -g @anthropic-ai/mcpb
@@ -437,7 +437,7 @@ mcpb pack
 
 __For Claude Desktop users__: Update to the latest version and look for the Extensions section in Settings
 
-__For enterprises__: Review our enterprise documentation for deployment options
+__For enterprises__: Review our [enterprise documentation](https://anthropic.skilljar.com/) for deployment options
 
 ### Building with Claude Code
 
@@ -474,8 +474,8 @@ Generate complete, production-ready code that can be immediately tested. Focus o
 
 Desktop Extensions represent a fundamental shift in how users interact with local AI tools. By removing installation friction, we're making powerful MCP servers accessible to everyone—not just developers.
 
-Internally, we're using desktop extensions to share highly experimental MCP servers - some fun, some useful. One team experimented to see how far our models could make it when directly connected to a GameBoy, similar to our "Claude plays Pokémon" research. We used Desktop Extensions to package a single extension that opens up the popular PyBoy GameBoy emulator and lets Claude take control. We believe that countless opportunities exist to connect the model's capabilities to the tools, data, and applications users already have on their local machines.
+Internally, we're using desktop extensions to share highly experimental MCP servers - some fun, some useful. One team experimented to see how far our models could make it when directly connected to a GameBoy, similar to our ["Claude plays Pokémon" research](https://www.anthropic.com/news/visible-extended-thinking). We used Desktop Extensions to package a single extension that opens up the popular [PyBoy](https://github.com/Baekalfen/PyBoy) GameBoy emulator and lets Claude take control. We believe that countless opportunities exist to connect the model's capabilities to the tools, data, and applications users already have on their local machines.
 
 ![Image 1: A desktop showing the PyBoy MCP with Super Mario Land start screen](https://www-cdn.anthropic.com/images/4zrzovbb/website/d48f3ea1218a4b90450b9ab8134fa0e24db5a167-720x542.png)
 
-We can't wait to see what you build. The same creativity that brought us thousands of MCP servers can now reach millions of users with just one click. Ready to share your MCP server? Submit your extension for review.
+We can't wait to see what you build. The same creativity that brought us thousands of MCP servers can now reach millions of users with just one click. Ready to share your MCP server? [Submit your extension for review](https://forms.gle/tyiAZvch1kDADKoP9).

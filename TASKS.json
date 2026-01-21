@@ -41,36 +41,36 @@
         {
             "ID": "2",
             "TaskName": "审查文章05-08：验证内容完整性",
-            "Status": "pending",
+            "Status": "completed",
             "Description": "审查第5-8篇Engineering文章，验证内容完整性和元数据准确性",
             "SubTasks": [
                 {
                     "ID": "2-05",
                     "TaskName": "审查第5篇：Think Tool",
-                    "Status": "pending",
+                    "Status": "completed",
                     "File": "anthropic-engineering-articles/05-think-tool-complex-situations.md"
                 },
                 {
                     "ID": "2-06",
                     "TaskName": "审查第6篇：Multi-Agent Research System",
-                    "Status": "pending",
+                    "Status": "completed",
                     "File": "anthropic-engineering-articles/06-how-we-built-our-multi-agent-research-system.md"
                 },
                 {
                     "ID": "2-07",
                     "TaskName": "审查第7篇：Desktop Extensions",
-                    "Status": "pending",
+                    "Status": "completed",
                     "File": "anthropic-engineering-articles/07-desktop-extensions-mcp-server-installation.md"
                 },
                 {
                     "ID": "2-08",
                     "TaskName": "审查第8篇：Postmortem of Three Issues",
-                    "Status": "pending",
+                    "Status": "completed",
                     "File": "anthropic-engineering-articles/08-a-postmortem-of-three-recent-issues.md"
                 }
             ],
             "Deliverables": [
-                "4篇文章的审查报告"
+                "4篇文章的修复完成"
             ],
             "AcceptanceCriteria": "内容完整（标题、正文、图片、代码、链接），元数据准确，Markdown格式正确"
         },
