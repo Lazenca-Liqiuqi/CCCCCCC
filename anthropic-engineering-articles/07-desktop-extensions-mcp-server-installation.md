@@ -4,7 +4,7 @@
 
   Sep 11, 2025
 
-  Claude Desktop Extensions now use the .mcpb (MCP Bundle) file extension instead of .dxt. Existing .dxt extensions will continue to work, but we recommend developers use .mcpb for new extensions going forward. All functionality remains the same - this is purely a naming convention update.
+  Claude Desktop Extensions now use the .mcpb (MCP Bundle) file extension instead of .dxt. Existing [.dxt extensions](https://github.com/anthropics/dxt) will continue to work, but we recommend developers use .mcpb for new extensions going forward. All functionality remains the same - this is purely a naming convention update.
 
 —
 
@@ -165,7 +165,7 @@ A full `manifest.json` with most of the optional fields might look like this:
   },
   "homepage": "https://example.com/my-extension",
   "documentation": "https://docs.example.com/my-extension",
-  "support": "https://github.com/your-username/my-mcp-extension/issues",
+  "support": "https://github.com/your-username/my-extension/issues",
   "icon": "icon.png",
   "screenshots": [
     "assets/screenshots/screenshot1.png",
@@ -467,7 +467,8 @@ I want to build this as a Desktop Extension, abbreviated as "MCPB". Please follo
    - Validate that all tool calls return properly structured responses
    - Verify manifest loads correctly and host integration works
 
-Generate complete, production-ready code that can be immediately tested. Focus on defensive programming, clear error messages, and following the exact MCPB specifications to ensure compatibility with the ecosystem.
+Generate complete, production-ready code that can be immediately tested. Focus on defensive programming, clear error messages, and following the exact
+MCPB specifications to ensure compatibility with the ecosystem.
 ```
 
 ### Conclusion
@@ -479,3 +480,18 @@ Internally, we're using desktop extensions to share highly experimental MCP serv
 ![Image 1: A desktop showing the PyBoy MCP with Super Mario Land start screen](https://www-cdn.anthropic.com/images/4zrzovbb/website/d48f3ea1218a4b90450b9ab8134fa0e24db5a167-720x542.png)
 
 We can't wait to see what you build. The same creativity that brought us thousands of MCP servers can now reach millions of users with just one click. Ready to share your MCP server? [Submit your extension for review](https://forms.gle/tyiAZvch1kDADKoP9).
+
+---
+
+### Looking to learn more?
+
+- Explore the [MCP documentation](https://modelcontextprotocol.io/docs/sdk)
+- Browse [extension examples](https://github.com/anthropics/mcpb/tree/main/examples)
+
+![Desktop Extensions logo](https://www-cdn.anthropic.com/images/4zrzovbb/website/43abe7e54b56a891e74a8542944dfbd33f07f49c-1000x1000.svg)
+
+---
+
+### Acknowledgements
+
+Written by the Claude Code team. Special thanks to the MCP community for their valuable feedback and contributions.

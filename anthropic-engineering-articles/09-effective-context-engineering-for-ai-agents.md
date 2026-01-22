@@ -5,6 +5,8 @@
 
 ---
 
+## Context engineering vs. prompt engineering
+
 After a few years of prompt engineering being the focus of attention in applied AI, a new term has come to prominence: __context engineering__. Building with language models is becoming less about finding the right words and phrases for your prompts, and more about answering the broader question of "what configuration of context is most likely to generate our model's desired behavior?"
 
 __Context__ refers to the set of tokens included when sampling from a large-language model (LLM). The __engineering__ problem at hand is optimizing the utility of those tokens against the inherent constraints of LLMs in order to consistently achieve a desired outcome. Effectively wrangling LLMs often requires _thinking in context_ — in other words: considering the holistic state available to the LLM at any given time and what potential behaviors that state might yield.
@@ -105,7 +107,7 @@ This strategy provides persistent memory with minimal overhead. Like Claude Code
 
 After context resets, the agent reads its own notes and continues multi-hour training sequences or dungeon explorations. This coherence across summarization steps enables long-horizon strategies that would be impossible when keeping all the information in the LLM's context window alone.
 
-As part of our Sonnet 4.5 launch, we released a memory tool in public beta on the Claude Developer Platform that makes it easier to store and consult information outside the context window through a file-based system. This allows agents to build up knowledge bases over time, maintain project state across sessions, and reference previous work without keeping everything in context.
+As part of our [Sonnet 4.5 launch](https://www.anthropic.com/effective-context-engineering-for-ai-agents), we released a [memory tool](https://anthropic.com/news/context-management) in public beta on the Claude Developer Platform that makes it easier to store and consult information outside the context window through a file-based system. This allows agents to build up knowledge bases over time, maintain project state across sessions, and reference previous work without keeping everything in context.
 
 __Sub-agent architectures__
 
@@ -127,6 +129,16 @@ Context engineering represents a fundamental shift in how we build with LLMs. As
 
 The techniques we've outlined will continue evolving as models improve. We're already seeing that smarter models require less prescriptive engineering, allowing agents to operate with more autonomy. But even as capabilities scale, treating context as a precious, finite resource will remain central to building reliable, effective agents.
 
+---
+
+## Looking to learn more?
+
+- [Perspectives on Psychological Science - Cognitive architecture](https://journals.sagepub.com/doi/abs/10.1177/0963721409359277)
+- [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/pdf/2306.15595)
+- [Simon Willison on agents](https://simonwillison.net/2025/Sep/18/agents/)
+- [Context management announcement](https://www.anthropic.com/news/context-management)
+
+![Context engineering diagram](https://www-cdn.anthropic.com/images/4zrzovbb/website/43abe7e54b56a891e74a8542944dfbd33f07f49c-1000x1000.svg)
 Get started with context engineering in the Claude Developer Platform today, and access helpful tips and best practices via our [memory and context management cookbook](https://platform.claude.com/cookbook/tool-use-memory-cookbook).
 
 ## Acknowledgements

@@ -1,10 +1,13 @@
 # Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet
 
+**Published:** Jan 06, 2025
+**Author:** Erik Schluntz
+
 > **Published**: Jan 06, 2025
 
-_Our latest model, the upgraded Claude 3.5 Sonnet, achieved 49% on SWE-bench Verified, a software engineering evaluation, beating the previous state-of-the-art model's 45%. This post explains the "agent" we built around the model, and is intended to help developers get the best possible performance out of Claude 3.5 Sonnet._
+_Our latest model, the upgraded [Claude 3.5 Sonnet](https://www.anthropic.com/news/3-5-models-and-computer-use), achieved 49% on SWE-bench Verified, a software engineering evaluation, beating the previous state-of-the-art model's 45%. This post explains the "agent" we built around the model, and is intended to help developers get the best possible performance out of Claude 3.5 Sonnet._
 
-SWE-bench is an AI evaluation benchmark that assesses a model's ability to complete real-world software engineering tasks. Specifically, it tests how the model can resolve GitHub issues from popular open-source Python repositories. For each task in the benchmark, the AI model is given a set up Python environment and the checkout (a local working copy) of the repository from just before the issue was resolved. The model then needs to understand, modify, and test the code before submitting its proposed solution.
+SWE-bench is an AI evaluation benchmark that assesses a model's ability to complete real-world software engineering tasks. For more information, see [swebench.com](https://www.swebench.com/). Specifically, it tests how the model can resolve GitHub issues from popular open-source Python repositories. For each task in the benchmark, the AI model is given a set up Python environment and the checkout (a local working copy) of the repository from just before the issue was resolved. The model then needs to understand, modify, and test the code before submitting its proposed solution.
 
 Each solution is graded against the real unit tests from the pull request that closed the original GitHub issue. This tests whether the AI model was able to achieve the same functionality as the original human author of the PR.
 
@@ -16,7 +19,7 @@ There are many other benchmarks for the coding abilities of Large Language Model
 2. It is not yet saturated—there's plenty of room for improvement. No model has yet crossed 50% completion on SWE-bench Verified (though the updated Claude 3.5 Sonnet is, at the time of writing, at 49%);
 3. It measures an entire "agent", rather than a model in isolation. Open-source developers and startups have had great success in optimizing scaffoldings to greatly improve the performance around the same model.
 
-Note that the original SWE-bench dataset contains some tasks that are impossible to solve without additional context outside of the GitHub issue (for example, about specific error messages to return). SWE-bench-Verified is a 500 problem subset of SWE-bench that has been reviewed by humans to make sure they are solvable, and thus provides the most clear measure of coding agents' performance. This is the benchmark to which we'll refer in this post.
+Note that the original SWE-bench dataset contains some tasks that are impossible to solve without additional context outside of the GitHub issue (for example, about specific error messages to return). SWE-bench-Verified is a 500 problem subset of SWE-bench that has been reviewed by humans to make sure they are solvable. See [OpenAI's introduction](https://openai.com/index/introducing-swe-bench-verified/) for more details. This provides the most clear measure of coding agents' performance. This is the benchmark to which we'll refer in this post. Other organizations like [SolverAI](https://solverai.com/) and [SWE-Agent](https://swe-agent.com/) have also worked on this benchmark.
 
 ## Achieving state-of-the-art
 
@@ -28,20 +31,57 @@ The prompt outlines a suggested approach for the model, but it's not overly long
 
 The following code shows the prompt from our agent scaffold:
 
-> **Note**: The code block content is not available in the current version. Please refer to the original article for the complete code.
+```text
+<uploaded_files>
+{location}
+</uploaded_files>
+I've uploaded a python code repository in the directory {location} (not in /tmp/inputs). Consider the following PR description:
 
-```
-[Code block content unavailable - needs to be fetched from source]
+<pr_description>
+{pr_description}
+</pr_description>
+
+Can you help me implement the necessary changes to the repository so that the requirements specified in the <pr_description> are met?
+I've already taken care of all changes to any of the test files described in the <pr_description>. This means you DON'T have to modify the testing logic or any of the tests in any way!
+
+Your task is to make the minimal changes to non-tests files in the {location} directory to ensure the <pr_description> is satisfied.
+
+Follow these steps to resolve the issue:
+1. As a first step, it might be a good idea to explore the repo to familiarize yourself with its structure.
+2. Create a script to reproduce the error and execute it with `python <filename.py>` using the BashTool, to confirm the error
+3. Edit the sourcecode of the repo to resolve the issue
+4. Rerun your reproduce script and confirm that the error is fixed!
+5. Think about edgecases and make sure your fix handles them as well
+
+Your thinking should be thorough and so it's fine if it's very long.
 ```
 
 The model's first tool executes Bash commands. The schema is simple, taking only the command to be run in the environment. However, the description of the tool carries more weight. It includes more detailed instructions for the model, including escaping inputs, lack of internet access, and how to run commands in the background.
 
 Next, we show the spec for the Bash Tool:
 
-> **Note**: The code block content is not available in the current version. Please refer to the original article for the complete code.
-
-```
-[Code block content unavailable - needs to be fetched from source]
+```text
+{
+   "name": "bash",
+   "description": "Run commands in a bash shell\n
+* When invoking this tool, the contents of the \"command\" parameter does NOT need to be XML-escaped.\n
+* You don't have access to the internet via this tool.\n
+* You do have access to a mirror of common linux and python packages via apt and pip.\n
+* State is persistent across command calls and discussions with the user.\n
+* To inspect a particular line range of a file, e.g. lines 10-25, try 'sed -n 10,25p /path/to/the/file'.\n
+* Please avoid commands that may produce a very large amount of output.\n
+* Please run long lived commands in the background, e.g. 'sleep 10 &' or start a server in the background.",
+   "input_schema": {
+       "type": "object",
+       "properties": {
+           "command": {
+               "type": "string",
+               "description": "The bash command to run."
+           }
+       },
+       "required": ["command"]
+   }
+}
 ```
 
 The model's second tool (the Edit Tool) is much more complex, and contains everything the model needs for viewing, creating, and editing files. Again, our tool description contains detailed information for the model about how to use the tool.
@@ -50,10 +90,21 @@ We put a lot of effort into the descriptions and specs for these tools across a 
 
 The following code shows the description for our Edit Tool:
 
-> **Note**: The code block content is not available in the current version. Please refer to the original article for the complete code.
-
-```
-[Code block content unavailable - needs to be fetched from source]
+```text
+{
+   "name": "str_replace_editor",
+   "description": "Custom editing tool for viewing, creating and editing files\n
+* State is persistent across command calls and discussions with the user\n
+* If `path` is a file, `view` displays the result of applying `cat -n`. If `path` is a directory, `view` lists non-hidden files and directories up to 2 levels deep\n
+* The `create` command cannot be used if the specified `path` already exists as a file\n
+* If a `command` generates a long output, it will be truncated and marked with `<response clipped>` \n
+* The `undo_edit` command will revert the last edit made to the file at `path`\n
+\n
+Notes for using the `str_replace` command:\n
+* The `old_str` parameter should match EXACTLY one or more consecutive lines from the original file. Be mindful of whitespaces!\n
+* If the `old_str` parameter is not unique in the file, the replacement will not be performed. Make sure to include enough context in `old_str` to make it unique\n
+* The `new_str` parameter should contain the edited lines that should replace the `old_str`",
+...
 ```
 
 One way we improved performance was to "error-proof" our tools. For instance, sometimes models could mess up relative file paths after the agent had moved out of the root directory. To prevent this, we simply made the tool always require an absolute path.
@@ -62,10 +113,47 @@ We experimented with several different strategies for specifying edits to existi
 
 The spec for our Edit Tool is shown below:
 
-> **Note**: The code block content is not available in the current version. Please refer to the original article for the complete code.
-
-```
-[Code block content unavailable - needs to be fetched from source]
+```text
+...
+   "input_schema": {
+       "type": "object",
+       "properties": {
+           "command": {
+               "type": "string",
+               "enum": ["view", "create", "str_replace", "insert", "undo_edit"],
+               "description": "The commands to run. Allowed options are: `view`, `create`, `str_replace`, `insert`, `undo_edit`."
+           },
+           "file_text": {
+               "description": "Required parameter of `create` command, with the content of the file to be created.",
+               "type": "string"
+           },
+           "insert_line": {
+               "description": "Required parameter of `insert` command. The `new_str` will be inserted AFTER the line `insert_line` of `path`.",
+               "type": "integer"
+           },
+           "new_str": {
+               "description": "Required parameter of `str_replace` command containing the new string. Required parameter of `insert` command containing the string to insert.",
+               "type": "string"
+           },
+           "old_str": {
+               "description": "Required parameter of `str_replace` command containing the string in `path` to replace.",
+               "type": "string"
+           },
+           "path": {
+               "description": "Absolute path to file or directory, e.g. `/repo/file.py` or `/repo`.",
+               "type": "string"
+           },
+           "view_range": {
+               "description": "Optional parameter of `view` command when `path` points to a file. If none is given, the full file is shown. If provided, the file will be shown in the indicated line number range, e.g. [11, 12] will show lines 11 and 12. Indexing at 1 to start. Setting `[start_line, -1]` shows all lines from `start_line` to the end of the file.",
+               "items": {
+                   "type": "integer"
+               },
+               "type": "array"
+           }
+       },
+       "required": ["command", "path"]
+   }
+}
 ```
 
 ## Results
@@ -84,13 +172,146 @@ The code blocks below will walk through a typical case of the Sonnet 3.5 solving
 
 In this first block, you can see part of the initial prompt given to the model, with `{pr_description}` filled in with the real value from a SWE-bench task. Importantly, this task contains steps to reproduce the issue, which will give the model a valuable starting point to investigate.
 
+```text
+<uploaded_files>
+/repo
+</uploaded_files>
+I've uploaded a python code repository in the directory /repo (not in /tmp/inputs). Consider the following PR description:
+
+<pr_description>
+linear_model.RidgeClassifierCV's Parameter store_cv_values issue
+#### Description
+Parameter store_cv_values error on sklearn.linear_model.RidgeClassifierCV
+
+#### Steps/Code to Reproduce
+import numpy as np
+from sklearn import linear_model as lm
+
+#test database
+n = 100
+x = np.random.randn(n, 30)
+y = np.random.normal(size = n)
+
+rr = lm.RidgeClassifierCV(alphas = np.arange(0.1, 1000, 0.1), normalize = True, 
+                                         store_cv_values = True).fit(x, y)
+
+#### Expected Results
+Expected to get the usual ridge regression model output, keeping the cross validation predictions as attribute.
+
+#### Actual Results
+TypeError: __init__() got an unexpected keyword argument 'store_cv_values'
+
+lm.RidgeClassifierCV actually has no parameter store_cv_values, even though some attributes depends on it.
+```
+
 The model responds and first uses the Edit Tool to view the repository structure. You can see the model's text output and tool call arguments under THOUGHT and ACTION, and part of the tool's output under OBSERVATION:
+
+```text
+THOUGHT:
+I'll help you implement the changes to satisfy the PR description. Let's follow the steps you outlined.
+
+1. First, let's explore the repo structure:
+ACTION (str_replace_editor):
+command:
+view
+
+path:
+/repo
+
+OBSERVATION:
+Here's the files and directories up to 2 levels deep in /repo, excluding hidden items:
+/repo
+/repo/PULL_REQUEST_TEMPLATE.md
+/repo/ISSUE_TEMPLATE.md
+/repo/sklearn
+/repo/sklearn/decomposition
+/repo/sklearn/kernel_ridge.py
+/repo/sklearn/model_selection
+/repo/sklearn/covariance
+/repo/sklearn/cluster
+/repo/sklearn/base.py
+/repo/sklearn/dummy.py
+/repo/sklearn/naive_bayes.py
+...
+```
 
 Now that the model has a better understanding of the repository structure, it uses the Edit Tool to create a new script that it will use to reproduce the issue and test its fix:
 
+```text
+THOUGHT:
+Based on the repository structure, we'll need to modify the Ridge Classifier in the `sklearn/linear_model` directory.
+
+Let's create a script to reproduce the error:
+ACTION (str_replace_editor):
+command:
+create
+
+path:
+/repo/reproduce_error.py
+
+file_text:
+import numpy as np
+from sklearn import linear_model as lm
+
+#test database
+n = 100
+x = np.random.randn(n, 30)
+y = np.random.normal(size = n)
+
+rr = lm.RidgeClassifierCV(alphas=np.arange(0.1, 1000, 0.1), normalize=True, 
+                         store_cv_values=True).fit(x, y)
+
+OBSERVATION:
+File created successfully at: /repo/reproduce_error.py
+```
+
 The model then uses the Bash Tool to execute the script it wrote, and successfully reproduces the issue from the task:
 
+```text
+THOUGHT:
+Let's verify that we can reproduce the error:
+ACTION (bash):
+command:
+python3 /repo/reproduce_error.py
+
+OBSERVATION:
+Traceback (most recent call last):
+  File "/repo/reproduce_error.py", line 10, in <module>
+    store_cv_values=True).fit(x, y)
+TypeError: __init__() got an unexpected keyword argument 'store_cv_values'
+```
+
 From here on, the model uses the Edit Tool to change the source code in the repository and reruns its script to verify whether the change has resolved the issue:
+
+```text
+THOUGHT:
+The error is reproducible. Looking at the code, I can see that the issue is that while the `RidgeClassifierCV` class inherits from `_BaseRidgeCV`, it fails to pass the `store_cv_values` parameter from its constructor through to the base class constructor.
+
+Let's fix this:
+ACTION (str_replace_editor):
+command:
+str_replace
+
+path:
+/repo/sklearn/linear_model/ridge.py
+
+old_str:
+    def __init__(self, alphas=(0.1, 1.0, 10.0), fit_intercept=True,
+                 normalize=False, scoring=None, cv=None, class_weight=None):
+        super(RidgeClassifierCV, self).__init__(
+            alphas=alphas, fit_intercept=fit_intercept, normalize=normalize,
+            scoring=scoring, cv=cv)
+        self.class_weight = class_weight
+
+new_str:
+    def __init__(self, alphas=(0.1, 1.0, 10.0), fit_intercept=True,
+                 normalize=False, scoring=None, cv=None, class_weight=None,
+                 store_cv_values=False):
+        super(RidgeClassifierCV, self).__init__(
+            alphas=alphas, fit_intercept=fit_intercept, normalize=normalize,
+            scoring=scoring, cv=cv, store_cv_values=store_cv_values)
+        self.class_weight = class_weight
+```
 
 In this particular example, the model worked for 12 steps before deciding that it was ready to submit. The task's tests then ran successfully, verifying that the model's solution addressed the problem. Some tasks took more than 100 turns before the model submitted its solution; in others, the model kept trying until it ran out of context.
 
@@ -103,7 +324,7 @@ SWE-bench Verified is a powerful evaluation, but it's also more complex to run t
 1. __Duration and high token costs.__ The examples above are from a case that was successfully completed in 12 steps. However, many successful runs took hundreds of turns for the model to resolve, and >100k tokens. The updated Claude 3.5 Sonnet is tenacious: it can often find its way around a problem given enough time, but that can be expensive;
 2. __Grading.__ While inspecting failed tasks, we found cases where the model behaved correctly, but there were environment setup issues, or problems with install patches being applied twice. Resolving these systems issues is crucial for getting an accurate picture of an AI agent's performance.
 3. __Hidden tests.__ Because the model cannot see the tests it's being graded against, it often "thinks" that it has succeeded when the task actually is a failure. Some of these failures are because the model solved the problem at the wrong level of abstraction (applying a bandaid instead of a deeper refactor). Other failures feel a little less fair: they solve the problem, but do not match the unit tests from the original task.
-4. __Multimodal.__ Despite the updated Claude 3.5 Sonnet having excellent vision and multimodal capabilities, we did not implement a way for it to view files saved to the filesystem or referenced as URLs. This made debugging certain tasks (especially those from Matplotlib) especially difficult, and also prone to model hallucinations. There is definitely low-hanging fruit here for developers to improve upon—and SWE-bench has launched a new evaluation focused on multi-modal tasks. We look forward to seeing developers achieve higher scores on this eval with Claude in the near future.
+4. __Multimodal.__ Despite the updated Claude 3.5 Sonnet having excellent vision and multimodal capabilities, we did not implement a way for it to view files saved to the filesystem or referenced as URLs. This made debugging certain tasks (especially those from Matplotlib) especially difficult, and also prone to model hallucinations. There is definitely low-hanging fruit here for developers to improve upon—and SWE-bench has [launched a new multimodal evaluation](https://www.swebench.com/multimodal.html). We look forward to seeing developers achieve higher scores on this eval with Claude in the near future.
 
 The upgraded Claude 3.5 Sonnet achieved 49% on SWE-bench Verified, beating the previous state-of-the-art (45%), with a simple prompt and two general purpose tools. We feel confident that developers building with the new Claude 3.5 Sonnet will quickly find new, better ways to improve SWE-bench scores over what we've initially demonstrated here.
 

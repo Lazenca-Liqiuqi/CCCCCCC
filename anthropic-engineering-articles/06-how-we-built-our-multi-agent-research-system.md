@@ -91,6 +91,15 @@ A [Clio](https://www.anthropic.com/research/clio) embedding plot showing the mos
 
 Written by Jeremy Hadfield, Barry Zhang, Kenneth Lien, Florian Scholz, Jeremy Fox, and Daniel Ford. This work reflects the collective efforts of several teams across Anthropic who made the Research feature possible. Special thanks go to the Anthropic apps engineering team, whose dedication brought this complex multi-agent system to production. We're also grateful to our early users for their excellent feedback.
 
+---
+
+### Want to learn more?
+
+- Read the [Research feature announcement](https://www.anthropic.com/news/research)
+- Explore [Claude training resources](https://anthropic.skilljar.com/)
+
+![Research workflow diagram](https://www-cdn.anthropic.com/images/4zrzovbb/website/43abe7e54b56a891e74a8542944dfbd33f07f49c-1000x1000.svg)
+
 ## Appendix
 
 Below are some additional miscellaneous tips for multi-agent systems.

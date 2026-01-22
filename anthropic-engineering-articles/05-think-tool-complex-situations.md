@@ -211,6 +211,13 @@ Whereas the "think" tool can offer substantial improvements, it is not applicabl
 1. __Non-sequential tool calls__. If Claude only needs to make a single tool call or multiple parallel calls to complete a task, there is unlikely to be any improvements from adding in "think."
 2. __Simple instruction following__. When there are not many constraints to which Claude needs to adhere, and its default behaviour is good enough, there are unlikely to be gains from additional "think"-ing.
 
+### When not to use the "think" tool
+
+Whereas the “think” tool can offer substantial improvements, it is not applicable to all tool use use cases, and does come at the cost of increased prompt length and output tokens. Specifically, we have found the “think” tool does not offer any improvements in the following use cases:
+
+- Non-sequential tool calls. If Claude only needs to make a single tool call or multiple parallel calls to complete a task, there is unlikely to be any improvements from adding in “think.”
+- Simple instruction following. When there are not many constraints to which Claude needs to adhere, and its default behaviour is good enough, there are unlikely to be gains from additional “think”-ing.
+
 ### Getting started
 
 The "think" tool is a straightforward addition to your Claude implementation that can yield meaningful improvements in just a few steps:
@@ -228,3 +235,9 @@ Our research has demonstrated that the "think" tool can significantly enhance Cl
 We look forward to seeing how you'll use the "think" tool to build more capable, reliable, and transparent AI systems with Claude.
 
 1. While our τ-Bench results focused on the improvement of Claude 3.7 Sonnet with the "think" tool, our experiments show Claude 3.5 Sonnet (New) is also able to achieve performance gains with the same configuration as 3.7 Sonnet, indicating that this improvement generalizes to other Claude models as well.
+
+---
+
+### Acknowledgements
+
+Written by York Li, with thanks to Omar Sanseviero, James Wu, and others who contributed to this research. Special thanks to the team at Sierra for their work on τ-Bench.

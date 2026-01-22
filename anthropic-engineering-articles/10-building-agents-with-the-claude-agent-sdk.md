@@ -7,7 +7,7 @@
 
 Last year, we shared lessons in [building effective agents](https://www.anthropic.com/engineering/building-effective-agents) alongside our customers. Since then, we've released Claude Code, an agentic coding solution that we originally built to support developer productivity at Anthropic.
 
-Over the past several months, Claude Code has become far more than a coding tool. At Anthropic, we've been using it for deep research, video creation, and note-taking, among countless other non-coding applications. In fact, it has begun to power almost all of our major agent loops.
+Over the past several months, Claude Code has become far more than a coding tool. At Anthropic, we've been [using it](https://www.anthropic.com/news/how-anthropic-teams-use-claude-code) for deep research, video creation, and note-taking, among countless other non-coding applications. In fact, it has begun to power almost all of our major agent loops.
 
 In other words, the agent harness that powers [Claude Code](https://www.anthropic.com/claude-code) (the Claude Code SDK) can power many other types of agents, too. To reflect this broader vision, we're renaming the Claude Code SDK to the Claude Agent SDK.
 
@@ -15,7 +15,7 @@ In this post, we'll highlight why we built the Claude Agent SDK, how to build yo
 
 ## Giving Claude a computer
 
-The key design principle behind Claude Code is that Claude needs the same tools that programmers use every day. It needs to be able to find appropriate files in a codebase, write and edit files, lint the code, run it, debug, edit, and sometimes take these actions iteratively until the code succeeds.
+[The key design principle](https://www.youtube.com/watch?v=vLIDHi-1PVU) behind Claude Code is that Claude needs the same tools that programmers use every day. It needs to be able to find appropriate files in a codebase, write and edit files, lint the code, run it, debug, edit, and sometimes take these actions iteratively until the code succeeds.
 
 We found that by giving Claude access to the user's computer (via the terminal), it had what it needed to write code like programmers do.
 
@@ -46,35 +46,35 @@ This offers a useful way to think about other agents, and the capabilities they 
 
 When developing an agent, you want to give it more than just a prompt: it needs to be able to fetch and update its own context. Here's how features in the SDK can help.
 
-### __Agentic search and the file system__
+### Agentic search and the file system
 
 The file system represents information that _could_ be pulled into the model's context.
 
-When Claude encounters large files, like logs or user-uploaded files, it will decide which way to load these into its context by using bash scripts like `grep` and `tail`. In essence, the folder and file structure of an agent becomes a form of context engineering.
+When Claude encounters large files, like logs or user-uploaded files, it will decide which way to load these into its context by using bash scripts like `grep` and `tail`. In essence, the folder and file structure of an agent becomes a form of [context engineering](https://anthropic.com/news/context-management).
 
 Our email agent might store previous conversations in a folder called 'Conversations'. This would allow it to search previous these for its context when asked about them.
 
 ![Email agent conversation storage structure](https://www-cdn.anthropic.com/images/4zrzovbb/website/d5e3b46900277431b86467fdc308b64e61edd740-2292x623.png)
 
-### __Semantic search__
+### Semantic search
 
-Semantic search is usually faster than agentic search, but less accurate, more difficult to maintain, and less transparent. It involves 'chunking' the relevant context, embedding these chunks as vectors, and then searching for concepts by querying those vectors. Given its limitations, we suggest starting with agentic search, and only adding semantic search if you need faster results or more variations.
+[Semantic search](https://www.anthropic.com/news/contextual-retrieval) is usually faster than agentic search, but less accurate, more difficult to maintain, and less transparent. It involves 'chunking' the relevant context, embedding these chunks as vectors, and then searching for concepts by querying those vectors. Given its limitations, we suggest starting with agentic search, and only adding semantic search if you need faster results or more variations.
 
-### __Subagents__
+### Subagents
 
-Claude Agent SDK supports subagents by default. Subagents are useful for two main reasons. First, they enable parallelization: you can spin up multiple subagents to work on different tasks simultaneously. Second, they help manage context: subagents use their own isolated context windows, and only send relevant information back to the orchestrator, rather than their full context. This makes them ideal for tasks that require sifting through large amounts of information where most of it won't be useful.
+Claude Agent SDK supports [subagents](https://docs.claude.com/en/api/agent-sdk/subagents) by default. Subagents are useful for two main reasons. First, they enable parallelization: you can spin up multiple subagents to work on different tasks simultaneously. Second, they help manage context: subagents use their own isolated context windows, and only send relevant information back to the orchestrator, rather than their full context. This makes them ideal for tasks that require sifting through large amounts of information where most of it won't be useful.
 
 When designing our email agent, we might give it a 'search subagent' capability. The email agent could then spin off multiple search subagents in parallel—each running different queries against your email history—and have them return only the relevant excerpts rather than full email threads.
 
-### __Compaction__
+### Compaction
 
-When agents are running for long periods of time, context maintenance becomes critical. The Claude Agent SDK's compact feature automatically summarizes previous messages when the context limit approaches, so your agent won't run out of context. This is built on Claude Code's compact slash command.
+When agents are running for long periods of time, context maintenance becomes critical. The Claude Agent SDK's compact feature automatically summarizes previous messages when the context limit approaches, so your agent won't run out of context. This is built on Claude Code's [compact slash command](https://docs.claude.com/en/docs/claude-code/sdk/sdk-slash-commands#%2Fcompact-compact-conversation-history).
 
 ## Take action
 
 Once you've gathered context, you'll want to give your agent flexible ways of taking action.
 
-### __Tools__
+### Tools
 
 Tools are the primary building blocks of execution for your agent. Tools are prominent in Claude's context window, making them the primary actions Claude will consider when deciding how to complete a task. This means you should be conscious about how you design your tools to maximize context efficiency. You can see more best practices in our blog post, [Writing effective tools for agents – with agents](https://www.anthropic.com/engineering/writing-tools-for-agents).
 
@@ -82,7 +82,7 @@ As such, your tools should be primary actions you want your agent to take. Learn
 
 For our email agent, we might define tools like "`fetchInbox`" or "`searchEmails`" as the agent's primary, most frequent actions.
 
-### __Bash & scripts__
+### Bash & scripts
 
 Bash is useful as a general-purpose tool to allow the agent to do flexible work using a computer.
 
@@ -90,7 +90,7 @@ In our email agent, the user might have important information stored in their at
 
 ![Email agent PDF processing workflow](https://www-cdn.anthropic.com/images/4zrzovbb/website/e2a32595e35164f46c054dc003197e622ca95180-2292x623.png)
 
-### __Code generation__
+### Code generation
 
 The Claude Agent SDK excels at code generation—and for good reason. Code is precise, composable, and infinitely reusable, making it an ideal output for agents that need to perform complex operations reliably.
 
@@ -102,7 +102,7 @@ In our email agent, we might want to allow users to create rules for inbound ema
 
 ![Email rule code generation workflow](https://www-cdn.anthropic.com/images/4zrzovbb/website/180c83cc0f6f0ea26e18cbfbc59040cab6767b55-2292x1290.png)
 
-### __MCPs__
+### MCPs
 
 The Model Context Protocol (MCP) provides standardized integrations to external services, handling authentication and API calls automatically. This means you can connect your agent to tools like Slack, GitHub, Google Drive, or Asana without writing custom integration code or managing OAuth flows yourself.
 
@@ -116,7 +116,7 @@ The Claude Code SDK finishes the agentic loop by evaluating its work. Agents tha
 
 The key is giving Claude concrete ways to evaluate its work. Here are three approaches we've found effective:
 
-### __Defining rules__
+### Defining rules
 
 The best form of feedback is providing clearly defined rules for an output, then explaining which rules failed and why.
 
@@ -124,7 +124,7 @@ Code linting is an excellent form of rules-based feedback. The more in-depth in 
 
 When generating an email, you may want Claude to check that the email address is valid (if not, throw an error) and that the user has sent an email to them before (if so, throw a warning).
 
-### __Visual feedback__
+### Visual feedback
 
 When using an agent to complete visual tasks, like UI generation or testing, visual feedback (in the form of screenshots or renders) can be helpful. For example, if sending an email with HTML formatting, you could screenshot the generated email and provide it back to the model for visual verification and iterative refinement. The model would then check whether the visual output matches what was requested.
 
@@ -141,7 +141,7 @@ Using an MCP server like Playwright, you can automate this visual feedback loop�
 
 *Visual feedback from a large-language model (LLM) can provide helpful guidance to your agent.*
 
-### __LLM as a judge__
+### LLM as a judge
 
 You can also have another language model "judge\" the output of your agent based on fuzzy rules. This is generally not a very robust method, and can have heavy latency tradeoffs, but for applications where any boost in performance is worth the cost, it can be helpful.
 
@@ -164,7 +164,7 @@ The Claude Agent SDK makes it easier to build autonomous agents by giving Claude
 
 With the agent loop in mind (gathering context, taking action, and your verifying work), you can build reliable agents that are easy to deploy and iterate on.
 
-You can get started with the Claude Agent SDK today. For developers who are already building on the SDK, we recommend migrating to the latest version by following this [migration guide](https://docs.claude.com/en/docs/claude-code/sdk/migration-guide). You can find the [Agent SDK overview documentation here](https://docs.claude.com/en/api/agent-sdk/overview).
+You can get started with the Claude Agent SDK today. For developers who are already building on the SDK, we recommend migrating to the latest version by following this [migration guide](https://docs.claude.com/en/docs/claude-code/sdk/migration-guide). You can find the [Agent SDK overview documentation here](https://docs.claude.com/en/api/agent-sdk/overview). Try it on [Claude.AI](https://claude.ai/redirect/website.v1.9fd1f431-9e65-40a9-86e7-21b1eebadc52).
 
 ## Acknowledgements
 

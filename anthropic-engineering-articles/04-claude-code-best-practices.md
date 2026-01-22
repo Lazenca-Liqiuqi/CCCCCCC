@@ -1,6 +1,9 @@
-# Claude Code Best Practices
+# Claude Code: Best practices for agentic coding
 
-We recently released Claude Code, a command line tool for agentic coding. Developed as a research project, Claude Code gives Anthropic engineers and researchers a more native way to integrate Claude into their coding workflows.
+**Published:** Apr 18, 2025
+**Author:** Written by Boris Cherny.
+
+We recently released [Claude Code](https://claude.ai/redirect/website.v1.9fd1f431-9e65-40a9-86e7-21b1eebadc52/code), a command line tool for agentic coding. Developed as a research project, Claude Code gives Anthropic engineers and researchers a more native way to integrate Claude into their coding workflows.
 
 Claude Code is intentionally low-level and unopinionated, providing close to raw model access without forcing specific workflows. This design philosophy creates a flexible, customizable, scriptable, and safe power tool. While powerful, this flexibility presents a learning curve for engineers new to agentic coding tools—at least until they develop their own best practices.
 
@@ -12,7 +15,7 @@ _Looking for more detailed information? Our comprehensive documentation at claud
 
 Claude Code is an agentic coding assistant that automatically pulls context into prompts. This context gathering consumes time and tokens, but you can optimize it through environment tuning.
 
-### a. Create `CLAUDE.md` files
+### a. Create CLAUDE.md files
 
 `CLAUDE.md` is a special file that Claude automatically pulls into context when starting a conversation. This makes it an ideal place for documenting:
 
@@ -37,7 +40,7 @@ There's no required format for `CLAUDE.md` files. We recommend keeping them conc
 - Destructure imports when possible (eg. import { foo } from 'bar')
 
 # Workflow
-- Be sure to typecheck when you're done making a series of code changes
+- Be sure to typecheck when you’re done making a series of code changes
 - Prefer running single tests, and not the whole test suite, for performance
 ```
 
@@ -50,7 +53,7 @@ You can place `CLAUDE.md` files in several locations:
 
 When you run the `/init` command, Claude will automatically generate a `CLAUDE.md` for you.
 
-### b. Tune your `CLAUDE.md` files
+### b. Tune your CLAUDE.md files
 
 Your `CLAUDE.md` files become part of Claude's prompts, so they should be refined like any frequently used prompt. A common mistake is adding extensive content without iterating on its effectiveness. Take time to experiment and determine what produces the best instruction following from the model.
 
@@ -268,7 +271,7 @@ These four tools help with course correction:
 
 Though Claude Code occasionally solves problems perfectly on the first attempt, using these correction tools generally produces better solutions faster.
 
-### f. Use `/clear` to keep context focused
+### f. Use /clear to keep context focused
 
 During long sessions, Claude's context window can fill with irrelevant conversation, file contents, and commands. This can reduce performance and sometimes distract Claude. Use the `/clear` command frequently between tasks to reset the context window.
 
@@ -366,12 +369,20 @@ Some tips:
 1. Call `claude -p "<your prompt>" --json | your_command`, where `your_command` is the next step of your processing pipeline
 2. That's it! JSON output (optional) can help provide structure for easier automated processing.
 
-For both of these use cases, it can be helpful to use the `--verbose` flag for debugging the Claude invocation. We generally recommend turning verbose mode off in production for cleaner output.
+For both of these use cases, it can be helpful to use the `--verbose` flag for debugging the Claude invocation. We generally recommend verbose mode off in production for cleaner output. For developers working in containers, we provide a [reference DevContainer configuration](https://github.com/anthropics/claude-code/tree/main/.devcontainer) for common development environments.
 
 What are your tips and best practices for working with Claude Code? Tag @AnthropicAI so we can see what you're building!
 
 ## Acknowledgements
 
 Written by Boris Cherny. This work draws upon best practices from across the broader Claude Code user community, whose creative approaches and workflows continue to inspire us. Special thanks also to Daisy Hollman, Ashwin Bhat, Cat Wu, Sid Bidasaria, Cal Rueb, Nodir Turakulov, Barry Zhang, Drew Hodun and many other Anthropic engineers whose valuable insights and practical experience with Claude Code helped shape these recommendations.
+
+### Looking to learn more?
+
+- [Automate CI and infra workflows](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview#automate-ci-and-infra-workflows)
+- [GitHub issue triage action](https://github.com/anthropics/claude-code/blob/main/.github/actions/claude-issue-triage-action/action.yml)
+- [Claude Code GitHub action](https://github.com/anthropics/claude-code-action/blob/main/action.yml)
+- [Notification setup guide](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview#notification-setup)
+- [Claude training resources](https://anthropic.skilljar.com/)
 
 ![Interlocking puzzle piece](https://www-cdn.anthropic.com/images/4zrzovbb/website/43abe7e54b56a891e74a8542944dfbd33f07f49c-1000x1000.svg)

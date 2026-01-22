@@ -1,6 +1,6 @@
 # Effective harnesses for long-running agents
 
-**Published:** October 29, 2024
+**Published:** Nov 26, 2025
 **Author:** Written by Justin Young
 
 ---
@@ -9,11 +9,11 @@ As AI agents become more capable, developers are increasingly asking them to tak
 
 The core challenge of long-running agents is that they must work in discrete sessions, and each new session begins with no memory of what came before. Imagine a software project staffed by engineers working in shifts, where each new engineer arrives with no memory of what happened on the previous shift. Because context windows are limited, and because most complex projects cannot be completed within a single window, agents need a way to bridge the gap between coding sessions.
 
-We developed a two-fold solution to enable the Claude Agent SDK to work effectively across many context windows: an __initializer agent__ that sets up the environment on the first run, and a __coding agent__ that is tasked with making incremental progress in every session, while leaving clear artifacts for the next session. You can find code examples in the accompanying quickstart.
+We developed a two-fold solution to enable the Claude Agent SDK to work effectively across many context windows: an __initializer agent__ that sets up the environment on the first run, and a __coding agent__ that is tasked with making incremental progress in every session, while leaving clear artifacts for the next session. You can find code examples in the [accompanying quickstart](https://github.com/anthropics/claude-quickstarts/tree/main/autonomous-coding).
 
 ## The long-running agent problem
 
-The Claude Agent SDK is a powerful, general-purpose agent harness adept at coding, as well as other tasks that require the model to use tools to gather context, plan, and execute. It has context management capabilities such as compaction, which enables an agent to work on a task without exhausting the context window. Theoretically, given this setup, it should be possible for an agent to continue to do useful work for an arbitrarily long time.
+The [Claude Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) is a powerful, general-purpose agent harness adept at coding, as well as other tasks that require the model to use tools to gather context, plan, and execute. It has context management capabilities such as compaction, which enables an agent to work on a task without exhausting the context window. Theoretically, given this setup, it should be possible for an agent to continue to do useful work for an arbitrarily long time.
 
 However, compaction isn't sufficient. Out of the box, even a frontier coding model like Opus 4.5 running on the Claude Agent SDK in a loop across multiple context windows will fall short of building a production-quality web app if it's only given a high-level prompt, such as "build a clone of claude.ai."
 
@@ -32,7 +32,7 @@ The key insight here was finding a way for agents to quickly understand the stat
 
 ## Environment management
 
-In the updated Claude 4 prompting guide, we shared some best practices for multi-context window workflows, including a harness structure that uses "a different prompt for the very first context window." This "different prompt" requests that the initializer agent set up the environment with all the necessary context that future coding agents will need to work effectively. Here, we provide a deeper dive on some of the key components of such an environment.
+In the updated [Claude 4 prompting guide](https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/claude-4-best-practices#multi-context-window-workflows), we shared some best practices for multi-context window workflows, including a harness structure that uses "a different prompt for the very first context window." This "different prompt" requests that the initializer agent set up the environment with all the necessary context that future coding agents will need to work effectively. Here, we provide a deeper dive on some of the key components of such an environment.
 
 ### Feature list
 
@@ -87,7 +87,7 @@ With all of the above in place, every coding agent is prompted to run through a 
 
 This approach saves Claude some tokens in every session since it doesn't have to figure out how to test the code. It also helps to ask the initializer agent to write an init.sh script that can run the development server, and then run through a basic end-to-end test before implementing a new feature.
 
-In the case of the claude.ai clone, this meant that the agent always started the local development server and used the Puppeteer MCP to start a new chat, send a message, and receive a response. This ensured that Claude could quickly identify if the app had been left in a broken state, and immediately fix any existing bugs. If the agent had instead started implementing a new feature, it would likely make the problem worse.
+In the case of the [claude.ai](https://claude.ai/redirect/website.v1.8d070a17-e400-44c1-a9da-84fb5775f18d) clone, this meant that the agent always started the local development server and used the Puppeteer MCP to start a new chat, send a message, and receive a response. This ensured that Claude could quickly identify if the app had been left in a broken state, and immediately fix any existing bugs. If the agent had instead started implementing a new feature, it would likely make the problem worse.
 
 Given all this, a typical session starts off with the following assistant messages:
 
@@ -129,7 +129,7 @@ Additionally, this demo is optimized for full-stack web app development. A futur
 
 Written by Justin Young. Special thanks to David Hershey, Prithvi Rajasakeran, Jeremy Hadfield, Naia Bouscal, Michael Tingley, Jesse Mu, Jake Eaton, Marius Buleandara, Maggie Vo, Pedram Navid, Nadine Yasser, and Alex Notov for their contributions.
 
-This work reflects the collective efforts of several teams across Anthropic who made it possible for Claude to safely do long-horizon autonomous software engineering, especially the code RL & Claude Code teams. Interested candidates who would like to contribute are welcome to apply at anthropic.com/careers.
+This work reflects the collective efforts of several teams across Anthropic who made it possible for Claude to safely do long-horizon autonomous software engineering, especially the code RL & Claude Code teams. Interested candidates who would like to contribute are welcome to apply at [anthropic.com/careers](https://anthropic.com/careers).
 
 ### Footnotes
 

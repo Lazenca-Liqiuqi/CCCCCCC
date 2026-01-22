@@ -37,7 +37,7 @@ Below we describe the three bugs that caused the degradation, when they occurred
 
 ### 1. Context window routing error
 
-On August 5, some Sonnet 4 requests were misrouted to servers configured for the upcoming [1M token context window](https://docs.claude.com/en/docs/build-with-claude/context-windows#1m-token-context-window). This bug initially affected 0.8% of requests. On August 29, a routine load balancing change unintentionally increased the number of short-context requests routed to the 1M context servers. At the worst impacted hour on August 31, 16% of Sonnet 4 requests were affected.
+On August 5, some Sonnet 4 requests were misrouted to servers configured for the upcoming [1M token context window](https://docs.claude.com/en/docs/build-with-claude/context-windows#1m-token-context-window). This bug initially affected 0.8% of requests. On August 29, a routine load balancing change unintentionally increased the number of short-context requests routed to the 1M context servers. At the worst impacted hour on August 31, 16% of Sonnet 4 requests were affected. For more background, see the [context windows documentation](https://docs.claude.com/en/docs/build-with-claude/context-windows).
 
 Approximately 30% of Claude Code users who made requests during this period had at least one message routed to the wrong server type, resulting in degraded responses. On Amazon Bedrock, misrouted traffic peaked at 0.18% of all Sonnet 4 requests from August 12. Incorrect routing affected less than 0.0004% of requests on Google Cloud's Vertex AI between August 27 and September 16.
 

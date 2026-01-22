@@ -1,4 +1,7 @@
-# Building Effective AI Agents
+# Building effective agents
+
+**Published:** Dec 19, 2024
+**Author:** Written by Erik Schluntz and Barry Zhang.
 
 Over the past year, we've worked with dozens of teams building large language model (LLM) agents across industries. Consistently, the most successful implementations weren't using complex frameworks or specialized libraries. Instead, they were building with simple, composable patterns.
 
@@ -46,7 +49,7 @@ The basic building block of agentic systems is an LLM enhanced with augmentation
 
 The augmented LLM
 
-We recommend focusing on two key aspects of the implementation: tailoring these capabilities to your specific use case and ensuring they provide an easy, well-documented interface for your LLM. While there are many ways to implement these augmentations, one approach is through our recently released [Model Context Protocol](https://www.anthropic.com/news/model-context-protocol), which allows developers to integrate with a growing ecosystem of third-party tools with a simple client implementation.
+We recommend focusing on two key aspects of the implementation: tailoring these capabilities to your specific use case and ensuring they provide an easy, well-documented interface for your LLM. While there are many ways to implement these augmentations, one approach is through our recently released [Model Context Protocol](https://www.anthropic.com/news/model-context-protocol), which allows developers to [integrate with a growing ecosystem of third-party tools](https://modelcontextprotocol.io/tutorials/building-a-client#building-mcp-clients) with a simple client implementation.
 
 For the remainder of this post, we'll assume each LLM call has access to these augmented capabilities.
 
@@ -201,7 +204,7 @@ The software development space has shown remarkable potential for LLM features, 
 - The problem space is well-defined and structured; and
 - Output quality can be measured objectively.
 
-In our own implementation, agents can now solve real GitHub issues in the SWE-bench Verified benchmark based on the pull request description alone. However, whereas automated testing helps verify functionality, human review remains crucial for ensuring solutions align with broader system requirements.
+In our own implementation, agents can now solve real GitHub issues in the [SWE-bench Verified](https://www.anthropic.com/research/swe-bench-sonnet) benchmark based on the pull request description alone. However, whereas automated testing helps verify functionality, human review remains crucial for ensuring solutions align with broader system requirements.
 
 ## Appendix 2: Prompt engineering your tools
 
@@ -219,7 +222,7 @@ One rule of thumb is to think about how much effort goes into human-computer int
 
 - Put yourself in the model's shoes. Is it obvious how to use this tool, based on the description and parameters, or would you need to think carefully about it? If so, then it's probably also true for the model. A good tool definition often includes example usage, edge cases, input format requirements, and clear boundaries from other tools.
 - How can you change parameter names or descriptions to make things more obvious? Think of this as writing a great docstring for a junior developer on your team. This is especially important when using many similar tools.
-- Test how the model uses your tools: Run many example inputs in our workbench to see what mistakes the model makes, and iterate.
-- Poka-yoke your tools. Change the arguments so that it is harder to make mistakes.
+- Test how the model uses your tools: Run many example inputs in our [workbench](https://console.anthropic.com/workbench) to see what mistakes the model makes, and iterate.
+- [Poka-yoke](https://en.wikipedia.org/wiki/Poka-yoke) your tools. Change the arguments so that it is harder to make mistakes.
 
 While building our agent for SWE-bench, we actually spent more time optimizing our tools than the overall prompt. For example, we found that the model would make mistakes with tools using relative filepaths after the agent had moved out of the root directory. To fix this, we changed the tool to always require absolute filepaths—and we found that the model used this method flawlessly.
