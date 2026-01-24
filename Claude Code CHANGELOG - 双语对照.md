@@ -1,5 +1,150 @@
 # Claude Code 更新日志 - 双语对照
 
+## 2.1.19
+
+- Added env var `CLAUDE_CODE_ENABLE_TASKS`, set to `false` to keep the old system temporarily
+添加了环境变量 `CLAUDE_CODE_ENABLE_TASKS`，设置为 `false` 可暂时保留旧系统
+
+- Added shorthand `$0`, `$1`, etc. for accessing individual arguments in custom commands
+添加了简写 `$0`、`$1` 等，用于在自定义命令中访问单个参数
+
+- Fixed crashes on processors without AVX instruction support
+修复了不支持 AVX 指令集的处理器上的崩溃问题
+
+- Fixed dangling Claude Code processes when terminal is closed by catching EIO errors from `process.exit()` and using SIGKILL as fallback
+修复了终端关闭时残留的 Claude Code 进程问题，通过捕获 `process.exit()` 的 EIO 错误并使用 SIGKILL 作为备用方案
+
+- Fixed `/rename` and `/tag` not updating the correct session when resuming from a different directory (e.g., git worktrees)
+修复了从不同目录（如 git worktrees）恢复会话时 `/rename` 和 `/tag` 未更新正确会话的问题
+
+- Fixed resuming sessions by custom title not working when run from a different directory
+修复了从不同目录运行时无法按自定义标题恢复会话的问题
+
+- Fixed pasted text content being lost when using prompt stash (Ctrl+S) and restore
+修复了使用提示暂存（Ctrl+S）和恢复时粘贴文本内容丢失的问题
+
+- Fixed agent list displaying "Sonnet (default)" instead of "Inherit (default)" for agents without an explicit model setting
+修复了代理列表为未明确设置模型的代理显示"Sonnet (default)"而非"Inherit (default)"的问题
+
+- Fixed backgrounded hook commands not returning early, potentially causing the session to wait on a process that was intentionally backgrounded
+修复了后台 hook 命令未提前返回的问题，该问题可能导致会话等待本应后台运行的进程
+
+- Fixed file write preview omitting empty lines
+修复了文件写入预览省略空行的问题
+
+- Changed skills without additional permissions or hooks to be allowed without requiring approval
+更改了无额外权限或 hooks 的技能的许可方式，现在无需审批即可使用
+
+- Changed indexed argument syntax from `$ARGUMENTS.0` to `$ARGUMENTS[0]` (bracket syntax)
+将索引参数语法从 `$ARGUMENTS.0` 更改为 `$ARGUMENTS[0]`（括号语法）
+
+- [SDK] Added replay of `queued_command` attachment messages as `SDKUserMessageReplay` events when `replayUserMessages` is enabled
+[SDK] 添加了在启用 `replayUserMessages` 时将 `queued_command` 附件消息作为 `SDKUserMessageReplay` 事件重放的功能
+
+- [VSCode] Enabled session forking and rewind functionality for all users
+[VSCode] 为所有用户启用了会话分支和回退功能
+
+## 2.1.18
+
+- Added customizable keyboard shortcuts. Configure keybindings per context, create chord sequences, and personalize your workflow. Run `/keybindings` to get started. Learn more at https://code.claude.com/docs/en/keybindings
+添加了可自定义的键盘快捷键功能。可以按上下文配置键绑定、创建和弦序列并个性化工作流程。运行 `/keybindings` 开始使用。了解更多信息：https://code.claude.com/docs/en/keybindings
+
+## 2.1.17
+
+- Fixed crashes on processors without AVX instruction support
+修复了不支持 AVX 指令集的处理器上的崩溃问题
+
+## 2.1.16
+
+- Added new task management system, including new capabilities like dependency tracking
+添加了新的任务管理系统，包括依赖跟踪等新功能
+
+- [VSCode] Added native plugin management support
+[VSCode] 添加了原生插件管理支持
+
+- [VSCode] Added ability for OAuth users to browse and resume remote Claude sessions from the Sessions dialog
+[VSCode] 为 OAuth 用户添加了从会话对话框浏览和恢复远程 Claude 会话的功能
+
+- Fixed out-of-memory crashes when resuming sessions with heavy subagent usage
+修复了恢复使用大量子代理的会话时的内存不足崩溃问题
+
+- Fixed an issue where the "context remaining" warning was not hidden after running `/compact`
+修复了运行 `/compact` 命令后"上下文剩余"警告未隐藏的问题
+
+- Fixed session titles on the resume screen not respecting the user's language setting
+修复了恢复屏幕上的会话标题未遵守用户语言设置的问题
+
+- [IDE] Fixed a race condition on Windows where the Claude Code sidebar view container would not appear on start
+[IDE] 修复了 Windows 上 Claude Code 侧边栏视图容器在启动时不显示的竞态条件问题
+
+## 2.1.15
+
+- Added deprecation notification for npm installations - run `claude install` or see https://docs.anthropic.com/en/docs/claude-code/getting-started for more options
+添加了 npm 安装方式的弃用通知 - 运行 `claude install` 或访问 https://docs.anthropic.com/en/docs/claude-code/getting-started 查看更多选项
+
+- Improved UI rendering performance with React Compiler
+通过 React Compiler 改进了 UI 渲染性能
+
+- Fixed the "Context left until auto-compact" warning not disappearing after running `/compact`
+修复了运行 `/compact` 命令后"上下文自动压缩剩余量"警告未消失的问题
+
+- Fixed MCP stdio server timeout not killing child process, which could cause UI freezes
+修复了 MCP stdio 服务器超时未终止子进程的问题，该问题可能导致 UI 冻结
+
+## 2.1.14
+
+- Added history-based autocomplete in bash mode (`!`) - type a partial command and press Tab to complete from your bash command history
+添加了基于历史记录的 bash 模式（`!`）自动补全 - 输入部分命令并按 Tab 键从 bash 命令历史中完成补全
+
+- Added search to installed plugins list - type to filter by name or description
+为已安装插件列表添加了搜索功能 - 输入以按名称或描述进行筛选
+
+- Added support for pinning plugins to specific git commit SHAs, allowing marketplace entries to install exact versions
+添加了将插件固定到特定 git commit SHA 的支持，允许从市场条目安装精确版本
+
+- Fixed a regression where the context window blocking limit was calculated too aggressively, blocking users at ~65% context usage instead of the intended ~98%
+修复了上下文窗口阻塞限制计算过于激进的回归问题，之前在约 65% 上下文使用时就阻止用户，而非预期的约 98%
+
+- Fixed memory issues that could cause crashes when running parallel subagents
+修复了运行并行子代理时可能导致崩溃的内存问题
+
+- Fixed memory leak in long-running sessions where stream resources were not cleaned up after shell commands completed
+修复了长时间运行会话中的内存泄漏问题，此前 shell 命令完成后未清理流资源
+
+- Fixed `@` symbol incorrectly triggering file autocomplete suggestions in bash mode
+修复了 bash 模式下 `@` 符号错误触发文件自动补全建议的问题
+
+- Fixed `@`-mention menu folder click behavior to navigate into directories instead of selecting them
+修复了 `@` 提及菜单文件夹点击行为，现在会进入目录而不是选择它们
+
+- Fixed `/feedback` command generating invalid GitHub issue URLs when description is very long
+修复了 `/feedback` 命令在描述很长时生成无效 GitHub issue URL 的问题
+
+- Fixed `/context` command to show the same token count and percentage as the status line in verbose mode
+修复了 `/context` 命令，使其在详细模式下显示与状态行相同的 token 数量和百分比
+
+- Fixed an issue where `/config`, `/context`, `/model`, and `/todos` command overlays could close unexpectedly
+修复了 `/config`、`/context`、`/model` 和 `/todos` 命令覆盖层可能意外关闭的问题
+
+- Fixed slash command autocomplete selecting wrong command when typing similar commands (e.g., `/context` vs `/compact`)
+修复了输入相似命令时（如 `/context` 与 `/compact`）斜杠命令自动补全选择错误命令的问题
+
+- Fixed inconsistent back navigation in plugin marketplace when only one marketplace is configured
+修复了仅配置一个市场时插件市场返回导航不一致的问题
+
+- Fixed iTerm2 progress bar not clearing properly on exit, preventing lingering indicators and bell sounds
+修复了 iTerm2 进度栏在退出时未正确清除的问题，避免了残留指示器和提示音
+
+- Improved backspace to delete pasted text as a single token instead of one character at a time
+改进了退格键功能，现在可以将粘贴的文本作为单个标记删除，而不是逐字符删除
+
+- [VSCode] Added `/usage` command to display current plan usage
+[VSCode] 添加了 `/usage` 命令以显示当前计划使用情况
+
+## 2.1.13
+
+（该版本在官方 CHANGELOG 中未列出具体更新内容）
+
 ## 2.1.12
 
 - Fixed message rendering bug
