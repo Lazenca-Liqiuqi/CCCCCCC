@@ -1,0 +1,55 @@
+# HTML到Markdown转换报告
+
+## 转换概要
+- 转换时间：2026-01-25
+- 转换方式：pandoc + 自定义清理脚本
+- 总文件数：16篇
+- 成功转换：16篇
+- 总字符数：~311,000字符
+
+## 文件列表
+
+| 编号 | 文件名 | 字符数 |
+|------|--------|--------|
+| 01 | contextual-retrieval.md | 17,465 |
+| 02 | building-effective-agents.md | 20,519 |
+| 03 | swe-bench-sonnet.md | 18,306 |
+| 04 | claude-code-best-practices.md | 34,787 |
+| 05 | claude-think-tool.md | 16,668 |
+| 06 | multi-agent-research-system.md | 27,408 |
+| 07 | desktop-extensions.md | 21,231 |
+| 08 | a-postmortem-of-three-recent-issues.md | 15,327 |
+| 09 | effective-context-engineering-for-ai-agents.md | 22,848 |
+| 10 | building-agents-with-the-claude-agent-sdk.md | 15,427 |
+| 11 | equipping-agents-for-the-real-world-with-agent-skills.md | 11,772 |
+| 12 | writing-tools-for-agents.md | 26,700 |
+| 13 | code-execution-with-mcp.md | 15,376 |
+| 14 | beyond-permission-prompts.md | 6,777 |
+| 15 | effective-harnesses-for-long-running-agents.md | 15,061 |
+| 16 | advanced-tool-use.md | 25,198 |
+
+## 转换流程
+
+1. 使用BeautifulSoup提取HTML中的`<article>`标签内容
+2. 使用pandoc将HTML转换为Markdown格式
+3. 使用Python脚本清理HTML属性和标签残留
+
+## 转换特性
+
+- 保留标题层级结构（h1-h6）
+- 保留段落内容
+- 保留列表格式（有序/无序）
+- 保留代码块
+- 保留链接格式
+- 保留图片引用
+- 保留引用块
+- 移除HTML class属性
+- 移除内联样式属性
+
+## 输出目录
+
+`/home/pc/project/Claude Code Chinese Commentary Collection/anthropic-engineering-articles/markdown/`
+
+## 下一步
+
+准备进行翻译工作，采用双语对照格式。

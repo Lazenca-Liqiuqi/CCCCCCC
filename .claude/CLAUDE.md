@@ -28,11 +28,13 @@ Claude Code Chinese Commentary Collection/
 
 ## 当前状态
 
-- **已完成**：获取16篇Anthropic Engineering文章
+- **已完成**：获取16篇Anthropic Engineering文章HTML内容
 - **已完成**：审查并修复16篇文章内容（16/16篇已完成）
-- **已完成**：HTML到Markdown转换脚本测试
+- **已完成**：HTML到Markdown批量转换（16/16篇已完成，~311,000字符）
 - **已完成**：CHANGELOG 双语对照已更新至 2.1.12 版本
-- **待进行**：HTML与Markdown内容比对验证
+- **待进行**：排版文章为网页格式
+- **待进行**：翻译16篇文章（双语对照格式）
+- **待进行**：质量检查和版本控制
 
 ## TODO
 
@@ -48,15 +50,17 @@ Claude Code Chinese Commentary Collection/
 - ✅ 文章09-12：修复完成（11个链接+2个小节+3张SVG图片）
 - ✅ 文章13-16：修复完成（27个链接+4张图片+3个日期+1个标题）
 
-### 阶段3：HTML转换工具开发 ✅
+### 阶段3：HTML到Markdown批量转换 ✅
 
-创建HTML到Markdown转换脚本并测试：
-- ✅ 创建 `html_to_md.py` 转换脚本
-- ✅ 测试文章01转换成功（20,933字符）
+使用 BeautifulSoup + pandoc 批量转换 16 篇文章：
+- ✅ 提取 HTML `<article>` 内容
+- ✅ 使用 pandoc 转换为 Markdown
+- ✅ 清理 HTML 属性和残留标签
+- ✅ 16/16 篇转换完成，~311,000 字符
 
-### 阶段4：内容比对验证（待进行）
+### 阶段4：排版文章为网页格式（待进行）
 
-使用转换脚本批量转换HTML文件，与现有Markdown进行逐篇比对，确保内容一致性。
+将 Markdown 文章排版成美观的网页 HTML 格式，添加 CSS 样式和导航。
 
 ### 阶段5：翻译16篇文章（双语对照格式）
 
