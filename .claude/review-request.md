@@ -1,11 +1,11 @@
-# 翻译格式审查请求 - ID 10
+# 翻译格式审查请求 - ID 09
 
 ## 项目基本信息
 
 **项目名称**: Claude Code 中文指南合集 - Engineering 文章翻译
-**文章**: 10-a-postmortem-of-three-recent-issues.md
-**标题**: A postmortem of three recent issues
-**主题**: 三个近期基础设施 Bug 的事后分析
+**文章**: 09-writing-tools-for-agents.md
+**标题**: Writing effective tools for AI agents—using AI agents
+**主题**: 为AI智能体编写有效工具——使用AI智能体
 **翻译日期**: 2026-01-25
 
 ## 项目结构与状态
@@ -23,49 +23,54 @@ anthropic-engineering-articles/
     ├── 13-agent-skills.md
     ├── 12-agent-sdk.md
     ├── 11-effective-context-engineering-for-ai-agents.md
-    └── 10-a-postmortem-of-three-recent-issues.md (本次翻译)
+    ├── 10-a-postmortem-of-three-recent-issues.md
+    └── 09-writing-tools-for-agents.md (本次翻译)
 ```
 
 ### 项目状态
-- **已完成翻译**: 10/19 篇文章（53%）
+- **已完成翻译**: 11/19 篇文章（58%）
 - **格式规范**: `.claude/rules/translation-format.md`
-- **上一次审查**: ID 11 评分 92/100（修复后预期 98-100/100）
+- **上一次审查**: ID 10 评分 88/100（修复后预期 98-100/100）
 
 ## 用户的原始需求
 
-翻译 Anthropic Engineering 文章 ID 10，遵循项目的翻译格式规范，创建中英文双语对照版本。
+翻译 Anthropic Engineering 文章 ID 09，遵循项目的翻译格式规范，创建中英文双语对照版本。
 
 ## 本次工作内容与交付物
 
 ### 工作内容
-1. 获取原文：https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues
+1. 获取原文：https://www.anthropic.com/engineering/writing-tools-for-agents
 2. 全文翻译，包含以下章节：
-   - 引言：三个基础设施 Bug 导致 Claude 响应质量下降
-   - How we serve Claude at scale：Claude 的大规模服务架构（多平台部署）
-   - Timeline of events：事件时间线（8月-9月）
-   - Three overlapping issues：三个重叠问题
-     1. Context window routing error（上下文窗口路由错误）
-     2. Output corruption（输出损坏）
-     3. Approximate top-k XLA:TPU miscompilation（近似 top-k 编译器 Bug）
-   - A closer look at the XLA compiler bug：XLA 编译器 Bug 深度分析
-     - Mixed precision arithmetic（混合精度算术）
-     - Approximate top-k operation（近似 top-k 操作）
-   - Why detection was difficult：为什么检测很困难
-   - What we're changing：我们正在做出的改变
-   - Acknowledgments：致谢
-   - Footnotes：脚注（4个）
+   - 引言：使用 MCP 协议为 LLM 智能体配备工具
+   - What is a tool?：工具的本质（确定性系统与非确定性智能体之间的契约）
+   - How to write tools：如何编写工具
+     - Building a prototype（构建原型）
+     - Running an evaluation（运行评估）
+       - Generating evaluation tasks（生成评估任务）
+       - Running the evaluation（运行评估）
+       - Analyzing results（分析结果）
+     - Collaborating with agents（与智能体协作）
+   - Principles for writing effective tools：编写有效工具的原则
+     - Choosing the right tools for agents（为智能体选择正确的工具）
+     - Namespacing your tools（为工具添加命名空间）
+     - Returning meaningful context from your tools（从工具返回有意义的上下文）
+     - Optimizing tool responses for token efficiency（优化工具响应以提高标记效率）
+     - Prompt-engineering your tool descriptions（对工具描述进行提示工程）
+   - Looking ahead：展望未来
+   - Acknowledgements：致谢
+   - Footnotes：脚注（1个）
 
 ### 交付物
-- **文件**: `anthropic-engineering-articles/markdown/10-a-postmortem-of-three-recent-issues.md`
-- **行数**: ~270 行
-- **图片**: 4 张（已转换为原始 www-cdn.anthropic.com URL）
-- **链接**: 博客、平台、邮箱等资源链接
+- **文件**: `anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md`
+- **行数**: ~550 行
+- **图片**: 8 张（已转换为原始 www-cdn.anthropic.com URL）
+- **链接**: 文档、API、SWE-bench、开发者指南等资源链接
 
 ## 需要审查的目标文件与范围
 
 ### 目标文件
 ```
-anthropic-engineering-articles/markdown/10-a-postmortem-of-three-recent-issues.md
+anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md
 ```
 
 ### 审查范围
@@ -135,11 +140,10 @@ anthropic-engineering-articles/markdown/10-a-postmortem-of-three-recent-issues.m
 
 - [ ] **保留链接**: 保持 markdown 链接格式 `[Link text](https://...)`
 - [ ] **资源链接**: 为提到的资源添加链接
-  - 博客文章 (blog post)
   - 文档 (documentation, guide, cookbook)
-  - 官网 (docs.anthropic.com)
-  - 开发者平台 (Claude Developer Platform)
-  - 邮箱 (feedback@anthropic.com)
+  - API 参考 (API reference, docs.anthropic.com)
+  - 博客文章 (blog post, SWE-bench)
+  - 官网 (Developer Guide)
 
 **检查项**:
 - 链接是否可点击
@@ -162,28 +166,61 @@ anthropic-engineering-articles/markdown/10-a-postmortem-of-three-recent-issues.m
 - [ ] 参考术语表
 
 **关键术语**:
-- Postmortem | 事后分析/复盘
-- Infrastructure bugs | 基础设施 Bug
-- Response quality | 响应质量
-- Context window | 上下文窗口
-- Routing error | 路由错误
-- Load balancing | 负载平衡
-- Output corruption | 输出损坏
-- Token generation | 标记生成
-- XLA:TPU compiler | XLA:TPU 编译器
-- Approximate top-k | 近似 top-k
-- Exact top-k | 精确 top-k
-- Top-p sampling | Top-p 采样
-- Mixed precision arithmetic | 混合精度算术
-- bf16 (bfloat16) | bf16（16位浮点）
-- fp32 (32-bit floating point) | fp32（32位浮点）
-- Vector processor | 向量处理器
-- Distributed sort | 分布式排序
-- Vectorized operations | 向量化操作
-- Serial algorithms | 串行算法
-- Canary groups | 金丝雀组
-- Performance metrics | 性能指标
-- Sticky routing | 粘性路由
+- Model Context Protocol (MCP) | 模型上下文协议（MCP）
+- Tool | 工具
+- Agent | 智能体
+- Deterministic systems | 确定性系统
+- Non-deterministic systems | 非确定性系统
+- Contract | 契约
+- Affordances | 可供性
+- Context | 上下文
+- Ergonomic | 符合人体工程学（的）
+- Prototype | 原型
+- Evaluation | 评估
+- MCP server | MCP 服务器
+- Desktop extension (DXT) | 桌面扩展（DXT）
+- API call | API 调用
+- Prompt | 提示
+- Response | 响应
+- Knowledge base | 知识库
+- Microservice | 微服务
+- Sandbox environment | 沙箱环境
+- Stress-test | 压力测试
+- Verifier | 验证器
+- Ground truth | 基本事实
+- System prompt | 系统提示
+- Chain-of-thought (CoT) | 思维链（CoT）
+- Interleaved thinking | 交错思考
+- Runtime | 运行时间
+- Token consumption | 标记消耗
+- Workflow | 工作流程
+- Consolidate | 整合/合并
+- Namespacing | 命名空间
+- Prefix | 前缀
+- Suffix | 后缀
+- Context relevance | 上下文相关性
+- Technical identifier | 技术标识符
+- UUID | UUID
+- Hallucination | 幻觉
+- Retrieval task | 检索任务
+- ResponseFormat | ResponseFormat（响应格式）
+- Enum | 枚举
+- Verbosity | 详细程度
+- Pagination | 分页
+- Range selection | 范围选择
+- Truncation | 截断
+- Input validation | 输入验证
+- Error response | 错误响应
+- Traceback | 回溯
+- Token-efficient | 节省标记的
+- Prompt-engineering | 提示工程
+- Specialized query format | 专门的查询格式
+- Niche terminology | 小众术语
+- Data model | 数据模型
+- SWE-bench Verified | SWE-bench Verified
+- State-of-the-art | 最先进的
+- Open-world access | 开放世界访问
+- Destructive changes | 破坏性更改
 
 ### 9. 完整性审查
 
@@ -244,7 +281,7 @@ anthropic-engineering-articles/markdown/10-a-postmortem-of-three-recent-issues.m
 ---
 
 **审查请求生成时间**: 2026-01-25
-**任务ID**: #10
-**文件**: 10-a-postmortem-of-three-recent-issues.md
+**任务ID**: #11
+**文件**: 09-writing-tools-for-agents.md
 
 请开始审查！
