@@ -1,11 +1,11 @@
-# 翻译格式审查请求 - ID 14
+# 翻译格式审查请求 - ID 13
 
 ## 项目基本信息
 
 **项目名称**: Claude Code 中文指南合集 - Engineering 文章翻译
-**文章**: 14-claude-code-sandboxing.md
-**标题**: Making Claude Code more secure and autonomous with sandboxing
-**主题**: Claude Code 沙箱安全特性
+**文章**: 13-agent-skills.md
+**标题**: Equipping agents for the real world with Agent Skills
+**主题**: Agent Skills 模块化技能系统
 **翻译日期**: 2026-01-25
 
 ## 项目结构与状态
@@ -19,42 +19,45 @@ anthropic-engineering-articles/
     ├── 17-advanced-tool-use.md
     ├── 16-effective-harnesses-for-long-running-agents.md
     ├── 15-code-execution-with-mcp.md
-    └── 14-claude-code-sandboxing.md (本次翻译)
+    ├── 14-claude-code-sandboxing.md
+    └── 13-agent-skills.md (本次翻译)
 ```
 
 ### 项目状态
-- **已完成翻译**: 6/19 篇文章（32%）
+- **已完成翻译**: 7/19 篇文章（37%）
 - **格式规范**: `.claude/rules/translation-format.md`
-- **上一次审查**: ID 15 评分 93/100（技术维度满分）
+- **上一次审查**: ID 14 评分 81/100（修复后通过）
 
 ## 用户的原始需求
 
-翻译 Anthropic Engineering 文章 ID 14，遵循项目的翻译格式规范，创建中英文双语对照版本。
+翻译 Anthropic Engineering 文章 ID 13，遵循项目的翻译格式规范，创建中英文双语对照版本。
 
 ## 本次工作内容与交付物
 
 ### 工作内容
-1. 获取原文：https://www.anthropic.com/engineering/claude-code-sandboxing
+1. 获取原文：https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
 2. 全文翻译，包含以下章节：
-   - 引言：Claude Code 的权限模型和风险
-   - Sandboxing 概述
-   - 两个核心隔离机制（文件系统隔离、网络隔离）
-   - 沙箱 bash 工具
-   - 网页版 Claude Code
-   - 入门指南
+   - 引言：Agent Skills 的定义和目的
+   - 技能的解剖结构（SKILL.md 文件格式）
+   - 渐进式披露原则
+   - 技能与上下文窗口
+   - 技能与代码执行
+   - 开发和评估技能的指南
+   - 安全考虑
+   - 技能的未来
    - 致谢
 
 ### 交付物
-- **文件**: `anthropic-engineering-articles/markdown/14-claude-code-sandboxing.md`
-- **行数**: ~200 行
-- **图片**: 2 张（已转换为原始 www-cdn.anthropic.com URL）
-- **链接**: 添加了 docs、claude.com/code 等资源链接
+- **文件**: `anthropic-engineering-articles/markdown/13-agent-skills.md`
+- **行数**: ~220 行
+- **图片**: 6 张（已转换为原始 www-cdn.anthropic.com URL）
+- **链接**: 添加了 Skills documentation 和 cookbook 链接
 
 ## 需要审查的目标文件与范围
 
 ### 目标文件
 ```
-anthropic-engineering-articles/markdown/14-claude-code-sandboxing.md
+anthropic-engineering-articles/markdown/13-agent-skills.md
 ```
 
 ### 审查范围
@@ -90,20 +93,24 @@ anthropic-engineering-articles/markdown/14-claude-code-sandboxing.md
 
 - [ ] **英文行格式**: `1. English item with description.`
 - [ ] **中文行格式**: 无序号，直接文本
+- [ ] **交错排列**: 英文项后紧跟中文译文
 
 **检查项**:
 - 英文行是否保留序号（`1.` `2.`）
 - 中文行是否删除序号
+- 列表项是否按"英文项→中文译文"交错排列
 - 列表项翻译是否完整
 
 ### 4. 无序列表格式审查
 
 - [ ] 保持原有的列表符号（`-`）
 - [ ] 中英文对照完整
+- [ ] 英文项后紧跟中文译文
 
 **检查项**:
 - 列表符号是否正确
 - 每个列表项是否有中英文对照
+- 是否按交错格式排列
 
 ### 5. 图片格式审查
 
@@ -121,10 +128,9 @@ anthropic-engineering-articles/markdown/14-claude-code-sandboxing.md
 - [ ] **保留链接**: 保持 markdown 链接格式 `[Link text](https://...)`
 - [ ] **资源链接**: 为提到的资源添加链接
   - 文档 (documentation, docs)
-  - 官网 (claude.com/code, anthropic.com)
-  - 快速入门 (quickstart)
-  - API 参考
-  - GitHub 仓库
+  - 官网 (claude.com, anthropic.com)
+  - API 文档 (API reference)
+  - Cookbook/示例代码
 
 **检查项**:
 - 链接是否可点击
@@ -134,40 +140,32 @@ anthropic-engineering-articles/markdown/14-claude-code-sandboxing.md
 ### 7. 代码块格式审查
 
 - [ ] 保持原样，不翻译代码
-- [ ] 代码注释可以添加中文翻译
+- [ ] 文件名（SKILL.md）保持原样
+- [ ] YAML frontmatter 保持原样
 
 **检查项**:
 - 代码是否保持原样
-- 命令示例（如 `/sandbox`）是否保持原样
+- 文件名和术语是否正确保留
 
-### 8. 表格格式审查
-
-- [ ] 表格包含中英文对照
-- [ ] 使用"英文 | 中文"的双语格式
-
-**检查项**:
-- 表头是否有中英文对照
-- 表格内容是否有中英文对照
-
-### 9. 术语一致性审查
+### 8. 术语一致性审查
 
 - [ ] 专业术语翻译一致
 - [ ] 参考术语表
 
 **关键术语**:
-- Sandboxing → 沙箱/沙箱化
-- Filesystem isolation → 文件系统隔离
-- Network isolation → 网络隔离
-- Permission prompts → 权限提示/权限请求
-- Prompt injection → 提示注入
-- Approval fatigue → 审批疲劳
-- Autonomous → 自主/自动化
-- Bubblewrap → Bubblewrap (Linux沙箱工具)
-- Seatbelt → Seatbelt (macOS沙箱工具)
-- Unix domain socket → Unix域套接字
-- Scoped credential → 作用域凭证
+- Agent Skills → Agent 技能/技能
+- Skills → 技能
+- Progressive disclosure → 渐进式披露
+- Context window → 上下文窗口
+- SKILL.md → SKILL.md（保持原样）
+- YAML frontmatter → YAML 前置元数据
+- Onboarding guide → 入职指南
+- Composable → 可组合的
+- Procedural knowledge → 程序性知识
+- Deterministic → 确定性的
+- MCP (Model Context Protocol) → MCP（模型上下文协议）
 
-### 10. 完整性审查
+### 9. 完整性审查
 
 - [ ] 文章内容完整，无遗漏段落
 - [ ] 所有图片都已翻译说明
@@ -181,8 +179,8 @@ anthropic-engineering-articles/markdown/14-claude-code-sandboxing.md
 |--------|------|----------|
 | 标题格式正确性 | 10分 | 所有标题使用 `|` 分隔符，层级正确 |
 | 正文格式正确性 | 20分 | 换行格式，空行分隔，无中文字符混杂 |
-| 列表格式正确性 | 10分 | 有序列表中文行无序号，无序列表格式正确 |
-| 代码块格式正确性 | 5分 | 代码保持原样，命令示例正确 |
+| 列表格式正确性 | 10分 | 有序列表中文行无序号，交错排列正确 |
+| 代码块格式正确性 | 5分 | 代码保持原样，文件名正确 |
 | 图片链接正确性 | 5分 | 使用原始 URL，图片说明完整 |
 
 ### 战略维度 (50分)
@@ -225,7 +223,7 @@ anthropic-engineering-articles/markdown/14-claude-code-sandboxing.md
 ---
 
 **审查请求生成时间**: 2026-01-25
-**任务ID**: #6
-**文件**: 14-claude-code-sandboxing.md
+**任务ID**: #7
+**文件**: 13-agent-skills.md
 
 请开始审查！
