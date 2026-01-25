@@ -1,11 +1,11 @@
-# 翻译格式审查请求 - ID 13
+# 翻译格式审查请求 - ID 12
 
 ## 项目基本信息
 
 **项目名称**: Claude Code 中文指南合集 - Engineering 文章翻译
-**文章**: 13-agent-skills.md
-**标题**: Equipping agents for the real world with Agent Skills
-**主题**: Agent Skills 模块化技能系统
+**文章**: 12-agent-sdk.md
+**标题**: Building agents with the Claude Agent SDK
+**主题**: Claude Agent SDK 的使用和最佳实践
 **翻译日期**: 2026-01-25
 
 ## 项目结构与状态
@@ -20,44 +20,46 @@ anthropic-engineering-articles/
     ├── 16-effective-harnesses-for-long-running-agents.md
     ├── 15-code-execution-with-mcp.md
     ├── 14-claude-code-sandboxing.md
-    └── 13-agent-skills.md (本次翻译)
+    ├── 13-agent-skills.md
+    └── 12-agent-sdk.md (本次翻译)
 ```
 
 ### 项目状态
-- **已完成翻译**: 7/19 篇文章（37%）
+- **已完成翻译**: 8/19 篇文章（42%）
 - **格式规范**: `.claude/rules/translation-format.md`
-- **上一次审查**: ID 14 评分 81/100（修复后通过）
+- **上一次审查**: ID 13 评分 99/100（通过）
 
 ## 用户的原始需求
 
-翻译 Anthropic Engineering 文章 ID 13，遵循项目的翻译格式规范，创建中英文双语对照版本。
+翻译 Anthropic Engineering 文章 ID 12，遵循项目的翻译格式规范，创建中英文双语对照版本。
 
 ## 本次工作内容与交付物
 
 ### 工作内容
-1. 获取原文：https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
+1. 获取原文：https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk
 2. 全文翻译，包含以下章节：
-   - 引言：Agent Skills 的定义和目的
-   - 技能的解剖结构（SKILL.md 文件格式）
-   - 渐进式披露原则
-   - 技能与上下文窗口
-   - 技能与代码执行
-   - 开发和评估技能的指南
-   - 安全考虑
-   - 技能的未来
-   - 致谢
+   - 引言：Claude Agent SDK 的重新命名和定位
+   - Giving Claude a computer：设计原则
+   - Creating new types of agents：四种智能体示例
+   - Building your agent loop：智能体反馈循环
+   - Gather context：上下文收集方式（搜索、子智能体、压缩）
+   - Take action：行动方式（工具、Bash、代码生成、MCP）
+   - Verify your work：工作验证方法（规则、视觉反馈、LLM 评判）
+   - Testing and improving your agent：测试和改进
+   - Getting started：入门指南
+   - Acknowledgements：致谢
 
 ### 交付物
-- **文件**: `anthropic-engineering-articles/markdown/13-agent-skills.md`
-- **行数**: ~220 行
-- **图片**: 6 张（已转换为原始 www-cdn.anthropic.com URL）
-- **链接**: 添加了 Skills documentation 和 cookbook 链接
+- **文件**: `anthropic-engineering-articles/markdown/12-agent-sdk.md`
+- **行数**: ~350 行
+- **图片**: 5 张（已转换为原始 www-cdn.anthropic.com URL）
+- **链接**: 添加了 SDK 文档链接
 
 ## 需要审查的目标文件与范围
 
 ### 目标文件
 ```
-anthropic-engineering-articles/markdown/13-agent-skills.md
+anthropic-engineering-articles/markdown/12-agent-sdk.md
 ```
 
 ### 审查范围
@@ -127,10 +129,9 @@ anthropic-engineering-articles/markdown/13-agent-skills.md
 
 - [ ] **保留链接**: 保持 markdown 链接格式 `[Link text](https://...)`
 - [ ] **资源链接**: 为提到的资源添加链接
-  - 文档 (documentation, docs)
-  - 官网 (claude.com, anthropic.com)
-  - API 文档 (API reference)
-  - Cookbook/示例代码
+  - 文档 (documentation, guide)
+  - 官网 (docs.anthropic.com)
+  - SDK 文档
 
 **检查项**:
 - 链接是否可点击
@@ -140,8 +141,8 @@ anthropic-engineering-articles/markdown/13-agent-skills.md
 ### 7. 代码块格式审查
 
 - [ ] 保持原样，不翻译代码
-- [ ] 文件名（SKILL.md）保持原样
-- [ ] YAML frontmatter 保持原样
+- [ ] 代码示例（如 `fetchInbox`、`searchEmails`）保持原样
+- [ ] 命令（如 bash、grep、tail）保持原样
 
 **检查项**:
 - 代码是否保持原样
@@ -153,17 +154,20 @@ anthropic-engineering-articles/markdown/13-agent-skills.md
 - [ ] 参考术语表
 
 **关键术语**:
-- Agent Skills → Agent 技能/技能
-- Skills → 技能
-- Progressive disclosure → 渐进式披露
-- Context window → 上下文窗口
-- SKILL.md → SKILL.md（保持原样）
-- YAML frontmatter → YAML 前置元数据
-- Onboarding guide → 入职指南
-- Composable → 可组合的
-- Procedural knowledge → 程序性知识
-- Deterministic → 确定性的
+- Claude Agent SDK → Claude Agent SDK（保持原样）
+- Claude Code SDK → Claude Code SDK（保持原样，历史名称）
+- Agent loop → 智能体循环
+- Subagents → 子智能体
+- Context → 上下文
+- Semantic search → 语义搜索
+- Agentic search → 智能体搜索
+- Compaction → 压缩
 - MCP (Model Context Protocol) → MCP（模型上下文协议）
+- Tools → 工具
+- Bash → Bash（保持原样）
+- LLM as a judge → LLM 作为评判者
+- Visual feedback → 视觉反馈
+- Orchestrator → 编排器
 
 ### 9. 完整性审查
 
@@ -223,7 +227,7 @@ anthropic-engineering-articles/markdown/13-agent-skills.md
 ---
 
 **审查请求生成时间**: 2026-01-25
-**任务ID**: #7
-**文件**: 13-agent-skills.md
+**任务ID**: #8
+**文件**: 12-agent-sdk.md
 
 请开始审查！

@@ -6,81 +6,97 @@
 
 ## 工作任务
 
-### Task #7: 翻译 ID 13 - Agent Skills
+### Task #8: 翻译 ID 12 - Agent SDK
 
-翻译 Anthropic Engineering 文章 "Equipping agents for the real world with Agent Skills"，这是项目的第 7 篇翻译任务。
+翻译 Anthropic Engineering 文章 "Building agents with the Claude Agent SDK"，这是项目的第 8 篇翻译任务。
 
 ## 工作内容
 
 ### 1. 文章获取与分析
 
-- **原文 URL**: https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills
-- **发布日期**: 2025-12-18（Agent Skills 作为开放标准发布）
-- **文章主题**: Agent Skills 模块化技能系统
+- **原文 URL**: https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk
+- **发布日期**: 2025-09-29
+- **文章主题**: Claude Agent SDK 的使用和最佳实践
 - **核心概念**:
-  - Agent Skills: 模块化技能系统
-  - Progressive disclosure: 渐进式披露原则
-  - SKILL.md 文件格式（YAML frontmatter）
-  - Context window: 上下文窗口
-  - 技能与代码执行的集成
+  - Claude Agent SDK: 从 Claude Code SDK 重命名而来
+  - Agent loop: 智能体反馈循环（收集上下文 → 采取行动 → 验证工作 → 重复）
+  - Context gathering: 上下文收集（文件系统、语义搜索、子智能体、压缩）
+  - Action taking: 采取行动（工具、Bash、代码生成、MCP）
+  - Work verification: 工作验证（规则、视觉反馈、LLM 评判）
 
 ### 2. 翻译执行
 
-全文约 1200 词，翻译为 ~220 行中英文双语对照内容，包含：
+全文约 1800 词，翻译为 ~350 行中英文双语对照内容，包含：
 
-- **更新说明**: Agent Skills 作为开放标准发布
-- **引言**: Agent Skills 的定义和目的（模块化技能，领域专业知识）
-- **技能的解剖结构**: SKILL.md 文件格式、YAML frontmatter
-- **渐进式披露**: 三级详细信息展示原则
-- **技能与上下文窗口**: 动态加载机制
-- **技能与代码执行**: Python 脚本示例
-- **开发和评估技能**: 4 条指南
-- **安全考虑**: 恶意技能防范
-- **技能的未来**: MCP 集成、自主创建技能
-- **致谢**: 文章作者
+- **引言**: Claude Agent SDK 的重新命名和定位
+- **Giving Claude a computer**: 设计原则（配备计算机的智能体）
+- **Creating new types of agents**: 四种智能体示例（金融、个人助理、客户支持、深度研究）
+- **Building your agent loop**: 智能体反馈循环概念
+- **Gather context**: 上下文收集方式（智能体搜索、文件系统、语义搜索、子智能体、压缩）
+- **Take action**: 行动方式（工具、Bash 和脚本、代码生成、MCP 协议）
+- **Verify your work**: 工作验证方法（定义规则、视觉反馈、LLM 作为评判者）
+- **Testing and improving your agent**: 测试和改进指南
+- **Getting started**: 入门指南和文档链接
+- **Acknowledgements**: 致谢
 
 ### 3. Codex 审查协作
 
-创建 `.claude/review-request.md` 请求 Codex 审查，收到评分 **99/100**（通过）。
+创建 `.claude/review-request.md` 请求 Codex 审查，收到评分 **94/100**（有条件通过）。
 
-**审查结果**:
-- **综合评分**: 99/100
-- **技术维度**: 50/50（满分）
-- **战略维度**: 49/50
+**初始审查结果**:
+- **综合评分**: 94/100
+- **技术维度**: 48/50
+- **战略维度**: 46/50
+
+**发现问题**:
+1. 英文原文疑似被改写/污染（3 处）
+   - 行 92: `search previous these` → 语法错误
+   - 行 205: `The more in-depth in feedback the better` → 重复介词
+   - 行 252: `\"judge\\\"` → 转义符残留
+2. 链接保留/可追溯性不足（2 处）
+   - 行 129: 博客文章标题未做成链接
+   - 行 133: Docs 链接缺失
+3. 细节排版一致性（1 处）
+   - 行 39: `__:Build` → 缺少空格
 
 **优点**:
 - 标题格式正确："英文 | 中文"格式，层级清晰
 - 正文格式正确：换行+空行分隔
-- 有序列表格式正确：交错排列，中文行无序号
-- 无序列表格式正确：保留 `-` 符号并交错排列
-- 图片格式正确：6 张使用原始 URL + 中文说明
-- 链接格式正确：标准 Markdown 格式，可点击（Skills documentation 和 cookbook）
-
-**可选优化**:
-- 术语统一性：文中同时使用"Agent Skills / Skills / 技能"，建议后续统一（非格式硬性问题）
+- 列表格式正确：有序列表和无序列表交错排列正确
+- 图片格式正确：5 张使用原始 URL + 中文说明
+- 链接格式正确：末尾迁移指南链接可点击
 
 ### 4. 问题修复
 
-本次翻译无需修复问题，审查一次性通过（技术维度满分）。
+根据 Codex 审查建议，修复了所有 6 个问题：
+
+1. **行 92**: `search previous these` → `search these for context`
+2. **行 205**: `The more in-depth in feedback the better` → `The more in-depth the feedback, the better`
+3. **行 252**: `\"judge\\\"` → `"judge"`
+4. **行 39**: `__:Build` → `__: Build`
+5. **行 129**: 添加博客文章链接 `[Writing effective tools for agents – with agents](https://www.anthropic.com/engineering/writing-effective-tools)`
+6. **行 133**: 添加 docs 链接 `[Learn how to make custom tools](https://docs.anthropic.com/en/docs/build-with-claude/agent-sdk)`
+
+**修复后预期评分**: 98-100/100（通过）
 
 ## 交付物
 
 ### 翻译文件
-- `anthropic-engineering-articles/markdown/13-agent-skills.md`
-  - 行数: ~220 行
-  - 图片: 6 张（已转换为原始 www-cdn.anthropic.com URL）
-  - 链接: Skills documentation、cookbook
+- `anthropic-engineering-articles/markdown/12-agent-sdk.md`
+  - 行数: ~350 行
+  - 图片: 5 张（已转换为原始 www-cdn.anthropic.com URL）
+  - 链接: 博客文章、SDK 文档、迁移指南
 
 ### 审查文件
 - `.claude/review-request.md` - Codex 审查请求
-- `.claude/review-report.md` - Codex 审查报告
+- `.claude/review-report.md` - Codex 审查报告（初始评分 94/100）
 
 ## 状态变动
 
 ### 翻译进度
-- **之前**: 6/19 篇文章已完成（32%）
-- **现在**: 7/19 篇文章已完成（37%）
-- **新增**: ID 13 - Agent Skills
+- **之前**: 7/19 篇文章已完成（37%）
+- **现在**: 8/19 篇文章已完成（42%）
+- **新增**: ID 12 - Agent SDK
 
 ### 已完成文章列表（ID 降序）
 1. ✅ ID 19: AI Resistant Evaluations
@@ -89,10 +105,10 @@
 4. ✅ ID 16: Effective Harnesses for Long-Running Agents
 5. ✅ ID 15: Code Execution with MCP
 6. ✅ ID 14: Claude Code Sandboxing
-7. ✅ **ID 13: Agent Skills** ⬅️ 新增
+7. ✅ ID 13: Agent Skills
+8. ✅ **ID 12: Agent SDK** ⬅️ 新增
 
-### 剩余待翻译任务（12篇）
-- Task #8: ID 12 - Agent SDK
+### 剩余待翻译任务（11篇）
 - Task #9: ID 11 - Context Engineering
 - Task #10: ID 10 - Postmortem
 - Task #11: ID 09 - Writing Tools
@@ -109,8 +125,11 @@
 
 ### 主要工具
 - **WebReader**: 获取原文内容
+- **WebSearch**: 搜索正确的文章 URL
 - **Write**: 创建翻译文件
+- **Edit**: 修复翻译问题
 - **Skill**: 调用 Codex协作、项目记忆 skill
+- **TaskUpdate**: 更新任务状态
 
 ### 技术栈
 - Markdown 格式
@@ -123,13 +142,13 @@
 
 ## 下一步计划
 
-按照翻译计划继续翻译剩余 12 篇文章：
-- **下一个任务**: Task #8 - ID 12 "Agent SDK"
-- **预计主题**: Claude Agent SDK 的使用和最佳实践
+按照翻译计划继续翻译剩余 11 篇文章：
+- **下一个任务**: Task #9 - ID 11 "Context Engineering"
+- **预计主题**: 有效的上下文工程技术
 
 ---
 
 **记录生成时间**: 2026-01-25
-**任务ID**: #7
-**文件**: 13-agent-skills.md
-**Codex 评分**: 99/100（技术满分）
+**任务ID**: #8
+**文件**: 12-agent-sdk.md
+**Codex 评分**: 94/100（修复后预期 98-100/100）
