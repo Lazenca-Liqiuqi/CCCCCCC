@@ -1,6 +1,6 @@
 # Claude Code 工作进度记录
 
-**更新时间**: 2026-01-25
+**更新时间**: 2026-01-26
 **会话 ID**: 019bf489-67c1-7362-a343-d5114f763579
 
 ---
@@ -9,17 +9,17 @@
 
 **项目名称**: Claude Code 中文指南合集 - Engineering 文章翻译
 **项目阶段**: 格式规范完善期 → 持续翻译期
-**当前进度**: 11/19 篇文章已完成（58%）
+**当前进度**: 12/19 篇文章已完成（63%）
 
 ---
 
 ## 工作任务
 
-### Task #11: 翻译 ID 09 - Writing Tools
+### Task #12: 翻译 ID 08 - Desktop Extensions
 
 **任务状态**: ✅ 已完成
-**开始时间**: 2026-01-25
-**完成时间**: 2026-01-25
+**开始时间**: 2026-01-26
+**完成时间**: 2026-01-26
 
 ---
 
@@ -27,87 +27,78 @@
 
 ### 基本信息
 
-- **文件**: `anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md`
-- **标题**: Writing effective tools for AI agents—using AI agents
-- **中文标题**: 为AI智能体编写有效工具——使用AI智能体
+- **文件**: `anthropic-engineering-articles/markdown/08-desktop-extensions.md`
+- **标题**: Claude Desktop Extensions: One-click MCP server installation for Claude Desktop
+- **中文标题**: Claude Desktop 扩展：一键安装 MCP 服务器
 - **发布日期**: 2025-09-11
-- **原文 URL**: https://www.anthropic.com/engineering/writing-tools-for-agents
+- **原文 URL**: https://www.anthropic.com/engineering/desktop-extensions
 
 ### 文章结构
 
 1. **引言**
-   - 使用 MCP 协议为 LLM 智能体配备工具
-   - 本文涵盖的技术内容概览
+   - MCP 安装问题回顾
+   - 用户反馈总结
 
-2. **What is a tool?**
-   - 确定性系统与非确定性智能体的区别
-   - 工具作为两者之间的契约
-   - 为智能体设计工具的理念
+2. **Addressing the MCP installation problem** | 解决 MCP 安装问题
+   - 本地 MCP 服务器的强大功能
+   - 当前安装流程的障碍（5 个问题）
 
-3. **How to write tools**
-   - **Building a prototype**: 构建原型
-     - 快速原型开发
-     - LLM 友好的文档（llms.txt）
-     - 本地 MCP 服务器和桌面扩展（DXT）
+3. **Introducing Desktop Extensions** | 介绍 Desktop Extensions
+   - `.mcpb` 文件格式
+   - 安装流程对比（Before vs After）
 
-   - **Running an evaluation**: 运行评估
-     - **Generating evaluation tasks**: 生成评估任务
-       - 强任务 vs 弱任务示例
-       - 现实世界场景的重要性
-     - **Running the evaluation**: 运行评估
-       - 程序化评估
-       - 智能体循环
-       - 系统提示和思维链（CoT）
-       - 交错思考（Interleaved thinking）
-     - **Analyzing results**: 分析结果
-       - 与智能体协作分析结果
+4. **Architecture overview** | 架构概览
+   - ZIP 归档结构
+   - manifest.json 详解
+   - Node.js 和 Python 扩展示例
 
-   - **Collaborating with agents**: 与智能体协作
-     - 使用 Claude Code 优化工具
+5. **Building your first extension** | 构建你的第一个扩展
+   - **Step 1**: Create the manifest（创建 manifest）
+   - **Step 2**: Handle user configuration（处理用户配置）
+   - **Step 3**: Package the extension（打包扩展）
+   - **Step 4**: Test locally（本地测试）
 
-4. **Principles for writing effective tools**
-   - **Choosing the right tools for agents**: 为智能体选择正确的工具
-     - 上下文限制 vs 计算机内存
-     - 工具整合的重要性
-     - 工具整合示例
+6. **Advanced features** | 高级功能
+   - **Cross-platform support**: 跨平台支持
+   - **Dynamic configuration**: 动态配置
+   - **Feature declaration**: 功能声明
 
-   - **Namespacing your tools**: 为工具添加命名空间
-     - 前缀 vs 后缀命名空间
-     - 减少智能体错误
+7. **The extension directory** | 扩展目录
+   - 精心策划的扩展目录
+   - 提交流程（4 步）
 
-   - **Returning meaningful context from your tools**: 从工具返回有意义的上下文
-     - 高信号信息优先
-     - 自然语言 vs 技术标识符
-     - ResponseFormat 枚举（DETAILED/CONCISE）
+8. **Building an open ecosystem** | 构建开放生态系统
+   - 开源承诺
+   - 开源内容清单（4 项）
+   - 生态价值（3 个方面）
 
-   - **Optimizing tool responses for token efficiency**: 优化工具响应以提高标记效率
-     - 分页、范围选择、过滤、截断
-     - 错误响应的提示工程
+9. **Security and enterprise considerations** | 安全和企业考虑
+   - **For users**: 3 项保障
+   - **For enterprises**: 5 项管理功能
 
-   - **Prompt-engineering your tool descriptions**: 对工具描述进行提示工程
-     - 工具描述的最佳实践
-     - SWE-bench Verified 性能提升
+10. **Getting started** | 入门指南
+    - MCP 服务器开发者
+    - Claude Desktop 用户
+    - 企业用户
 
-5. **Looking ahead**
-   - 软件开发实践的根本转变
-   - 智能体与工具的共同演进
+11. **Building with Claude Code** | 使用 Claude Code 构建
+    - 内部实践经验
+    - Claude Code 上下文提示词模板
 
-6. **Acknowledgements**
-   - 作者与贡献者名单
-
-7. **Footnotes**
-   - 1 个脚注
+12. **Conclusion** | 结论
+    - Desktop Extensions 的根本性转变
+    - 内部实验案例（PyBoy GameBoy）
 
 ### 交付物统计
 
 | 项目 | 内容 |
 |------|------|
-| **文件路径** | `anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md` |
-| **文件大小** | ~440 行 |
-| **图片数量** | 8 张 |
+| **文件路径** | `anthropic-engineering-articles/markdown/08-desktop-extensions.md` |
+| **文件大小** | ~760 行 |
+| **图片数量** | 1 张 |
 | **图片格式** | 原始 www-cdn.anthropic.com URL |
-| **关键术语** | 53 个 |
-| **外部链接** | 6 个 |
+| **关键术语** | ~40 个 |
+| **外部链接** | 4 个 |
 
 ---
 
@@ -115,39 +106,40 @@
 
 ### 翻译特点
 
-1. **技术密集型文章**
-   - 大量 AI/LLM 术语（Model Context Protocol、agent、deterministic、non-deterministic）
-   - 软件工程概念（API、MCP server、SDK、evaluation、prototype）
-   - 智能体相关术语（affordances、context、chain-of-thought、interleaved thinking）
+1. **技术文档型文章**
+   - 大量技术术语（MCP、.mcpb、manifest.json、runtime、keychain）
+   - 多个 JSON 配置示例
+   - CLI 命令示例
+   - 文件结构图（ASCII art）
 
 2. **结构化内容**
-   - 三个主要部分：工具定义、编写方法、设计原则
-   - 多级嵌套结构（主章节 → 子章节 → 小节）
-   - 大量代码示例和对比说明
+   - 清晰的章节层级（12 个主章节）
+   - 4 步构建流程
+   - Before/After 对比说明
+   - 多个代码块示例
 
 3. **实践导向**
-   - 包含强任务和弱任务的具体示例
-   - 详细的工作流程说明
-   - 实用的最佳实践建议
+   - 完整的构建指南
+   - 详细的 manifest 规范说明
+   - 企业级管理功能介绍
 
 ### 关键技术概念
 
 | 英文术语 | 中文翻译 |
 |----------|----------|
 | Model Context Protocol (MCP) | 模型上下文协议（MCP） |
-| Deterministic systems | 确定性系统 |
-| Non-deterministic systems | 非确定性系统 |
-| Affordances | 可供性 |
-| Ergonomic | 符合人体工程学（的） |
-| Prototype | 原型 |
-| Evaluation | 评估 |
-| Chain-of-thought (CoT) | 思维链（CoT） |
-| Interleaved thinking | 交错思考 |
-| Namespacing | 命名空间 |
-| Consolidate | 整合/合并 |
-| Token-efficient | 节省标记的 |
-| Prompt-engineering | 提示工程 |
-| State-of-the-art | 最先进的 |
+| Desktop Extensions | 桌面扩展 |
+| `.mcpb` file | `.mcpb` 文件（MCP Bundle） |
+| manifest.json | manifest.json（扩展元数据配置） |
+| Built-in runtime | 内置运行时 |
+| OS keychain | 操作系统密钥链 |
+| Template literals | 模板字面量 |
+| Cross-platform | 跨平台 |
+| User configuration | 用户配置 |
+| Group Policy | 组策略 |
+| MDM (Mobile Device Management) | 移动设备管理 |
+| Sensitive data | 敏感数据 |
+| Semantic version | 语义版本 |
 
 ---
 
@@ -157,7 +149,7 @@
 
 **文件**: `.claude/review-request.md`
 **审查内容**: 全文翻译格式与质量审查
-**关键术语表**: 53 个术语
+**关键术语表**: 40 个术语
 
 ### 审查结果
 
@@ -165,31 +157,33 @@
 
 | 评分维度 | 分数 |
 |----------|------|
-| **综合评分** | 86/100 |
-| 技术维度 | 45/50 |
-| 战略维度 | 41/50 |
+| **综合评分** | 79/100 |
+| 技术维度 | 40/50 |
+| 战略维度 | 39/50 |
 | **建议** | 有条件通过 |
 
 ### 发现的问题
 
 | 优先级 | 问题 | 数量 |
 |--------|------|------|
-| **高** | 列表中英对照缺空行 | 16 处 |
-| **高** | 脚注格式损坏 | 2 处 |
+| **高** | 无序列表中文行缺少 `-` | 11 组 |
+| **高** | JSON 重复键（中英对照） | 9 处 |
+| **中** | 占位链接 example.com | 2 处 |
 
 ### 问题修复
 
-**1. 列表空行修复（16 处）**
-- 引言部分：8 对列表项
-- 强任务示例：3 对列表项
-- 弱任务示例：3 对列表项
-- 工具整合示例：3 对列表项
+**1. 无序列表修复（11 组）**
+- 引言部分：5 组列表项
+- 架构概览：3 组列表项
+- 高级功能：1 组列表项
+- 开放生态系统：1 组列表项
+- 安全企业考虑：1 组列表项
 
 **修复格式**:
 ```markdown
 # 修复前
 - English item
-- 中文项目
+中文项目
 
 # 修复后
 - English item
@@ -197,27 +191,51 @@
 - 中文项目
 ```
 
-**2. 脚注格式修复**
-```markdown
+**2. JSON 重复键修复（9 处）**
+根据格式规范，代码块应保持原样，不翻译。删除所有 JSON 中的中文重复键：
+
+```json
 # 修复前
-1Beyond training the underlying LLMs themselves.
-1除了训练底层 LLM 本身之外。
+{
+  "title": "API Key",
+  "title": "API 密钥",
+  "description": "Your API key for authentication",
+  "description": "用于身份验证的 API 密钥"
+}
 
 # 修复后
-## Footnotes | 脚注
+{
+  "title": "API Key",
+  "description": "Your API key for authentication"
+}
+```
 
-[1] Beyond training the underlying LLMs themselves.
+**修复位置**:
+- `user_config` 示例（1 处）
+- 完整 manifest 示例（2 处）
+- `tools` 示例（1 处）
+- `prompts` 示例（1 处）
+- `allowed_directories` 配置（2 处）
+- `api_key` 配置（2 处）
+- Step 2 示例（2 处）
+- Feature declaration 示例（2 处）
 
-[1] 除了训练底层 LLM 本身之外。
+**3. 占位链接修复（2 处）**
+```markdown
+# 修复前
+Ready to share your MCP server? [Submit your extension](https://example.com/submit) for review.
+
+# 修复后
+Ready to share your MCP server? Submit your extension for review.
 ```
 
 ### 修复后预期评分
 
 | 项目 | 修复前 | 修复后 |
 |------|--------|--------|
-| **综合评分** | 86/100 | **98-100/100** |
-| 技术维度 | 45/50 | **50/50** |
-| 战略维度 | 41/50 | **48-50/50** |
+| **综合评分** | 79/100 | **95-98/100** |
+| 技术维度 | 40/50 | **48-50/50** |
+| 战略维度 | 39/50 | **47-48/50** |
 
 ---
 
@@ -226,7 +244,7 @@
 ### 翻译文件
 
 ```
-anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md
+anthropic-engineering-articles/markdown/08-desktop-extensions.md
 ```
 
 ### 审查文件
@@ -240,10 +258,10 @@ anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md
 
 | 指标 | 数值 |
 |------|------|
-| 总行数 | ~440 行 |
-| 图片 | 8 张 |
-| 外部链接 | 6 个 |
-| 关键术语 | 53 个 |
+| 总行数 | ~760 行 |
+| 图片 | 1 张 |
+| 外部链接 | 4 个 |
+| 关键术语 | 40 个 |
 
 ---
 
@@ -253,9 +271,9 @@ anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md
 
 | 项目 | 之前 | 现在 |
 |------|------|------|
-| 已完成翻译 | 10/19 | **11/19** |
-| 完成百分比 | 53% | **58%** |
-| 待翻译 | 9 篇 | **8 篇** |
+| 已完成翻译 | 11/19 | **12/19** |
+| 完成百分比 | 58% | **63%** |
+| 待翻译 | 8 篇 | **7 篇** |
 
 ### 已完成文章列表（ID 降序）
 
@@ -269,17 +287,17 @@ anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md
 8. ✅ ID 12: Agent SDK
 9. ✅ ID 11: Context Engineering
 10. ✅ ID 10: Postmortem
-11. ✅ **ID 09: Writing Tools** ⬅️ 本次完成
+11. ✅ ID 09: Writing Tools
+12. ✅ **ID 08: Desktop Extensions** ⬅️ 本次完成
 
 ---
 
 ## 剩余任务
 
-### 待翻译文章（8 篇）
+### 待翻译文章（7 篇）
 
 | 任务ID | 文章ID | 标题 |
 |--------|--------|------|
-| #12 | ID 08 | Desktop Extensions |
 | #13 | ID 07 | Multi-Agent Research |
 | #14 | ID 06 | Claude Code Best Practices |
 | #15 | ID 05 | Think Tool |
@@ -297,7 +315,7 @@ anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md
 - **WebSearch**: 搜索文章 URL
 - **WebReader**: 获取原文内容
 - **Write**: 创建翻译文件和审查请求
-- **Edit**: 修复格式问题（16 处列表 + 2 处脚注）
+- **Edit**: 修复格式问题（11 组列表 + 9 处 JSON + 2 处链接）
 - **TaskUpdate**: 更新任务状态
 
 ### 技术栈
@@ -310,12 +328,17 @@ anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md
 
 ## 总结
 
-本次任务成功完成了 ID 09 "Writing Tools" 文章的翻译工作。这是一篇技术密集型的文章，涵盖了为 AI 智能体编写有效工具的完整方法论，从理论基础到实践指南，内容详实且结构清晰。
+本次任务成功完成了 ID 08 "Desktop Extensions" 文章的翻译工作。这是一篇技术文档型的文章，详细介绍了 Claude Desktop Extensions (.mcpb) 打包格式，从安装问题到完整构建指南，内容实用且结构清晰。
 
-翻译过程中遇到了两个格式问题（列表空行和脚注格式），通过 Codex 审查及时发现并全部修复。修复后的预期评分从 86/100 提升至 98-100/100，符合项目质量标准。
+翻译过程中遇到了 3 类格式问题（无序列表缺 `-`、JSON 重复键、占位链接），通过 Codex 审查及时发现并全部修复。修复后的预期评分从 79/100 提升至 95-98/100，符合项目质量标准。
 
-项目整体进度达到 58%（11/19），继续稳步推进中。
+**关键学习点**：
+1. **无序列表格式**：中文翻译行需要保留 `-` 符号，与英文行保持一致的列表结构
+2. **JSON 代码块规范**：代码块应保持原样，不进行双语翻译，避免重复键问题
+3. **占位符处理**：原文中的占位符链接应转换为纯文本或根据实际情况处理
+
+项目整体进度达到 63%（12/19），继续稳步推进中。
 
 ---
 
-**下次会话建议**: 继续进行 Task #12 - ID 08 "Desktop Extensions" 翻译
+**下次会话建议**: 继续进行 Task #13 - ID 07 "Multi-Agent Research" 翻译
