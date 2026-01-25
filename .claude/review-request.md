@@ -1,11 +1,11 @@
-# 翻译格式审查请求 - ID 11
+# 翻译格式审查请求 - ID 10
 
 ## 项目基本信息
 
 **项目名称**: Claude Code 中文指南合集 - Engineering 文章翻译
-**文章**: 11-effective-context-engineering-for-ai-agents.md
-**标题**: Effective context engineering for AI agents
-**主题**: AI 智能体的有效上下文工程技术
+**文章**: 10-a-postmortem-of-three-recent-issues.md
+**标题**: A postmortem of three recent issues
+**主题**: 三个近期基础设施 Bug 的事后分析
 **翻译日期**: 2026-01-25
 
 ## 项目结构与状态
@@ -22,51 +22,50 @@ anthropic-engineering-articles/
     ├── 14-claude-code-sandboxing.md
     ├── 13-agent-skills.md
     ├── 12-agent-sdk.md
-    └── 11-effective-context-engineering-for-ai-agents.md (本次翻译)
+    ├── 11-effective-context-engineering-for-ai-agents.md
+    └── 10-a-postmortem-of-three-recent-issues.md (本次翻译)
 ```
 
 ### 项目状态
-- **已完成翻译**: 9/19 篇文章（47%）
+- **已完成翻译**: 10/19 篇文章（53%）
 - **格式规范**: `.claude/rules/translation-format.md`
-- **上一次审查**: ID 12 评分 94/100（修复后预期 98-100/100）
+- **上一次审查**: ID 11 评分 92/100（修复后预期 98-100/100）
 
 ## 用户的原始需求
 
-翻译 Anthropic Engineering 文章 ID 11，遵循项目的翻译格式规范，创建中英文双语对照版本。
+翻译 Anthropic Engineering 文章 ID 10，遵循项目的翻译格式规范，创建中英文双语对照版本。
 
 ## 本次工作内容与交付物
 
 ### 工作内容
-1. 获取原文：https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
+1. 获取原文：https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues
 2. 全文翻译，包含以下章节：
-   - 引言：从 prompt engineering 到 context engineering 的演进
-   - Why context engineering is important：上下文工程的重要性（context rot、attention budget）
-   - The anatomy of effective context：有效上下文的解剖结构
-     - System prompts：系统提示的最佳实践
-     - Tools：工具设计原则
-     - Providing examples：少样本提示
-   - Context retrieval and agentic search：上下文检索与智能体搜索
-     - Just-in-time context strategies：即时上下文策略
-     - Progressive disclosure：渐进式披露
-     - Hybrid strategy：混合策略
-   - Context engineering for long-horizon tasks：长时间跨度任务的上下文工程
-     - Compaction：压缩技术
-     - Structured note-taking：结构化笔记/智能体记忆
-     - Sub-agent architectures：子智能体架构
-   - Conclusion：结论
-   - Acknowledgements：致谢
+   - 引言：三个基础设施 Bug 导致 Claude 响应质量下降
+   - How we serve Claude at scale：Claude 的大规模服务架构（多平台部署）
+   - Timeline of events：事件时间线（8月-9月）
+   - Three overlapping issues：三个重叠问题
+     1. Context window routing error（上下文窗口路由错误）
+     2. Output corruption（输出损坏）
+     3. Approximate top-k XLA:TPU miscompilation（近似 top-k 编译器 Bug）
+   - A closer look at the XLA compiler bug：XLA 编译器 Bug 深度分析
+     - Mixed precision arithmetic（混合精度算术）
+     - Approximate top-k operation（近似 top-k 操作）
+   - Why detection was difficult：为什么检测很困难
+   - What we're changing：我们正在做出的改变
+   - Acknowledgments：致谢
+   - Footnotes：脚注（4个）
 
 ### 交付物
-- **文件**: `anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md`
-- **行数**: ~320 行
-- **图片**: 2 张（已转换为原始 www-cdn.anthropic.com URL）
-- **链接**: 包含博客文章、文档、开发平台链接
+- **文件**: `anthropic-engineering-articles/markdown/10-a-postmortem-of-three-recent-issues.md`
+- **行数**: ~270 行
+- **图片**: 4 张（已转换为原始 www-cdn.anthropic.com URL）
+- **链接**: 博客、平台、邮箱等资源链接
 
 ## 需要审查的目标文件与范围
 
 ### 目标文件
 ```
-anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md
+anthropic-engineering-articles/markdown/10-a-postmortem-of-three-recent-issues.md
 ```
 
 ### 审查范围
@@ -140,6 +139,7 @@ anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-
   - 文档 (documentation, guide, cookbook)
   - 官网 (docs.anthropic.com)
   - 开发者平台 (Claude Developer Platform)
+  - 邮箱 (feedback@anthropic.com)
 
 **检查项**:
 - 链接是否可点击
@@ -149,8 +149,8 @@ anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-
 ### 7. 代码块格式审查
 
 - [ ] 保持原样，不翻译代码
-- [ ] 代码示例（如 `test_utils.py`、`src/core_logic/`）保持原样
-- [ ] 命令（如 head、tail、glob、grep）保持原样
+- [ ] 代码示例保持原样
+- [ ] 命令保持原样
 
 **检查项**:
 - 代码是否保持原样
@@ -162,31 +162,35 @@ anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-
 - [ ] 参考术语表
 
 **关键术语**:
-- Context engineering → 上下文工程
-- Prompt engineering → 提示工程
-- Context → 上下文
-- Context rot → 上下文衰退
-- Attention budget → 注意力预算
-- LLM (Large Language Model) → LLM（大型语言模型）
-- System prompts → 系统提示
-- Tools → 工具
-- Few-shot prompting → 少样本提示
-- Agentic search → 智能体搜索
-- Just-in-time context → 即时上下文
-- Progressive disclosure → 渐进式披露
-- Hybrid strategy → 混合策略
-- Long-horizon tasks → 长时间跨度任务
-- Compaction → 压缩
-- Structured note-taking → 结构化笔记
-- Agentic memory → 智能体记忆
-- Sub-agent architectures → 子智能体架构
-- MCP (Model Context Protocol) → MCP（模型上下文协议）
+- Postmortem | 事后分析/复盘
+- Infrastructure bugs | 基础设施 Bug
+- Response quality | 响应质量
+- Context window | 上下文窗口
+- Routing error | 路由错误
+- Load balancing | 负载平衡
+- Output corruption | 输出损坏
+- Token generation | 标记生成
+- XLA:TPU compiler | XLA:TPU 编译器
+- Approximate top-k | 近似 top-k
+- Exact top-k | 精确 top-k
+- Top-p sampling | Top-p 采样
+- Mixed precision arithmetic | 混合精度算术
+- bf16 (bfloat16) | bf16（16位浮点）
+- fp32 (32-bit floating point) | fp32（32位浮点）
+- Vector processor | 向量处理器
+- Distributed sort | 分布式排序
+- Vectorized operations | 向量化操作
+- Serial algorithms | 串行算法
+- Canary groups | 金丝雀组
+- Performance metrics | 性能指标
+- Sticky routing | 粘性路由
 
 ### 9. 完整性审查
 
 - [ ] 文章内容完整，无遗漏段落
 - [ ] 所有图片都已翻译说明
 - [ ] 所有章节都已翻译
+- [ ] 脚注（Footnotes）已翻译
 
 ## 评分标准
 
@@ -240,7 +244,7 @@ anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-
 ---
 
 **审查请求生成时间**: 2026-01-25
-**任务ID**: #9
-**文件**: 11-effective-context-engineering-for-ai-agents.md
+**任务ID**: #10
+**文件**: 10-a-postmortem-of-three-recent-issues.md
 
 请开始审查！
