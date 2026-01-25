@@ -1,88 +1,103 @@
-# 上一次工作进度记录
+# LAST_CLAUDE_PROGRESS.md
 
 ## 项目概况
 
-本次对话主要完成 Anthropic Engineering 文章的 HTML 到 Markdown 批量转换工作。项目位于 `anthropic-engineering-articles/` 子目录，是独立的 Git 仓库。
+本项目是 Anthropic Engineering Blog 文章的中文翻译项目，旨在为中文开发者提供高质量的技术文档翻译。项目包含 19 篇 Engineering 文章的翻译工作，采用双语对照格式（英文段落+中文翻译）。
 
 ## 工作任务
 
-- ✅ 使用 BeautifulSoup + Python 提取 HTML 的 `<article>` 内容
-- ✅ 使用 pandoc 将 HTML 转换为 Markdown
-- ✅ 编写 Python 脚本清理 HTML 属性和残留标签
-- ✅ 批量转换 16 篇文章并清理格式
-- ✅ 生成转换报告
-- ✅ 清理临时脚本文件
+本次对话完成了 Engineering 文章翻译任务清单的前 4 篇文章（ID 19-16）的翻译工作：
+- Task #1: 翻译 ID 19 - AI Resistant Technical Evaluations
+- Task #2: 翻译 ID 18 - Demystifying Evals for AI Agents
+- Task #3: 翻译 ID 17 - Advanced Tool Use
+- Task #4: 翻译 ID 16 - Effective Harnesses for Long-Running Agents
 
 ## 工作内容
 
-1. **HTML 解析**：使用 BeautifulSoup 从下载的 HTML 文件中提取 `<article>` 标签内容
+### 翻译流程
 
-2. **Pandoc 转换**：
-   - 安装 pandoc 3.1.3
-   - 使用 `pandoc -f html -t markdown` 转换提取的 article 内容
+每篇文章的翻译工作包含三个步骤：
 
-3. **格式清理**：
-   - 移除标题后的 HTML class 属性 `{#id .class ...}`
-   - 移除链接后的 target/rel 属性
-   - 清理 `<figure>`、`<figcaption>`、`<br />` 等标签
-   - 移除 SVG base64 图片
-   - 移除 [Copy] 按钮文本
-   - 清理多余空行
+1. **获取**：使用 webReader 工具从 https://www.anthropic.com/engineering 获取文章的 Markdown 内容
+2. **排版**：清理文章格式，确保 Markdown 结构正确
+3. **翻译**：采用双语对照格式，每段英文后紧跟中文翻译
 
-4. **特殊处理**：第 14 篇文章来自 claude.com，HTML 结构不同，使用 `u-rich-text-blog` 类提取内容
+### 已翻译文章概览
 
-5. **清理临时文件**：删除转换过程中生成的脚本文件
+1. **Designing AI Resistant Technical Evaluations** (ID 19)
+   - 主题：如何设计能抵御 AI 攻击的技术评估测试
+   - 字数：约 3,500 词
+   - 文件大小：33K
+
+2. **Demystifying Evals for AI Agents** (ID 18)
+   - 主题：AI 智能体评估的全面指南
+   - 字数：约 8,000 词
+   - 文件大小：75K
+
+3. **Introducing Advanced Tool Use** (ID 17)
+   - 主题：Claude 开发者平台的三个新功能
+   - 字数：约 4,500 词
+   - 文件大小：41K
+
+4. **Effective Harnesses for Long-Running Agents** (ID 16)
+   - 主题：如何让 AI 智能体在长时间任务中保持一致进展
+   - 字数：约 2,500 词
+   - 文件大小：23K
 
 ## 交付物
 
 ```
-anthropic-engineering-articles/
-├── html/
-│   ├── 01-contextual-retrieval.html
-│   ├── 02-building-effective-agents.html
-│   └── ... (共16个HTML文件)
-├── markdown/
-│   ├── 01-contextual-retrieval.md (17,465 字符)
-│   ├── 02-building-effective-agents.md (20,519 字符)
-│   ├── 03-swe-bench-sonnet.md (18,306 字符)
-│   ├── 04-claude-code-best-practices.md (34,787 字符)
-│   ├── 05-claude-think-tool.md (16,668 字符)
-│   ├── 06-multi-agent-research-system.md (27,408 字符)
-│   ├── 07-desktop-extensions.md (21,231 字符)
-│   ├── 08-a-postmortem-of-three-recent-issues.md (15,327 字符)
-│   ├── 09-effective-context-engineering-for-ai-agents.md (22,848 字符)
-│   ├── 10-building-agents-with-the-claude-agent-sdk.md (15,427 字符)
-│   ├── 11-equipping-agents-for-the-real-world-with-agent-skills.md (11,772 字符)
-│   ├── 12-writing-tools-for-agents.md (26,700 字符)
-│   ├── 13-code-execution-with-mcp.md (15,376 字符)
-│   ├── 14-beyond-permission-prompts.md (6,777 字符)
-│   ├── 15-effective-harnesses-for-long-running-agents.md (15,061 字符)
-│   ├── 16-advanced-tool-use.md (25,198 字符)
-│   └── conversion_report.txt
-└── CLAUDE.md
+anthropic-engineering-articles/markdown/
+├── 19-AI-resistant-technical-evaluations.md      (33K)
+├── 18-demystifying-evals-for-ai-agents.md       (75K)
+├── 17-advanced-tool-use.md                       (41K)
+└── 16-effective-harnesses-for-long-running-agents.md (23K)
 ```
+
+**总计**：4 个文件，约 172K（双语对照格式）
 
 ## 状态变动
 
-**完成前**：
-- 16 个 HTML 文件，未转换为 Markdown
+### 任务进度
 
-**完成后**：
-- 16 个 Markdown 文件，总计约 311,000 字符
-- 格式已清理，可供后续翻译使用
+- **已完成**：4/19 篇文章（21%）
+- **待完成**：15/19 篇文章（79%，其中 ID 01 为重复文章需跳过）
+
+### 项目状态
+
+- 从"项目初始化中"进入"Engineering 文章翻译进行中"
+- 建立了稳定的工作流程：获取 → 排版 → 翻译
+- 创建了 TaskList 跟踪系统，共 19 个任务
+
+### 版本变化
+
+- 无版本更新（本次工作不涉及版本号变更）
 
 ## 工具
 
-- **BeautifulSoup** (Python)：HTML 解析和内容提取
-- **pandoc 3.1.3**：HTML 到 Markdown 转换
-- **Python re 模块**：正则表达式清理格式
-- **bash**：批量脚本执行
+### 主要工具
 
-## 转换统计
+- **webReader**：用于获取 Engineering 文章的 Markdown 内容
+- **TaskCreate / TaskUpdate / TaskList**：任务管理系统
+- **Write**：文件写入工具
 
-| 项目 | 数值 |
-|------|------|
-| 成功转换 | 16/16 篇 |
-| 总字符数 | ~311,000 字符 |
-| 最大文件 | 04-claude-code-best-practices.md (34,787 字符) |
-| 最小文件 | 14-beyond-permission-prompts.md (6,777 字符) |
+### 技术栈
+
+- **格式**：Markdown（.md）
+- **编码**：UTF-8
+- **翻译风格**：双语对照，技术文档风格
+- **Git**：版本控制
+
+### 方法
+
+- 逐篇处理：按 ID 顺序（19→18→17→16...）逐篇翻译
+- 质量控制：每篇文章完成独立的质量检查
+- 进度跟踪：使用 TaskList 系统实时更新任务状态
+
+## 下一步计划
+
+剩余 15 篇文章待翻译，按 ID 顺序继续：
+- Task #5: ID 15 - Code Execution with MCP
+- Task #6: ID 14 - Claude Code Sandboxing
+- Task #7: ID 13 - Agent Skills
+- ...（继续至 ID 02，跳过 ID 01）
