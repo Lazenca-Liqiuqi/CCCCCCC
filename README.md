@@ -62,36 +62,60 @@ Claude Code Chinese Commentary Collection/
 
 ## 当前状态
 
+**格式规范完善期**
+
+项目已完成4篇Engineering文章的翻译（ID 19-16），并完成了格式规范制定和已翻译文章的格式修复工作。
+
 ### 已完成内容
 
-- **16 篇 Anthropic 工程文章获取**：全部完成
+- **翻译 4/19 篇文章**（21%）
+  - ID 19: Designing AI Resistant Technical Evaluations
+  - ID 18: Demystifying Evals for AI Agents
+  - ID 17: Introducing Advanced Tool Use
+  - ID 16: Effective Harnesses for Long-Running Agents
 
-- **16 篇文章内容修复**：全部完成
-  - 文章01-04：添加26个链接
-  - 文章05-08：添加2个链接+2个小节+2个作者信息+2张SVG图片+修复1个拼写错误
-  - 文章09-12：添加11个链接+2个小节+3张SVG图片
-  - 文章13-16：添加27个链接+4张图片+3个日期+1个标题
+- **格式修复 4/4 篇文章**（100%）
+  - 修复正文段落空行问题
+  - 修复标题格式（使用 `|` 分隔符）
+  - 修复代码块、列表、链接、表格等问题
 
-- **HTML到Markdown转换工具**：开发完成
-  - 创建 `html_to_md.py` 转换脚本
-  - 测试文章01转换成功（20,933字符）
+- **创建翻译格式规范**
+  - 文件：`.claude/rules/translation-format.md`
+  - 包含：标题、正文、列表、图片、表格、代码块、链接等格式规范
+  - 基于实际修复经验的常见问题清单
+  - 质量检查清单
 
-- **CHANGELOG 双语对照**：已更新至 2.1.12 版本
+- **建立 Codex 审查协作机制**
+  - 审查请求模板：`.claude/review-request.md`
+  - 审查报告：`.claude/review-report.md`
 
 ### 待进行内容
 
-- **HTML与Markdown内容比对**：使用转换工具批量验证16篇文章内容一致性
-- **翻译16篇文章**：使用 Codex 协作翻译
+- **翻译剩余 15 篇文章**（ID 15-01，跳过 ID 01）
 - 持续跟进 Claude Code 新版本更新
-- 补充更多 Anthropic 工程文章翻译
 
 ## TODO
 
-1. **HTML与Markdown内容比对**：使用转换脚本批量转换HTML文件，与现有Markdown进行逐篇比对
-2. **优化转换脚本**：修复有序列表编号、图片URL编码等问题
-3. **翻译16篇文章**：使用 Codex 协作翻译所有文章
-4. **质量检查**：执行自动化检查、术语一致性验证、人工审校
-5. **Git提交**：完成所有修复和翻译的版本控制
+### 翻译任务
+- [ ] 翻译 ID 15: Code Execution with MCP
+- [ ] 翻译 ID 14: Claude Code Sandboxing
+- [ ] 翻译 ID 13: Agent Skills
+- [ ] 翻译 ID 12: Agent SDK
+- [ ] 翻译 ID 11: Context Engineering
+- [ ] 翻译 ID 10: Postmortem
+- [ ] 翻译 ID 09: Writing Tools
+- [ ] 翻译 ID 08: Desktop Extensions
+- [ ] 翻译 ID 07: Multi-Agent Research
+- [ ] 翻译 ID 06: Claude Code Best Practices
+- [ ] 翻译 ID 05: Think Tool
+- [ ] 翻译 ID 04: SWE-Bench
+- [ ] 翻译 ID 03: Building Effective Agents
+- [ ] 翻译 ID 02: Contextual Retrieval
+- [ ] 跳过 ID 01: 重复文章
+
+### 注意事项
+- 新翻译文章应直接遵循 `.claude/rules/translation-format.md` 规范
+- 翻译完成后可请求 Codex 审查确保质量
 
 ## 资源
 
