@@ -85,7 +85,7 @@ One final major failure mode that we observed was Claude's tendency to mark a fe
 In the case of building a web app, Claude mostly did well at verifying features end-to-end once explicitly prompted to use browser automation tools and do all testing as a human user would.
 在构建 Web 应用程序的情况下，一旦明确提示使用浏览器自动化工具并像人类用户一样进行所有测试，Claude 在端到端验证功能方面大多做得很好。
 
-![Image 1: Screenshots taken by Claude through the Puppeteer MCP server as it tested the claude.ai clone.](https://example.com/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2Ff94c2257964fb2d623f1e81f874977ebfc0986bc-1920x1080.gif&w=3840&q=75)
+![Image 1: Screenshots taken by Claude through the Puppeteer MCP server as it tested the claude.ai clone.](https://www-cdn.anthropic.com/images/4zrzovbb/website/f94c2257964fb2d623f1e81f874977ebfc0986bc-1920x1080.gif)
 
 Screenshots taken by Claude through the Puppeteer MCP server as it tested the claude.ai clone.
 Claude 通过 Puppeteer MCP 服务器在测试 claude.ai 克隆时拍摄的屏幕截图。

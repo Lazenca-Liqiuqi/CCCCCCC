@@ -59,7 +59,7 @@ But token cost isn't the only issue. The most common failures are wrong tool sel
 Instead of loading all tool definitions upfront, the Tool Search Tool discovers tools on-demand. Claude only sees the tools it actually needs for the current task.
 工具搜索工具不是预先加载所有工具定义，而是按需发现工具。Claude 只看到它当前任务实际需要的工具。
 
-![Image 1: Tool Search Tool diagram](https://example.com/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2Ff359296f770706608901eadaffbff4ca0b67874c-1999x1125.png&w=3840&q=75)
+![Image 1: Tool Search Tool diagram](https://www-cdn.anthropic.com/images/4zrzovbb/website/f359296f770706608901eadaffbff4ca0b67874c-1999x1125.png)
 
 _Tool Search Tool preserves 191,300 tokens of context compared to 122,800 with Claude's traditional approach._
 _工具搜索工具保留了 191,300 个令牌的上下文，而 Claude 的传统方法为 122,800 个令牌。_
@@ -226,7 +226,7 @@ __使用编程式工具调用：__
 Instead of each tool result returning to Claude, Claude writes a Python script that orchestrates the entire workflow. The script runs in the Code Execution tool (a sandboxed environment), pausing when it needs results from your tools. When you return tool results via the API, they're processed by the script rather than consumed by the model. The script continues executing, and Claude only sees the final output.
 Claude 编写一个编排整个工作流程的 Python 脚本，而不是每个工具结果返回给 Claude。该脚本在代码执行工具（沙盒环境）中运行，在需要工具结果时暂停。当你通过 API 返回工具结果时，它们由脚本处理，而不是由模型消耗。脚本继续执行，Claude 只看到最终输出。
 
-![Image 2: Programmatic tool calling flow](https://example.com/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F65737d69a3290ed5c1f3c3b8dc873645a9dcc2eb-1999x1491.png&w=3840&q=75)
+![Image 2: Programmatic tool calling flow](https://www-cdn.anthropic.com/images/4zrzovbb/website/65737d69a3290ed5c1f3c3b8dc873645a9dcc2eb-1999x1491.png)
 
 Programmatic Tool Calling enables Claude to orchestrate tools through code rather than through individual API round-trips, allowing for parallel tool execution.
 编程式工具调用使 Claude 能够通过代码而不是通过单独的 API 往返来编排工具，从而实现并行工具执行。
