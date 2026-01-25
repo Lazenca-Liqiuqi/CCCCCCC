@@ -1,5 +1,4 @@
-# Effective Harnesses for Long-Running Agents
-长时间运行智能体的有效工具
+# Effective Harnesses for Long-Running Agents | 长时间运行智能体的有效工具
 
 As AI agents become more capable, developers are increasingly asking them to take on complex tasks requiring work that spans hours, or even days. However, getting agents to make consistent progress across multiple context windows remains an open problem.
 随着 AI 智能体变得更强大，开发人员越来越要求它们承担需要数小时甚至数天才能完成的复杂任务。然而，让智能体在多个上下文窗口中取得一致进展仍然是一个未解决的问题。
@@ -10,8 +9,7 @@ The core challenge of long-running agents is that they must work in discrete ses
 We developed a two-fold solution to enable the Claude Agent SDK to work effectively across many context windows: an __initializer agent__ that sets up the environment on the first run, and a __coding agent__ that is tasked with making incremental progress in every session, while leaving clear artifacts for the next session. You can find code examples in the accompanying quickstart.
 我们开发了一个双重解决方案，使 Claude Agent SDK 能够在许多上下文窗口中有效工作：一个在第一次运行时设置环境的 __初始化智能体__，和一个在每个会话中负责取得增量进展同时为下一个会话留下清晰工件的 __编码智能体__。你可以在附带的快速入门中找到代码示例。
 
-## The Long-Running Agent Problem
-长时间运行智能体的问题
+## The Long-Running Agent Problem | 长时间运行智能体的问题
 
 The Claude Agent SDK is a powerful, general-purpose agent harness adept at coding, as well as other tasks that require the model to use tools to gather上下文、plan, and execute. It has context management capabilities such as compaction, which enables an agent to work on a task without exhausting the context window. Theoretically, given this setup, it should be possible for an agent to continue to do useful work for an arbitrarily long time.
 Claude Agent SDK 是一个强大的、通用的智能体工具，擅长编码以及其他需要模型使用工具来收集上下文、计划和执行的任务。它具有上下文管理功能（如压缩），使智能体能够处理任务而不会耗尽上下文窗口。理论上，鉴于这种设置，智能体应该可以继续进行有用的工作任意长的时间。
@@ -32,22 +30,20 @@ When experimenting internally, we addressed these problems using a two-part solu
 在内部实验时，我们使用两部分解决方案解决了这些问题：
 
 1. Initializer agent: The very first agent session uses a specialized prompt that asks the model to set up the initial environment: an `init.sh` script, a claude-progress.txt file that keeps a log of what agents have done, and an initial git commit that shows what files were added.
-1. 初始化智能体：第一个智能体会话使用一个专门的提示，要求模型设置初始环境：一个 `init.sh` 脚本、一个记录智能体所做事情的 claude-progress.txt 文件，以及一个显示添加了哪些文件的初始 git 提交。
+初始化智能体：第一个智能体会话使用一个专门的提示，要求模型设置初始环境：一个 `init.sh` 脚本、一个记录智能体所做事情的 claude-progress.txt 文件，以及一个显示添加了哪些文件的初始 git 提交。
 
 2. Coding agent: Every subsequent session asks the model to make incremental progress, then leave structured updates.
-2. 编码智能体：每个后续会话要求模型取得增量进展，然后留下结构化更新。
+编码智能体：每个后续会话要求模型取得增量进展，然后留下结构化更新。
 
 The key insight here was finding a way for agents to quickly understand the state of work when starting with a fresh context window, which is accomplished with the claude-progress.txt file alongside the git history. Inspiration for these practices came from knowing what effective software engineers do every day.
 这里的关键洞察是找到一种方法，让智能体在从新的上下文窗口开始时快速理解工作状态，这是通过 claude-progress.txt 文件与 git 历史一起完成的。这些实践的灵感来自于了解有效的软件工程师每天所做的事情。
 
-## Environment Management
-环境管理
+## Environment Management | 环境管理
 
 In the updated Claude 4 prompting guide, we shared some best practices for multi-context window workflows, including a harness structure that uses "a different prompt for the very first context window." This "different prompt" requests that the initializer agent set up the environment with all the necessary context that future coding agents will need to work effectively. Here, we provide a deeper dive on some of the key components of such an environment.
 在更新的 Claude 4 提示指南中，我们分享了一些多上下文窗口工作流程的最佳实践，包括使用"第一个上下文窗口使用不同的提示"的工具结构。这个"不同的提示"要求初始化智能体设置环境，其中包含未来的编码智能体有效工作所需的所有必要上下文。在这里，我们将深入探讨这种环境的一些关键组件。
 
-### Feature List
-功能列表
+### Feature List | 功能列表
 
 To address the problem of the agent one-shotting an app or prematurely considering the project complete, we prompted the initializer agent to write a comprehensive file of feature requirements expanding on the user's initial prompt. In the claude.ai clone example, this meant over 200 features, such as "a user can open a new chat, type in a query, press enter, and see an AI response." These features were all initially marked as "failing" so that later coding agents would have a clear outline of what full functionality looked like.
 为了解决智能体一次性完成应用程序或过早认为项目完成的问题，我们提示初始化智能体编写一个全面的功能需求文件，扩展用户的初始提示。在 claude.ai 克隆示例中，这意味着超过 200 个功能，例如"用户可以打开新聊天、输入查询、按回车键并查看 AI 响应"。这些功能最初都被标记为"失败"，以便后来的编码智能体能够清楚地了解完整功能的样子。
@@ -70,8 +66,7 @@ To address the problem of the agent one-shotting an app or prematurely consideri
 We prompt coding agents to edit this file only by changing the status of a passes field, and we use strongly-worded instructions like "It is unacceptable to remove or edit tests because this could lead to missing or buggy functionality." After some experimentation, we landed on using JSON for this, as the model is less likely to inappropriately change or overwrite JSON files compared to Markdown files.
 我们提示编码智能体只能通过更改 passes 字段的状态来编辑此文件，并且我们使用措辞强硬的指令，如"删除或编辑测试是不可接受的，因为这可能导致功能缺失或错误。"经过一些实验，我们决定使用 JSON，因为与 Markdown 文件相比，模型不太可能不当更改或覆盖 JSON 文件。
 
-### Incremental Progress
-增量进展
+### Incremental Progress | 增量进展
 
 Given this initial environment scaffolding, the next iteration of the coding agent was then asked to work on only one feature at a time. This incremental approach turned out to be critical to addressing the agent's tendency to do too much at once.
 鉴于这种初始环境脚手架，下一轮编码智能体被要求一次只处理一个功能。这种增量方法被证明是解决智能体一次做太多事情倾向的关键。
@@ -82,8 +77,7 @@ Once working incrementally, it's still essential that the model leaves the envir
 These approaches also increased efficiency, as they eliminated the need for an agent to have to guess at what had happened and spend its time trying to get the basic app working again.
 这些方法还提高了效率，因为它们消除了智能体猜测发生了什么并花费时间试图使基本应用程序再次工作的需要。
 
-### Testing
-测试
+### Testing | 测试
 
 One final major failure mode that we observed was Claude's tendency to mark a feature as complete without proper testing. Absent explicit prompting, Claude tended to make code changes, and even do testing with unit tests or `curl` commands against a development server, but would fail recognize that the feature didn't work end-to-end.
 我们观察到的最后一个主要失败模式是 Claude 倾向于在没有适当测试的情况下将功能标记为完成。如果没有明确的提示，Claude 倾向于进行代码更改，甚至对开发服务器进行单元测试或 `curl` 命令测试，但无法认识到功能端到端不起作用。
@@ -102,20 +96,19 @@ Providing Claude with these kinds of testing tools dramatically improved perform
 Some issues remain, like limitations to Claude's vision and to browser automation tools making it difficult to identify every kind of bug. For example, Claude can't see browser-native alert modals through the Puppeteer MCP, and features relying on these modals tended to be buggier as a result.
 一些问题仍然存在，例如 Claude 的视觉和浏览器自动化工具的局限性，使得难以识别每种类型的错误。例如，Claude 无法通过 Puppeteer MCP 看到浏览器原生警报模态框，因此依赖这些模态框的功能往往更有问题。
 
-## Getting Up to Speed
-快速了解状态
+## Getting Up to Speed | 快速了解状态
 
 With all of the above in place, every coding agent is prompted to run through a series of steps to get its bearings, some quite basic but still helpful:
 有了上述所有内容，每个编码智能体都被提示运行一系列步骤来了解其方位，其中一些非常基本但仍然有帮助：
 
 1. _Run `pwd` to see the directory you're working in. You'll only be able to edit files in this directory._
-1. _运行 `pwd` 查看你正在工作的目录。你只能编辑此目录中的文件。_
+_运行 `pwd` 查看你正在工作的目录。你只能编辑此目录中的文件。_
 
 2. _Read the git logs and progress files to get up to speed on what was recently worked on._
-2. _阅读 git 日志和进度文件以快速了解最近的工作内容。_
+_阅读 git 日志和进度文件以快速了解最近的工作内容。_
 
 3. _Read the features list file and choose the highest-priority feature that's not yet done to work on._
-3. _阅读功能列表文件，选择尚未完成的最高优先级功能进行处理。_
+_阅读功能列表文件，选择尚未完成的最高优先级功能进行处理。_
 
 This approach saves Claude some tokens in every session since it doesn't have to figure out how to test the code. It also helps to ask the initializer agent to write an init.sh script that can run the development server, and then run through a basic end-to-end test before implementing a new feature.
 这种方法在每个会话中为 Claude 节省了一些令牌，因为它不必弄清楚如何测试代码。它还有助于要求初始化智能体编写一个可以运行开发服务器的 init.sh 脚本，然后在实现新功能之前运行基本的端到端测试。
@@ -154,8 +147,7 @@ Agent Failure Modes and Solutions
 Summarizing four common failure modes and solutions in long-running AI agents.
 总结长时间运行 AI 智能体的四种常见失败模式和解决方案。
 
-## Future Work
-未来工作
+## Future Work | 未来工作
 
 This research demonstrates one possible set of solutions in a long-running agent harness to enable the model to make incremental progress across many context windows. However, there remain open questions.
 这项研究展示了长时间运行智能体工具中一组可能的解决方案，使模型能够在许多上下文窗口中取得增量进展。然而，仍然存在未解决的问题。
@@ -166,8 +158,7 @@ Most notably, it's still unclear whether a single, general-purpose coding agent 
 Additionally, this demo is optimized for full-stack web app development. A future direction is to generalize these findings to other fields. It's likely that some or all of these lessons can be applied to the types of long-running agentic tasks required in, for example, scientific research or financial modeling.
 此外，此演示针对全栈 Web 应用程序开发进行了优化。未来的方向是将这些发现概括到其他领域。其中一些或所有这些教训可能适用于例如科学研究或金融建模所需的长时间运行的智能体任务类型。
 
-### Acknowledgements
-致谢
+### Acknowledgements | 致谢
 
 Written by Justin Young. Special thanks to David Hershey, Prithvi Rajasakeran, Jeremy Hadfield, Naia Bouscal, Michael Tingley, Jesse Mu, Jake Eaton, Marius Buleandara, Maggie Vo, Pedram Navid, Nadine Yasser, and Alex Notov for their contributions.
 本文由 Justin Young 撰写。特别感谢 David Hershey、Prithvi Rajasakeran、Jeremy Hadfield、Naia Bouscal、Michael Tingley、Jesse Mu、Jake Eaton、Marius Buleandara、Maggie Vo、Pedram Navid、Nadine Yasser 和 Alex Notov 的贡献。
@@ -175,8 +166,7 @@ Written by Justin Young. Special thanks to David Hershey, Prithvi Rajasakeran, J
 This work reflects the collective efforts of several teams across Anthropic who made it possible for Claude to safely do long-horizon autonomous software engineering, especially the code RL & Claude Code teams. Interested candidates who would like to contribute are welcome to apply at anthropic.com/careers.
 这项工作反映了 Anthropic 的几个团队的集体努力，他们使 Claude 能够安全地进行长时间自主软件工程，尤其是代码 RL 和 Claude Code 团队。欢迎有兴趣做出贡献的候选人申请 anthropic.com/careers。
 
-### Footnotes
-脚注
+### Footnotes | 脚注
 
 1. We refer to these as separate agents in this context only because they have different initial user prompts. The system prompt, set of tools, and overall agent harness was otherwise identical.
-1. 我们在这种情况下将它们称为独立的智能体，只是因为它们具有不同的初始用户提示。系统提示、工具集和整体智能体工具在其他方面是相同的。
+我们在这种情况下将它们称为独立的智能体，只是因为它们具有不同的初始用户提示。系统提示、工具集和整体智能体工具在其他方面是相同的。

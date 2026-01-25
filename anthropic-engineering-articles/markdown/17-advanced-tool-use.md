@@ -1,5 +1,4 @@
-# Introducing Advanced Tool Use on the Claude Developer Platform
-Claude 开发者平台高级工具使用介绍
+# Introducing Advanced Tool Use on the Claude Developer Platform | Claude 开发者平台高级工具使用介绍
 
 Claude can now discover, learn, and execute tools dynamically to enable agents that take action in the real world. Here's how.
 Claude 现在可以动态发现、学习和执行工具，以实现能够在现实世界中采取行动的智能体。以下是如何实现。
@@ -36,11 +35,9 @@ In internal testing, we've found these features have helped us build things that
 Based on our experience, we believe these features open up new possibilities for what you can build with Claude.
 根据我们的经验，我们认为这些功能为你使用 Claude 构建的东西开辟了新的可能性。
 
-## Tool Search Tool
-工具搜索工具
+## Tool Search Tool | 工具搜索工具
 
-### The Challenge
-挑战
+### The Challenge | 挑战
 
 MCP tool definitions provide important context, but as more servers connect, those tokens can add up. Consider a five-server setup:
 MCP 工具定义提供了重要的上下文，但随着更多服务器的连接，这些令牌会累积。考虑一个五服务器设置：
@@ -57,8 +54,7 @@ That's 58 tools consuming approximately 55K tokens before the conversation even 
 But token cost isn't the only issue. The most common failures are wrong tool selection and incorrect parameters, especially when tools have similar names like `notification-send-user` vs. `notification-send-channel`.
 但令牌成本并不是唯一的问题。最常见的失败是错误的工具选择和不正确的参数，尤其是当工具具有相似名称时，例如 `notification-send-user` 与 `notification-send-channel`。
 
-### Our Solution
-我们的解决方案
+### Our Solution | 我们的解决方案
 
 Instead of loading all tool definitions upfront, the Tool Search Tool discovers tools on-demand. Claude only sees the tools it actually needs for the current task.
 工具搜索工具不是预先加载所有工具定义，而是按需发现工具。Claude 只看到它当前任务实际需要的工具。
@@ -91,8 +87,7 @@ With the Tool Search Tool:
 This represents an 85% reduction in token usage while maintaining access to your full tool library. Internal testing showed significant accuracy improvements on MCP evaluations when working with large tool libraries. Opus 4 improved from 49% to 74%, and Opus 4.5 improved from 79.5% to 88.1% with Tool Search Tool enabled.
 这代表了令牌使用减少了 85%，同时保持对完整工具库的访问。内部测试显示，在使用大型工具库时，MCP 评估的准确性显著提高。Opus 4 从 49% 提高到 74%，Opus 4.5 从 79.5% 提高到 88.1%，启用了工具搜索工具。
 
-### How the Tool Search Tool Works
-工具搜索工具的工作原理
+### How the Tool Search Tool Works | 工具搜索工具的工作原理
 
 The Tool Search Tool lets Claude dynamically discover tools instead of loading all definitions upfront. You provide all your tool definitions to the API, but mark tools with `defer_loading: true` to make them discoverable on-demand. Deferred tools aren't loaded into Claude's context initially. Claude only sees the Tool Search Tool itself plus any tools with `defer_loading: false` (your most critical, frequently-used tools).
 工具搜索工具允许 Claude 动态发现工具，而不是预先加载所有定义。你向 API 提供所有工具定义，但使用 `defer_loading: true` 标记工具以使其可按需发现。延迟的工具最初不会加载到 Claude 的上下文中。Claude 只看到工具搜索工具本身以及任何带有 `defer_loading: false` 的工具（你最重要、最常用的工具）。
@@ -149,8 +144,7 @@ For MCP servers, you can defer loading entire servers while keeping specific hig
 The Claude Developer Platform provides regex-based and BM25-based search tools out of the box, but you can also implement custom search tools using embeddings or other strategies.
 Claude 开发者平台开箱即提供基于正则表达式和 BM25 的搜索工具，但你也可以使用嵌入或其他策略实现自定义搜索工具。
 
-### When to Use the Tool Search Tool
-何时使用工具搜索工具
+### When to Use the Tool Search Tool | 何时使用工具搜索工具
 
 Like any architectural decision, enabling the Tool Search Tool involves trade-offs. The feature adds a search step before tool invocation, so it delivers the best ROI when the context savings and accuracy improvements outweigh additional latency.
 与任何架构决策一样，启用工具搜索工具涉及权衡。该功能在工具调用之前添加了搜索步骤，因此当上下文节省和准确性提高超过额外延迟时，它提供最佳投资回报率。
@@ -177,11 +171,9 @@ __不太有益时：__
 - Tool definitions are compact
 - 工具定义紧凑
 
-## Programmatic Tool Calling
-编程式工具调用
+## Programmatic Tool Calling | 编程式工具调用
 
-### The Challenge
-挑战
+### The Challenge | 挑战
 
 Traditional tool calling creates two fundamental problems as workflows become more complex:
 传统工具调用在工作流变得更加复杂时会产生两个基本问题：
@@ -192,8 +184,7 @@ Traditional tool calling creates two fundamental problems as workflows become mo
 - __Inference overhead and manual synthesis__: Each tool call requires a full model inference pass. After receiving results, Claude must "eyeball" the data to extract relevant information, reason about how pieces fit together, and decide what to do next—all through natural language processing. A five tool workflow means five inference passes plus Claude parsing each result, comparing values, and synthesizing conclusions. This is both slow and error-prone.
 - __推理开销和手动综合：__ 每个工具调用都需要完整的模型推理过程。接收结果后，Claude 必须"目测"数据以提取相关信息，推理各部分如何组合在一起，并决定下一步做什么——所有这些都通过自然语言处理。五个工具的工作流程意味着五次推理过程加上 Claude 解析每个结果、比较值和综合结论。这既缓慢又容易出错。
 
-### Our Solution
-我们的解决方案
+### Our Solution | 我们的解决方案
 
 Programmatic Tool Calling enables Claude to orchestrate tools through code rather than through individual API round-trips. Instead of Claude requesting tools one at a time with each result being returned to its context, Claude writes code that calls multiple tools, processes their outputs, and controls what information actually enters its context window.
 编程式工具调用使 Claude 能够通过代码而不是通过单独的 API 往返来编排工具。Claude 编写调用多个工具、处理其输出并控制实际进入其上下文窗口的信息的代码，而不是 Claude 一次请求一个工具，每个结果都返回到其上下文。
@@ -201,8 +192,7 @@ Programmatic Tool Calling enables Claude to orchestrate tools through code rathe
 Claude excels at writing code and by letting it express orchestration logic in Python rather than through natural language tool invocations, you get more reliable, precise control flow. Loops, conditionals, data transformations, and error handling are all explicit in code rather than implicit in Claude's reasoning.
 Claude 擅长编写代码，通过让它用 Python 而不是自然语言工具调用来表达编排逻辑，你会得到更可靠、精确的控制流。循环、条件语句、数据转换和错误处理都在代码中显式，而不是在 Claude 的推理中隐式。
 
-#### Example: Budget Compliance Check
-示例：预算合规检查
+#### Example: Budget Compliance Check | 示例：预算合规检查
 
 Consider a common business task: "Which team members exceeded their Q3 travel budget?"
 考虑一个常见的业务任务："哪些团队成员超过了他们的第三季度差旅预算？"
@@ -247,22 +237,18 @@ Here's what Claude's orchestration code looks like for the budget compliance tas
 ```python
 team = await get_team_members("engineering")
 
-# Fetch budgets for each unique level
-levels = list(set(m["level"] for m in team))
+# Fetch budgets for each unique level | levels = list(set(m["level"] for m in team))
 budget_results = await asyncio.gather(*[
     get_budget_by_level(level) for level in levels
 ])
 
-# Create a lookup dictionary: {"junior": budget1, "senior": budget2, ...}
-budgets = {level: budget for level, budget in zip(levels, budget_results)}
+# Create a lookup dictionary: {"junior": budget1, "senior": budget2, ...} | budgets = {level: budget for level, budget in zip(levels, budget_results)}
 
-# Fetch all expenses in parallel
-expenses = await asyncio.gather(*[
+# Fetch all expenses in parallel | expenses = await asyncio.gather(*[
     get_expenses(m["id"], "Q3") for m in team
 ])
 
-# Find employees who exceeded their travel budget
-exceeded = []
+# Find employees who exceeded their travel budget | exceeded = []
 for member, exp in zip(team, expenses):
     budget = budgets[member["level"]]
     total = sum(e["amount"] for e in exp)
@@ -294,13 +280,10 @@ The efficiency gains are substantial:
 Production workflows involve messy data, conditional logic, and operations that need to scale. Programmatic Tool Calling lets Claude handle that complexity programmatically while keeping its focus on actionable results rather than raw data processing.
 生产工作流程涉及杂乱的数据、条件逻辑和需要扩展的操作。编程式工具调用让 Claude 能够以编程方式处理这些复杂性，同时将其重点放在可操作的结果上，而不是原始数据处理。
 
-### How Programmatic Tool Calling Works
-编程式工具调用的工作原理
+### How Programmatic Tool Calling Works | 编程式工具调用的工作原理
 
 #### 1. Mark tools as callable from code
-#### 1. 将工具标记为可从代码调用
-
-Add code_execution to tools, and set allowed_callers to opt-in tools for programmatic execution:
+#### 1. 将工具标记为可从代码调用 | Add code_execution to tools, and set allowed_callers to opt-in tools for programmatic execution:
 将 code_execution 添加到工具，并设置 allowed_callers 以选择加入编程执行的工具：
 
 ```json
@@ -332,9 +315,7 @@ The API converts these tool definitions into Python functions that Claude can ca
 API 将这些工具定义转换为 Claude 可以调用的 Python 函数。
 
 #### 2. Claude writes orchestration code
-#### 2. Claude 编写编排代码
-
-Instead of requesting tools one at a time, Claude generates Python code:
+#### 2. Claude 编写编排代码 | Instead of requesting tools one at a time, Claude generates Python code:
 Claude 生成 Python 代码，而不是一次请求一个工具：
 
 ```json
@@ -349,9 +330,7 @@ Claude 生成 Python 代码，而不是一次请求一个工具：
 ```
 
 #### 3. Tools execute without hitting Claude's context
-#### 3. 工具执行而不影响 Claude 的上下文
-
-When the code calls get_expenses(), you receive a tool request with a caller field:
+#### 3. 工具执行而不影响 Claude 的上下文 | When the code calls get_expenses(), you receive a tool request with a caller field:
 当代码调用 get_expenses() 时，你会收到一个带有 caller 字段的工具请求：
 
 ```json
@@ -371,9 +350,7 @@ You provide the result, which is processed in the Code Execution environment rat
 你提供的结果在代码执行环境中处理，而不是在 Claude 的上下文中。这个请求-响应周期对代码中的每个工具调用重复。
 
 #### 4. Only final output enters context
-#### 4. 只有最终输出进入上下文
-
-When the code finishes running, only the results of the code are returned to Claude:
+#### 4. 只有最终输出进入上下文 | When the code finishes running, only the results of the code are returned to Claude:
 当代码完成运行时，只有代码的结果返回给 Claude：
 
 ```json
@@ -389,8 +366,7 @@ When the code finishes running, only the results of the code are returned to Cla
 This is all Claude sees, not the 2000+ expense line items processed along the way.
 这就是 Claude 看到的全部内容，而不是沿途处理的 2000+ 费用行项目。
 
-### When to Use Programmatic Tool Calling
-何时使用编程式工具调用
+### When to Use Programmatic Tool Calling | 何时使用编程式工具调用
 
 Programmatic Tool Calling adds a code execution step to your workflow. This extra overhead pays off when the token savings, latency improvements, and accuracy gains are substantial.
 编程式工具调用为你的工作流程添加了一个代码执行步骤。当令牌节省、延迟改进和准确性提高很大时，这个额外开销是值得的。
@@ -419,11 +395,9 @@ __不太有益时：__
 - Running quick lookups with small responses
 - 运行具有小响应的快速查找
 
-## Tool Use Examples
-工具使用示例
+## Tool Use Examples | 工具使用示例
 
-### The Challenge
-挑战
+### The Challenge | 挑战
 
 JSON Schema excels at defining structure–types, required fields, allowed enums–but it can't express usage patterns: when to include optional parameters, which combinations make sense, or what conventions your API expects.
 JSON 模式擅长定义结构——类型、必填字段、允许的枚举——但它无法表达使用模式：何时包含可选参数，哪些组合有意义，或者你的 API 期望什么约定。
@@ -483,8 +457,7 @@ The schema defines what's valid, but leaves critical questions unanswered:
 These ambiguities can lead to malformed tool calls and inconsistent parameter usage.
 这些模糊性可能导致格式错误的工具调用和不一致的参数使用。
 
-### Our Solution
-我们的解决方案
+### Our Solution | 我们的解决方案
 
 Tool Use Examples let you provide sample tool calls directly in your tool definitions. Instead of relying on schema alone, you show Claude concrete usage patterns:
 工具使用示例允许你直接在工具定义中提供示例工具调用。你不是单独依赖模式，而是向 Claude 展示具体的用法模式：
@@ -541,8 +514,7 @@ From these three examples, Claude learns:
 In our own internal testing, tool use examples improved accuracy from 72% to 90% on complex parameter handling.
 在我们自己的内部测试中，工具使用示例在复杂参数处理上的准确性从 72% 提高到 90%。
 
-### When to Use Tool Use Examples
-何时使用工具使用示例
+### When to Use Tool Use Examples | 何时使用工具使用示例
 
 Tool Use Examples add tokens to your tool definitions, so they're most valuable when accuracy improvements outweigh the additional cost.
 工具使用示例为你的工具定义添加令牌，因此当准确性提高超过额外成本时，它们最有价值。
@@ -569,14 +541,12 @@ __不太有益时：__
 - Validation concerns better handled by JSON Schema constraints
 - 最好由 JSON 模式约束处理的验证问题
 
-## Best Practices
-最佳实践
+## Best Practices | 最佳实践
 
 Building agents that take real-world actions means handling scale, complexity, and precision simultaneously. These three features work together to solve different bottlenecks in tool use workflows. Here's how to combine them effectively.
 构建在现实世界中采取行动的智能体意味着同时处理规模、复杂性和精度。这三个功能协同工作，解决了工具使用工作流程中的不同瓶颈。以下是如何有效地组合它们。
 
-### Layer Features Strategically
-战略性分层功能
+### Layer Features Strategically | 战略性分层功能
 
 Not every agent needs to use all three features for a given task. Start with your biggest bottleneck:
 并非每个智能体都需要针对给定任务使用所有三个功能。从你最大的瓶颈开始：
@@ -594,8 +564,7 @@ This focused approach lets you address the specific constraint limiting your age
 Then layer additional features as needed. They're complementary: Tool Search Tool ensures the right tools are found, Programmatic Tool Calling ensures efficient execution, and Tool Use Examples ensure correct invocation.
 然后根据需要分层附加功能。它们是互补的：工具搜索工具确保找到正确的工具，编程式工具调用确保高效执行，工具使用示例确保正确调用。
 
-### Set Up Tool Search Tool for Better Discovery
-设置工具搜索工具以更好地发现
+### Set Up Tool Search Tool for Better Discovery | 设置工具搜索工具以更好地发现
 
 Tool search matches against names and descriptions, so clear, descriptive definitions improve discovery accuracy.
 工具搜索匹配名称和描述，因此清晰、描述性的定义提高了发现准确性。
@@ -626,8 +595,7 @@ to find specific capabilities.
 Keep your three to five most-used tools always loaded, defer the rest. This balances immediate access for common operations with on-demand discovery for everything else.
 保持你的三到五个最常用的工具始终加载，其余的延迟。这平衡了常见操作的即时访问与其他所有内容的按需发现。
 
-### Set Up Programmatic Tool Calling for Correct Execution
-设置编程式工具调用以正确执行
+### Set Up Programmatic Tool Calling for Correct Execution | 设置编程式工具调用以正确执行
 
 Since Claude writes code to parse tool outputs, document return formats clearly. This helps Claude write correct parsing logic:
 由于 Claude 编写代码来解析工具输出，因此清楚地记录返回格式。这有助于 Claude 编写正确的解析逻辑：
@@ -654,8 +622,7 @@ See below for opt-in tools that benefit from programmatic orchestration:
 - Operations safe to retry (idempotent)
 - 可以安全重试的操作（幂等）
 
-### Set Up Tool Use Examples for Parameter Accuracy
-设置工具使用示例以提高参数准确性
+### Set Up Tool Use Examples for Parameter Accuracy | 设置工具使用示例以提高参数准确性
 
 Craft examples for behavioral clarity:
 为行为清晰度制作示例：
@@ -669,8 +636,7 @@ Craft examples for behavioral clarity:
 - Focus on ambiguity (only add examples where correct usage isn't obvious from schema)
 - 专注于模糊性（仅在模式中不清楚正确用法的地方添加示例）
 
-## Getting Started
-入门
+## Getting Started | 入门
 
 These features are available in beta. To enable them, add the beta header and include the tools you need:
 这些功能在测试版中可用。要启用它们，添加测试版标头并包含你需要的工具：
@@ -704,8 +670,7 @@ These features move tool use from simple function calling toward intelligent orc
 We're excited to see what you build.
 我们很期待看到你构建的东西。
 
-## Acknowledgements
-致谢
+## Acknowledgements | 致谢
 
 Written by Bin Wu, with contributions from Adam Jones, Artur Renault, Henry Tay, Jake Noble, Nathan McCandlish, Noah Picard, Sam Jiang, and the Claude Developer Platform team. This work builds on foundational research by Chris Gorgolewski, Daniel Jiang, Jeremy Fox and Mike Lambert. We also drew inspiration from across the AI ecosystem, including Joel Pobar's LLMVM, Cloudflare's Code Mode and Code Execution as MCP. Special thanks to Andy Schumeister, Hamish Kerr, Keir Bradwell, Matt Bleifer and Molly Vorwerck for their support.
 本文由 Bin Wu 撰写，Adam Jones、Artur Renault、Henry Tay、Jake Noble、Nathan McCandlish、Noah Picard、Sam Jiang 和 Claude 开发者平台团队做出了贡献。这项工作建立在 Chris Gorgolewski、Daniel Jiang、Jeremy Fox 和 Mike Lambert 的基础研究之上。我们还从整个 AI 生态系统中汲取了灵感，包括 Joel Pobar 的 LLMVM、Cloudflare 的代码模式和作为 MCP 的代码执行。特别感谢 Andy Schumeister、Hamish Kerr、Keir Bradwell、Matt Bleifer 和 Molly Vorwerck 的支持。
