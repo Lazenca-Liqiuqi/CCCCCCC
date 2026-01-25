@@ -1,4 +1,4 @@
-# 翻译格式审查请求 - ID 16
+# 翻译格式审查请求 - ID 15
 
 ## 项目基本信息
 
@@ -6,70 +6,72 @@
 
 **项目类型**: Anthropic Engineering Blog 文章中英文双语翻译
 
-**文章**: 16-effective-harnesses-for-long-running-agents.md
-**标题**: Effective Harnesses for Long-Running Agents
+**文章**: 15-code-execution-with-mcp.md
+**标题**: Code Execution with MCP: Building More Efficient AI Agents
 
 ## 项目状态与当前任务
 
-**当前阶段**: 修复已翻译文章的格式问题
+**当前阶段**: Engineering 文章翻译进行中
 
 **任务进度**:
-- ✅ ID 19: 修复完成
-- ✅ ID 18: 格式正确，无需修复
-- ✅ ID 17: 修复完成
-- ✅ ID 16: 修复完成（待审查）
+- ✅ ID 19: 翻译完成，格式修复完成
+- ✅ ID 18: 翻译完成，格式正确
+- ✅ ID 17: 翻译完成，格式修复完成
+- ✅ ID 16: 翻译完成，格式修复完成
+- ✅ ID 15: 翻译完成（待审查）
+
+**已完成翻译**: 5/19 篇文章 (26%)
 
 ## 用户原始需求
 
-用户指出的格式问题：
-1. 图片不能显示 - 图片链接使用代理URL格式
-2. 缺少链接 - 文章中缺少某些链接
-3. 标题翻译太突兀 - 应该使用"原文 | 译文"格式
-4. 有序列表序号翻倍 - 中文行重复了序号
-5. 表格只有译文、没有原文
-
-**重要澄清**:
-- **只有标题使用 `|` 格式**
-- **正文使用换行格式，不使用 `|`**
-- **有序列表中文行删除序号**
+按照 `.claude/rules/translation-format.md` 规范进行文章翻译，确保：
+1. 标题使用 `原文 | 译文` 格式
+2. 正文使用换行格式，**不使用** `|`
+3. 英文段落和中文段落之间有空行
+4. 有序列表中文行删除序号
+5. 图片使用原始 URL（www-cdn.anthropic.com）
+6. 链接完整且可点击
+7. 表格包含中英文对照
 
 ## 本次工作内容
 
 ### 工作目标
 
-修复文章 `16-effective-harnesses-for-long-running-agents.md` 的翻译格式问题，使其符合 `.claude/rules/translation-format.md` 规范。
+翻译文章 `15-code-execution-with-mcp.md`，主题是使用 MCP 执行代码构建更高效的 AI 智能体，讨论如何减少 98.7% 的令牌消耗。
 
-### 已完成的修复
+### 文章结构
 
-**问题1：正文段落缺少空行**
-- 在所有英文段落和中文段落之间添加了空行
-- 影响范围：全文约 50+ 处
+1. **引言**: MCP 背景和问题概述
+2. **问题分析**: 工具定义过载和中间结果消耗令牌
+3. **解决方案**: 代码执行如何提高上下文效率
+4. **好处**: 渐进式披露、上下文高效结果、隐私保护、状态持久化
+5. **总结**: MCP 社区贡献
 
-**已验证正确的部分**:
-1. 标题格式：所有标题使用 `原文 | 译文` 格式 ✓
-   - `# Effective Harnesses for Long-Running Agents | 长时间运行智能体的有效工具`
-   - `## The Long-Running Agent Problem | 长时间运行智能体的问题`
-   - `### Feature List | 功能列表`
+### 已完成的翻译
 
-2. 有序列表格式：英文行有序号，中文行无序号 ✓
-   ```
-   1. _Run `pwd` to see the directory you're working in._
-   _运行 `pwd` 查看你正在工作的目录。_
-   ```
+**翻译内容**:
+- 全文约 1500+ 行中英文双语对照
+- 包含多个代码示例（TypeScript）
+- 包含 1 张图片
+- 包含有序列表和无序列表
+- 包含多个章节标题
 
-3. 图片链接：使用原始 URL（www-cdn.anthropic.com）✓
-
-4. 表格格式：表格包含中英文对照 ✓
+**格式遵循**:
+- 标题：使用 `|` 分隔符 ✓
+- 正文：使用换行格式，中英文之间有空行 ✓
+- 有序列表：英文行有序号，中文行无序号 ✓
+- 代码块：保持原样 ✓
+- 图片：使用原始 URL ✓
 
 ### 交付物
 
-待审查的文件: `anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md`
+待审查的文件: `anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md`
 
 ## 审查目标与范围
 
 ### 目标文件
 
-`/home/pc/project/Claude Code Chinese Commentary Collection/anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md`
+`/home/pc/project/Claude Code Chinese Commentary Collection/anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md`
 
 ### 参考规范
 
@@ -86,9 +88,8 @@
 
 **预期示例**:
 ```markdown
-# Effective Harnesses for Long-Running Agents | 长时间运行智能体的有效工具
-## The Long-Running Agent Problem | 长时间运行智能体的问题
-### Feature List | 功能列表
+# Code Execution with MCP: Building More Efficient AI Agents | 使用 MCP 执行代码：构建更高效的 AI 智能体
+## Excessive Token Consumption from Tools Makes Agents Less Efficient | 工具过度消耗令牌使智能体效率降低
 ```
 
 ### 2. 正文段落格式审查
@@ -100,9 +101,9 @@
 
 **预期示例**:
 ```markdown
-As AI agents become more capable, developers are increasingly asking them to take on complex tasks.
+The Model Context Protocol (MCP) is an open standard for connecting AI agents to external systems.
 
-随着 AI 智能体变得更强大，开发人员越来越要求它们承担复杂任务。
+模型上下文协议（MCP）是连接 AI 智能体与外部系统的开放标准。
 ```
 
 ### 3. 有序列表格式审查
@@ -114,49 +115,49 @@ As AI agents become more capable, developers are increasingly asking them to tak
 
 **预期示例**:
 ```markdown
-1. _Run `pwd` to see the directory you're working in._
-_运行 `pwd` 查看你正在工作的目录。_
+1. Tool definitions overload the context window;
+2. Intermediate tool results consume additional tokens.
 
-2. _Read the git logs and progress files._
-_阅读 git 日志和进度文件。_
+工具定义过载上下文窗口；
+中间工具结果消耗额外令牌。
 ```
 
-### 4. 图片链接审查
+### 4. 代码块格式审查
+
+**检查项**:
+- [ ] 代码块是否正确格式化
+- [ ] 代码示例前后是否有说明文字
+- [ ] 代码块注释是否正确
+
+**文章包含多个 TypeScript 代码示例**
+
+### 5. 图片链接审查
 
 **检查项**:
 - [ ] 图片链接是否使用原始 URL（www-cdn.anthropic.com）
 - [ ] 是否存在代理 URL（example.com/_next/image?url=...）
 - [ ] 图片说明是否有中文翻译
 
-**预期示例**:
-```markdown
-![Image 1: Screenshots...](https://www-cdn.anthropic.com/images/...)
-Claude 通过 Puppeteer MCP 服务器在测试时拍摄的屏幕截图。
-```
-
-### 5. 表格格式审查
-
-**检查项**:
-- [ ] 表格是否包含中英文对照
-- [ ] 表头和内容是否正确格式化
-
 ### 6. 链接完整性审查
 
 **检查项**:
-- [ ] 文中提到的文档、资源是否有链接
+- [ ] 文中提到的文档、资源是否有链接（如有）
 - [ ] 链接是否可点击且指向正确地址
 
-### 7. 代码块格式审查
+### 7. 翻译质量审查
 
 **检查项**:
-- [ ] 代码块是否正确格式化
-- [ ] 代码示例是否有说明
+- [ ] 专业术语翻译是否准确
+- [ ] 技术概念是否清晰传达
+- [ ] 中文表达是否自然流畅
 
-### 8. 特殊格式审查
-
-**检查项**:
-- [ ] 强调文本（粗体、斜体）是否正确
-- [ ] 分隔线 `---` 前后格式是否正确
+**关键术语**:
+- Model Context Protocol (MCP) → 模型上下文协议（MCP）
+- Token → 令牌
+- Context window → 上下文窗口
+- Tool definitions → 工具定义
+- Progressive disclosure → 渐进式披露
+- Privacy-preserving → 隐私保护
 
 ## 评分标准
 
@@ -167,7 +168,7 @@ Claude 通过 Puppeteer MCP 服务器在测试时拍摄的屏幕截图。
 | 标题格式正确性 | 10 | 全部正确=10，部分正确=5-9，大部分错误=0-4 |
 | 正文格式正确性 | 20 | 全部正确=20，部分正确=10-19，大部分错误=0-9 |
 | 列表格式正确性 | 10 | 无重复序号=10，少量问题=5-9，严重问题=0-4 |
-| 链接完整性 | 5 | 链接完整=5，部分缺失=2-4，严重缺失=0-1 |
+| 代码块格式正确性 | 5 | 格式正确=5，部分问题=2-4，严重问题=0-1 |
 | 图片链接正确性 | 5 | 全部正确=5，部分问题=2-4，严重问题=0-1 |
 
 ### 战略维度 (50分)
@@ -176,12 +177,12 @@ Claude 通过 Puppeteer MCP 服务器在测试时拍摄的屏幕截图。
 |--------|------|----------|
 | 需求匹配度 | 15 | 完全符合用户要求=15，基本符合=8-14，不符合=0-7 |
 | 格式规范一致性 | 20 | 完全符合规范=20，基本符合=10-19，不符合=0-9 |
-| 可维护性 | 10 | 便于后续翻译=10，一般=5-9，困难=0-4 |
-| 风险评估 | 5 | 低风险=5，中等风险=2-4，高风险=0-1 |
+| 翻译质量 | 10 | 高质量=10，一般=5-9，较差=0-4 |
+| 可维护性 | 5 | 便于后续使用=5，一般=2-4，困难=0-1 |
 
 ### 综合评分
 
-- **90-100分**: 通过，格式完全正确
+- **90-100分**: 通过，格式完全正确，翻译质量高
 - **75-89分**: 有条件通过，需微调
 - **60-74分**: 退回，需重新修复
 - **0-59分**: 严重问题，需全面返工
@@ -193,28 +194,30 @@ Claude 通过 Puppeteer MCP 服务器在测试时拍摄的屏幕截图。
 1. **技术维度评分** (0-50分)
 2. **战略维度评分** (0-50分)
 3. **综合评分** (0-100分)
-4. **明确建议**: 通过 / 有条件通过 / 退回 / 已正确无需修改
+4. **明确建议**: 通过 / 有条件通过 / 退回
 5. **支持论据**: 详细说明评分理由
 6. **关键发现**: 指出任何问题或改进建议
 7. **修改记录**: 如发现问题，列出需要修改的具体位置
 
 ## 特别说明
 
-**ID 16 文章特点**:
-- 包含有序列表（带斜体的步骤说明）
-- 包含代码块和代码示例
-- 包含表格（中英文对照）
-- 有图片和图片说明
-- 有脚注部分
+**ID 15 文章特点**:
+- 主题：MCP 代码执行技术
+- 包含多个 TypeScript 代码示例
+- 包含 1 张架构图
+- 包含有序列表和无序列表
+- 讨论技术效率优化（98.7% 令牌节省）
+- 包含隐私保护和状态管理内容
 
 **审查重点**:
-- 正文空行格式
-- 有序列表的斜体格式
-- 表格的中英文对照
-- 脚注格式
+- 正文段落空行格式
+- 有序列表序号格式（中文行无序号）
+- 代码示例的完整性
+- 专业术语翻译准确性
+- 技术概念传达清晰度
 
 ---
 
 **审查请求生成时间**: 2026-01-25
-**任务ID**: #24
-**文件**: 16-effective-harnesses-for-long-running-agents.md
+**任务ID**: #5
+**文件**: 15-code-execution-with-mcp.md

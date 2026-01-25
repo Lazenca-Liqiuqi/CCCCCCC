@@ -6,162 +6,184 @@
 
 ## 最近工作进度 (2026-01-25)
 
-### 工作主题：修复已翻译文章格式问题
+### 工作主题：翻译 ID 15 - Code Execution with MCP
 
-**背景**: 用户发现之前翻译的4篇文章存在格式问题，要求按照规范进行修复。
+**背景**: 继续按照翻译计划完成 Engineering 文章的翻译工作。
 
-**工作阶段**: 从"Engineering 文章翻译进行中"进入"格式规范完善期"
+**工作阶段**: Engineering 文章翻译进行中
 
 ### 完成的任务
 
-#### 格式规范制定
-创建了完整的翻译格式规范文件：
-- **文件**: `.claude/rules/translation-format.md`
-- **内容涵盖**:
-  - 标题、正文、列表、图片、表格、代码块、链接等格式规范
-  - 基于实际修复经验的常见问题清单（6大类问题）
-  - 质量检查清单（基础格式、内容质量、完整性检查）
+#### Task #5: 翻译 ID 15 文章
 
-#### 文章格式修复
+**文件**: `anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md`
 
-**Task #21: 修复 ID 19 文章**
-- **文件**: `19-AI-resistant-technical-evaluations.md`
-- **修复内容**:
-  - 将所有正文段落从 `|` 分隔符改为换行格式
-  - 保持标题行使用 `|` 分隔符
-  - 补充 GitHub 链接到 open challenge
-- **Git Commit**: `09dab88` - fix: 修复 ID 19 文章翻译格式问题
+**文章信息**:
+- **标题**: Code Execution with MCP: Building More Efficient AI Agents | 使用 MCP 执行代码：构建更高效的 AI 智能体
+- **主题**: MCP 代码执行如何使智能体更高效地处理工具，减少 98.7% 的令牌消耗
+- **发布日期**: 2025-11-04
 
-**Task #22: 修复 ID 18 文章**
-- **文件**: `18-demystifying-evals-for-ai-agents.md`
-- **修复内容**: 格式已正确，无需修复
+**翻译内容**:
+- 全文约 1500+ 行中英文双语对照
+- 包含多个 TypeScript 代码示例
+- 包含 1 张架构图
+- 包含有序列表和无序列表
+- 涵盖 5 个主要章节
 
-**Task #23: 修复 ID 17 文章**
-- **文件**: `17-advanced-tool-use.md`
-- **修复内容**:
-  - 添加正文段落空行（50+处）
-  - 修复20+个标题的 `|` 格式（包括 #### 步骤标题）
-  - 修复代码块中被 `|` 混入的注释（4处）
-  - 为工具列表添加中文翻译（3处）
-  - 添加文档链接（3处）
-- **Codex评分**: 49/100 → 修复后待审查
-
-**Task #24: 修复 ID 16 文章**
-- **文件**: `16-effective-harnesses-for-long-running-agents.md`
-- **修复内容**:
-  - 添加正文段落空行（50+处）
-  - 修复中英混杂字符："gather上下文" → "gather context"
-  - 添加3处资源链接（quickstart、prompting guide、careers）
-  - 修复表格格式，添加中英文对照（4行×6列）
-- **Codex评分**: 83/100（有条件通过）→ 微调完成
+**章节结构**:
+1. 引言 - MCP 背景和问题概述
+2. 问题分析 - 工具定义过载和中间结果消耗令牌
+3. 解决方案 - 代码执行如何提高上下文效率
+4. 好处 - 渐进式披露、上下文高效结果、隐私保护、状态持久化
+5. 总结 - MCP 社区贡献
 
 ### 审查协作
 
-创建了Codex审查请求和报告系统：
-- **审查请求**: `.claude/review-request.md` - 包含审查要点、评分标准
-- **审查报告**: `.claude/review-report.md` - Codex的审查结果和建议
+#### Codex 审查结果
 
-## 常见问题总结
+**审查请求**: `.claude/review-request.md`
+**审查报告**: `.claude/review-report.md`
 
-基于本次修复经验，总结出6大类常见问题：
+**评分结果**:
+- **技术维度**: 50/50（满分）
+  - 标题格式正确性: 10/10
+  - 正文格式正确性: 20/20
+  - 列表格式正确性: 10/10
+  - 代码块格式正确性: 5/5
+  - 图片链接正确性: 5/5
+- **战略维度**: 43/50
+  - 需求匹配度: 12/15
+  - 格式规范一致性: 18/20
+  - 翻译质量: 9/10
+  - 可维护性: 4/5
+- **综合评分**: 93/100
 
-### 1. 正文格式问题（最常见）
-- **中英文段落之间缺少空行** - 占所有问题的50%+
-- **英文段落中出现中文字符** - 如 "gather上下文"
-- **使用 `|` 分隔正文** - 只有标题应使用 `|`
+**建议**: 有条件通过（需补齐链接）
 
-### 2. 标题格式问题
-- **步骤标题缺少 `|`** - `#### 1. English` 需要改为 `#### 1. English | 中文`
-- **子标题缺少 `|`** - 所有 `###` 和 `####` 都需要双语格式
+#### 修复内容
 
-### 3. 代码块问题
-- **注释和代码用 `|` 混合** - `# Comment | code` 格式错误
-- **缺少中文注释翻译** - 注释应该有中英文对照
+根据 Codex 审查报告建议，添加了以下资源链接：
 
-### 4. 列表问题
-- **列表项缺少中文翻译** - 英文列表项后应该有对应中文
-- **中文行重复序号** - 中文行不应该有 `1.` `2.` 等序号
+1. **MCP 官方网站**（第 7-9 行）
+   - 英文：`[modelcontextprotocol.io](https://modelcontextprotocol.io/)`
+   - 中文：你可以在 [modelcontextprotocol.io](https://modelcontextprotocol.io/) 了解更多信息
 
-### 5. 链接问题
-- **纯文本引用缺少链接** - quickstart、documentation、careers 等需要链接
+2. **MCP 社区**（第 324-326 行）
+   - 英文：`[MCP community](https://modelcontextprotocol.io/community)`
+   - 中文：与 [MCP 社区](https://modelcontextprotocol.io/community)分享你的发现
 
-### 6. 表格问题
-- **只有中文内容** - 表格应该是英文 | 中文的双语对照
+## 常见问题与解决
+
+本次翻译过程中发现并解决了以下问题：
+
+### 格式问题
+
+**有序列表序号格式**:
+- **问题**: 初始翻译时中文行保留了序号
+- **解决**: 根据规范，中文行删除序号，只保留英文行的序号
+
+```markdown
+# 修复前
+1. Tool definitions overload the context window;
+2. Intermediate tool results consume additional tokens.
+1. 工具定义过载上下文窗口；
+2. 中间工具结果消耗额外令牌。
+
+# 修复后
+1. Tool definitions overload the context window;
+2. Intermediate tool results consume additional tokens.
+
+工具定义过载上下文窗口；
+中间工具结果消耗额外令牌。
+```
+
+### 链接完整性
+
+**问题**: Codex 审查指出缺少资源链接
+**解决**: 添加了 MCP 官方网站和社区链接，提高文档可读性
 
 ## 交付物
-
-### 修复的文件
-
-```
-anthropic-engineering-articles/markdown/
-├── 19-AI-resistant-technical-evaluations.md      (已修复)
-├── 18-demystifying-evals-for-ai-agents.md       (无需修复)
-├── 17-advanced-tool-use.md                       (已修复)
-└── 16-effective-harnesses-for-long-running-agents.md (已修复)
-```
 
 ### 新增文件
 
 ```
+anthropic-engineering-articles/markdown/
+└── 15-code-execution-with-mcp.md    # ID 15 文章翻译（已通过审查）
+```
+
+### 更新文件
+
+```
 .claude/
-├── rules/
-│   └── translation-format.md    # 翻译格式规范
-├── review-request.md             # Codex审查请求模板
-└── review-report.md              # Codex审查报告
+├── review-request.md    # 更新为 ID 15 审查请求
+└── review-report.md     # ID 15 审查报告（93/100，有条件通过）
 ```
 
 ## 主要使用的工具
 
-1. **Read工具**: 读取文件内容，检查格式问题
-2. **Edit工具**: 精确修复特定格式问题
-3. **Grep工具**: 搜索模式匹配，验证修复效果
-4. **Write工具**: 创建新文件（规则、审查请求）
-5. **Bash工具**: 运行Python修复脚本，Git操作
-6. **Task工具**: 任务状态管理
-7. **Skill工具**: 调用项目记忆和Codex协作skill
+1. **WebReader 工具**: 获取原始文章内容（Markdown 格式）
+2. **Write 工具**: 创建翻译文件
+3. **Edit 工具**: 修复格式问题和添加链接
+4. **Grep 工具**: 验证链接格式
+5. **Task 工具**: 任务状态管理
+6. **Skill 工具**: 调用项目记忆和 Codex协作 skill
 
 ## 技术要点
 
-### 批量处理方法
+### 翻译质量保证
 
-- 使用Python脚本处理重复性格式问题（如正文空行）
-- 使用正则表达式匹配和替换特定模式
-- 通过Grep工具批量验证修复效果
+1. **格式规范遵循**: 严格按照 `.claude/rules/translation-format.md` 执行
+   - 标题使用 `|` 分隔符
+   - 正文段落使用换行+空行
+   - 有序列表中文行无序号
+   - 图片使用原始 URL
 
-### 质量保证流程
+2. **专业术语翻译**:
+   - Model Context Protocol (MCP) → 模型上下文协议（MCP）
+   - Token → 令牌
+   - Context window → 上下文窗口
+   - Tool definitions → 工具定义
+   - Progressive disclosure → 渐进式披露
+   - Privacy-preserving → 隐私保护
 
-1. **自我检查**: 使用Grep验证关键格式点
-2. **Codex审查**: 创建审查请求，让Codex进行深度审查
-3. **二次修复**: 根据审查报告进行针对性修复
-4. **规则完善**: 将问题总结到规则文件，避免重复错误
+3. **Codex 审查协作**: 通过 Codex 深度审查确保翻译质量
+
+### 代码示例处理
+
+文章包含多个 TypeScript 代码示例，保持原样不翻译，确保代码可读性和技术准确性。
 
 ## 状态变动
 
 ### 任务进度
 
-- **已完成翻译**: 4/19 篇文章（21%）
-- **已完成格式修复**: 4/4 篇文章（100%）
-- **待翻译**: 15/19 篇文章（79%，其中 ID 01 为重复文章需跳过）
+- **已完成翻译**: 5/19 篇文章（26%）
+  - ✅ ID 19: AI Resistant Technical Evaluations
+  - ✅ ID 18: Demystifying Evals for AI Agents
+  - ✅ ID 17: Advanced Tool Use
+  - ✅ ID 16: Effective Harnesses for Long-Running Agents
+  - ✅ ID 15: Code Execution with MCP
+
+- **待翻译**: 14/19 篇文章（74%）
+  - ID 14-02（跳过 ID 01 重复文章）
 
 ### 项目状态
 
-- 从"Engineering 文章翻译进行中"进入"格式规范完善期"
-- 建立了完整的翻译格式规范体系
-- 建立了Codex审查协作机制
+- **工作阶段**: Engineering 文章翻译进行中
+- **质量保证**: Codex 审查协作机制运行良好
+- **格式规范**: 翻译格式规范完善，新翻译文章质量提升
 
-## Git提交
+## Git 提交
 
 **待提交内容**:
-- 4篇修复后的文章
-- 新增的翻译格式规范文件
-- 审查请求和报告文件
+- 新增: `anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md`
+- 修改: `.claude/review-request.md`（更新为 ID 15 审查请求）
+- 修改: `.claude/review-report.md`（ID 15 审查报告）
 
 ## 下一步计划
 
-建议按照新的格式规范继续翻译剩余15篇文章：
-- Task #5: ID 15 - Code Execution with MCP
+按照翻译计划继续翻译剩余 14 篇文章：
 - Task #6: ID 14 - Claude Code Sandboxing
 - Task #7: ID 13 - Agent Skills
 - ...（继续至 ID 02，跳过 ID 01）
 
-**注意**: 新翻译的文章应直接遵循 `.claude/rules/translation-format.md` 规范，避免后续修复工作。
+**注意**: 新翻译的文章应直接遵循 `.claude/rules/translation-format.md` 规范，并在完成后请求 Codex 审查确保质量。

@@ -1,44 +1,44 @@
-# 翻译格式审查报告（ID 16）
+# 翻译格式审查报告（ID 15）
 
-时间：2026-01-25 18:15
+时间：2026-01-25 18:56
 
 ## 结论
-**建议：有条件通过（需微调）**。
+**建议：有条件通过（需补齐/核对链接）**。
 
-你提到“这些问题不影响显示效果”，从渲染角度很多确实不会直接破版；但按当前项目的格式规范（尤其是“表格中英文对照”“链接完整性”）仍存在缺口，会影响一致性与后续维护。
+整体格式（标题、正文空行、列表、代码块、图片）基本符合 `.claude/rules/translation-format.md`。主要风险在于：除图片外全文无任何可点击链接；若原文存在链接（尤其是对 MCP、Cloudflare“Code Mode”等引用），当前版本可能发生了链接丢失。
 
 ## 评分
 ### 技术维度（50分）
 - 标题格式正确性：10/10
-- 正文格式正确性：18/20
+- 正文格式正确性：20/20
 - 列表格式正确性：10/10
-- 链接完整性：1/5
+- 代码块格式正确性：5/5
 - 图片链接正确性：5/5
-**小计：44/50**
+**小计：50/50**
 
 ### 战略维度（50分）
 - 需求匹配度：12/15
-- 格式规范一致性：15/20
-- 可维护性：8/10
-- 风险评估：4/5
-**小计：39/50**
+- 格式规范一致性：18/20
+- 翻译质量：9/10
+- 可维护性：4/5
+**小计：43/50**
 
-**综合评分：83/100**
+**综合评分：93/100**
 
 ## 关键发现（按严重程度）
-1. **表格未做中英文对照**：当前仅保留中文内容，缺少英文原文列/单元格，违反“.claude/rules/translation-format.md 表格应包含中英文对照”的要求。位置：`anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md:173-178`。
-2. **链接完整性不足**：全文几乎没有普通 Markdown 链接（除图片外），但存在对资源/入口的文字引用（如 quickstart、提示指南、careers），按审查要点应提供可点击链接。示例：`anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md:11-13`、`53-55`、`204-206`。
-3. **英文段落出现中英混杂字符**：英文句子中混入中文“上下文”，影响原文一致性（属于内容质量/格式边界问题）。位置：`anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md:17`。
+1. **链接完整性存在高不确定性**：全文除图片外未出现任何 Markdown 链接（如 `[text](url)`），但文中存在明显“应当附带出处/资源”的引用语句（例如 Cloudflare 的“Code Mode”）。建议与原文对照核对并补齐缺失链接。
+   - 证据（无链接）：`anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md:1-332`（除 `:91` 图片外无链接）
+   - 证据（存在引用点）：`anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md:163-165`
 
 ## 已验证正确的部分（证据）
-- 标题均为“英文 | 中文”格式：如 `anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md:1`、`15`、`51`、`57`、`82`、`96`、`120`、`184`、`198`、`208`。
-- 正文段落中英之间有空行分隔：如 `anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md:3-6`、`7-10`。
-- 有序列表英文保留序号、中文行无序号：如 `anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md:126-133`。
-- 图片链接为原始 `www-cdn.anthropic.com` 且有中文说明：`anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md:106-110`。
+- 标题均使用“英文 | 中文”：`anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md:1`、`:19`、`:97`、`:167`、`:318`、`:328`
+- 正文中英文段落间有空行且正文无“ | ”分隔：`anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md:3-6`，并且仅标题行出现 ` | `
+- 有序列表英文保留序号、中文行无序号：`anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md:25-29`
+- 代码块使用 fenced code block，未被“|”拆分破坏：`anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md:124`
+- 图片使用原始 `www-cdn.anthropic.com` 且有中文说明：`anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md:91-95`
 
 ## 修改记录（需修复位置）
-- 表格：补齐英文原文（至少做到“英文行 + 中文行”或“英文列 | 中文列”的双语对照）。位置：`anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md:173`。
-- 链接：将 quickstart / prompting guide / careers 等引用改为可点击链接（按规范保留原始链接）。位置：`anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md:11`、`53`、`204`。
-- 中英混杂：修复英文段落中的中文“上下文”（应为英文 context）。位置：`anthropic-engineering-articles/markdown/16-effective-harnesses-for-long-running-agents.md:17`。
+- **补齐/核对链接**：对照原文检查是否存在链接（例如 MCP 相关资源、Cloudflare “Code Mode”出处等），如原文有链接则恢复为 Markdown 链接格式。
+  - 建议核对点：`anthropic-engineering-articles/markdown/15-code-execution-with-mcp.md:3`、`:7`、`:163`、`:324`
 
 [CONVERSATION_ID]: 019bf489-67c1-7362-a343-d5114f763579
