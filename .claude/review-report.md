@@ -1,53 +1,50 @@
-# 翻译格式审查报告（ID 12）
+# 翻译格式审查报告（ID 11）
 
-时间：2026-01-25 20:09
+时间：2026-01-25 20:31
 
 ## 综合结论
-**综合评分：94/100**
+**综合评分：92/100**
 
-- 技术维度：48/50
-- 战略维度：46/50
+- 技术维度：50/50
+- 战略维度：42/50
 
 **建议：有条件通过**
 
-> 说明：多数问题不影响“显示效果”，但会影响“英文原文保真度 / 链接可追溯性 / 长期可维护性”，建议按下述位置做小幅修正。
+> 说明：整体排版与图片表现良好；主要问题集中在“中文段落未保留原文链接（可追溯性下降）”与少量术语未翻译（如 capable）。
 
 ## 技术维度评分（50分）
 - 标题格式正确性：10/10
-- 正文格式正确性：18/20
+- 正文格式正确性：20/20
 - 列表格式正确性：10/10
 - 代码块格式正确性：5/5
 - 图片链接正确性：5/5
 
 ## 战略维度评分（50分）
 - 需求匹配度：15/15
-- 格式规范一致性：18/20
+- 格式规范一致性：14/20
 - 翻译质量：8/10
 - 可维护性：5/5
 
 ## 关键发现（问题清单）
-### A. 英文原文疑似被改写/污染（影响对照可信度）
-- 英文句子存在明显语法错误，疑似并非原始英文：`anthropic-engineering-articles/markdown/12-agent-sdk.md:92`（“search previous these”）。
-- 英文句子存在重复介词/不通顺：`anthropic-engineering-articles/markdown/12-agent-sdk.md:205`（“The more in-depth in feedback the better.”）。
-- 英文中出现转义符 `\\`，会直接显示在 Markdown 文本里：`anthropic-engineering-articles/markdown/12-agent-sdk.md:252`（`"judge\\\"`）。
+### A. 中文段落未保留 Markdown 链接（影响可点击性/可追溯性）
+以下位置英文段落含链接，但中文对应段落为纯文本（未保留同一链接）：
+- `anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md:91`（中文对应：`:93`）
+- `anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md:109`（中文对应：`:111`）
+- `anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md:171`（中文对应：`:173`）
+- `anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md:207`（中文对应：`:209`）
+- `anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md:241`（中文对应：`:243`；该英文句包含 2 个链接，中文均丢失）
 
-### B. 链接保留/可追溯性不足（可能与原文不一致）
-- 提到了具体“blog post”标题但未做成可点击链接，且英文句末多了空格：`anthropic-engineering-articles/markdown/12-agent-sdk.md:129`。
-- “Learn how to make custom tools…” 以及其中文对应句为纯文本，若原文/项目规范期待给 docs 链接，建议补齐：`anthropic-engineering-articles/markdown/12-agent-sdk.md:133`、`:135`。
-
-### C. 细节排版一致性（不破版但建议修）
-- 列表项英文小标题后缺空格：`anthropic-engineering-articles/markdown/12-agent-sdk.md:39`（`__:Build` → `__: Build`）。
+### B. 少量英文词未翻译进中文（影响一致性）
+- 中文段落中出现未翻译的“capable”：`anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md:55`、`:81`、`:115`、`:235`。
 
 ## 优点（做得好的地方）
-- 标题均为“英文 | 中文”格式且层级清晰：`anthropic-engineering-articles/markdown/12-agent-sdk.md:1`、`:19`、`:33`、`:59`、`:76`、`:121`、`:189`、`:260`、`:286`、`:300`。
-- 正文中英段落严格换行，且相邻中英之间有空行分隔（未发现相邻直连）：全篇一致（抽样如 `anthropic-engineering-articles/markdown/12-agent-sdk.md:3-6`、`:21-27`、`:72-75`）。
-- 无序列表中英文均保留 `-`，并按“英文项 → 中文译文”交错：`anthropic-engineering-articles/markdown/12-agent-sdk.md:39-53`、`:223-237`、`:270-284`。
-- 5 张图片均使用原始 `www-cdn.anthropic.com` 链接且都有中文图片说明：`anthropic-engineering-articles/markdown/12-agent-sdk.md:65-66`、`:96-97`、`:151-152`、`:172-173`、`:243-244`。
-- 末尾迁移指南链接使用标准 Markdown 格式，且中英文都保留可点击链接：`anthropic-engineering-articles/markdown/12-agent-sdk.md:296`、`:298`。
+- 标题均为“英文 | 中文”格式且层级清晰：`anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md:1`、`:35`、`:61`、`:107`、`:145`、`:231`、`:245`。
+- 正文严格使用换行对照，且相邻中英段落之间有空行分隔（未发现相邻直连）。
+- 无序列表中英文均保留 `-` 并按“英文项 → 中文译文”交错：`anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md:215`、`:217`、`:219`、`:221`、`:223`、`:225`。
+- 2 张图片均使用原始 `www-cdn.anthropic.com` 链接且包含中文图片说明：`anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md:27`、`:29`、`:71`、`:73`。
 
 ## 修改建议（按优先级）
-1. 修复英文原文污染（强烈建议）：逐条校正 `anthropic-engineering-articles/markdown/12-agent-sdk.md:92`、`:205`、`:252`，确保英文与原文一致且无转义残留。
-2. 补齐/链接化被引用的资源（建议）：将 `anthropic-engineering-articles/markdown/12-agent-sdk.md:129` 中提到的“Writing effective tools for agents – with agents”做成 Markdown 链接；如原文在 `:133/:135` 处有 docs 链接，也一并补齐。
-3. 微调列表项标点与空格一致性（可选）：`anthropic-engineering-articles/markdown/12-agent-sdk.md:39`。
+1. 为中文对应段落补齐与英文一致的 Markdown 链接（建议直接复用同一 URL）：优先处理 `anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md:93`、`:111`、`:173`、`:209`、`:243`。
+2. 将中文段落中的“capable”统一译为“更强大/更有能力/更胜任”等（按全文语境选一个并统一）：`anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md:55`、`:81`、`:115`、`:235`。
 
 [CONVERSATION_ID]: 019bf489-67c1-7362-a343-d5114f763579

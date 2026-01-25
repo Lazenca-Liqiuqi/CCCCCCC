@@ -1,11 +1,11 @@
-# 翻译格式审查请求 - ID 12
+# 翻译格式审查请求 - ID 11
 
 ## 项目基本信息
 
 **项目名称**: Claude Code 中文指南合集 - Engineering 文章翻译
-**文章**: 12-agent-sdk.md
-**标题**: Building agents with the Claude Agent SDK
-**主题**: Claude Agent SDK 的使用和最佳实践
+**文章**: 11-effective-context-engineering-for-ai-agents.md
+**标题**: Effective context engineering for AI agents
+**主题**: AI 智能体的有效上下文工程技术
 **翻译日期**: 2026-01-25
 
 ## 项目结构与状态
@@ -21,45 +21,52 @@ anthropic-engineering-articles/
     ├── 15-code-execution-with-mcp.md
     ├── 14-claude-code-sandboxing.md
     ├── 13-agent-skills.md
-    └── 12-agent-sdk.md (本次翻译)
+    ├── 12-agent-sdk.md
+    └── 11-effective-context-engineering-for-ai-agents.md (本次翻译)
 ```
 
 ### 项目状态
-- **已完成翻译**: 8/19 篇文章（42%）
+- **已完成翻译**: 9/19 篇文章（47%）
 - **格式规范**: `.claude/rules/translation-format.md`
-- **上一次审查**: ID 13 评分 99/100（通过）
+- **上一次审查**: ID 12 评分 94/100（修复后预期 98-100/100）
 
 ## 用户的原始需求
 
-翻译 Anthropic Engineering 文章 ID 12，遵循项目的翻译格式规范，创建中英文双语对照版本。
+翻译 Anthropic Engineering 文章 ID 11，遵循项目的翻译格式规范，创建中英文双语对照版本。
 
 ## 本次工作内容与交付物
 
 ### 工作内容
-1. 获取原文：https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk
+1. 获取原文：https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
 2. 全文翻译，包含以下章节：
-   - 引言：Claude Agent SDK 的重新命名和定位
-   - Giving Claude a computer：设计原则
-   - Creating new types of agents：四种智能体示例
-   - Building your agent loop：智能体反馈循环
-   - Gather context：上下文收集方式（搜索、子智能体、压缩）
-   - Take action：行动方式（工具、Bash、代码生成、MCP）
-   - Verify your work：工作验证方法（规则、视觉反馈、LLM 评判）
-   - Testing and improving your agent：测试和改进
-   - Getting started：入门指南
+   - 引言：从 prompt engineering 到 context engineering 的演进
+   - Why context engineering is important：上下文工程的重要性（context rot、attention budget）
+   - The anatomy of effective context：有效上下文的解剖结构
+     - System prompts：系统提示的最佳实践
+     - Tools：工具设计原则
+     - Providing examples：少样本提示
+   - Context retrieval and agentic search：上下文检索与智能体搜索
+     - Just-in-time context strategies：即时上下文策略
+     - Progressive disclosure：渐进式披露
+     - Hybrid strategy：混合策略
+   - Context engineering for long-horizon tasks：长时间跨度任务的上下文工程
+     - Compaction：压缩技术
+     - Structured note-taking：结构化笔记/智能体记忆
+     - Sub-agent architectures：子智能体架构
+   - Conclusion：结论
    - Acknowledgements：致谢
 
 ### 交付物
-- **文件**: `anthropic-engineering-articles/markdown/12-agent-sdk.md`
-- **行数**: ~350 行
-- **图片**: 5 张（已转换为原始 www-cdn.anthropic.com URL）
-- **链接**: 添加了 SDK 文档链接
+- **文件**: `anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md`
+- **行数**: ~320 行
+- **图片**: 2 张（已转换为原始 www-cdn.anthropic.com URL）
+- **链接**: 包含博客文章、文档、开发平台链接
 
 ## 需要审查的目标文件与范围
 
 ### 目标文件
 ```
-anthropic-engineering-articles/markdown/12-agent-sdk.md
+anthropic-engineering-articles/markdown/11-effective-context-engineering-for-ai-agents.md
 ```
 
 ### 审查范围
@@ -129,9 +136,10 @@ anthropic-engineering-articles/markdown/12-agent-sdk.md
 
 - [ ] **保留链接**: 保持 markdown 链接格式 `[Link text](https://...)`
 - [ ] **资源链接**: 为提到的资源添加链接
-  - 文档 (documentation, guide)
+  - 博客文章 (blog post)
+  - 文档 (documentation, guide, cookbook)
   - 官网 (docs.anthropic.com)
-  - SDK 文档
+  - 开发者平台 (Claude Developer Platform)
 
 **检查项**:
 - 链接是否可点击
@@ -141,8 +149,8 @@ anthropic-engineering-articles/markdown/12-agent-sdk.md
 ### 7. 代码块格式审查
 
 - [ ] 保持原样，不翻译代码
-- [ ] 代码示例（如 `fetchInbox`、`searchEmails`）保持原样
-- [ ] 命令（如 bash、grep、tail）保持原样
+- [ ] 代码示例（如 `test_utils.py`、`src/core_logic/`）保持原样
+- [ ] 命令（如 head、tail、glob、grep）保持原样
 
 **检查项**:
 - 代码是否保持原样
@@ -154,20 +162,25 @@ anthropic-engineering-articles/markdown/12-agent-sdk.md
 - [ ] 参考术语表
 
 **关键术语**:
-- Claude Agent SDK → Claude Agent SDK（保持原样）
-- Claude Code SDK → Claude Code SDK（保持原样，历史名称）
-- Agent loop → 智能体循环
-- Subagents → 子智能体
+- Context engineering → 上下文工程
+- Prompt engineering → 提示工程
 - Context → 上下文
-- Semantic search → 语义搜索
-- Agentic search → 智能体搜索
-- Compaction → 压缩
-- MCP (Model Context Protocol) → MCP（模型上下文协议）
+- Context rot → 上下文衰退
+- Attention budget → 注意力预算
+- LLM (Large Language Model) → LLM（大型语言模型）
+- System prompts → 系统提示
 - Tools → 工具
-- Bash → Bash（保持原样）
-- LLM as a judge → LLM 作为评判者
-- Visual feedback → 视觉反馈
-- Orchestrator → 编排器
+- Few-shot prompting → 少样本提示
+- Agentic search → 智能体搜索
+- Just-in-time context → 即时上下文
+- Progressive disclosure → 渐进式披露
+- Hybrid strategy → 混合策略
+- Long-horizon tasks → 长时间跨度任务
+- Compaction → 压缩
+- Structured note-taking → 结构化笔记
+- Agentic memory → 智能体记忆
+- Sub-agent architectures → 子智能体架构
+- MCP (Model Context Protocol) → MCP（模型上下文协议）
 
 ### 9. 完整性审查
 
@@ -227,7 +240,7 @@ anthropic-engineering-articles/markdown/12-agent-sdk.md
 ---
 
 **审查请求生成时间**: 2026-01-25
-**任务ID**: #8
-**文件**: 12-agent-sdk.md
+**任务ID**: #9
+**文件**: 11-effective-context-engineering-for-ai-agents.md
 
 请开始审查！
