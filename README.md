@@ -17,19 +17,28 @@ Claude Code Chinese Commentary Collection 是一个专注于 Anthropic 技术文
 Claude Code Chinese Commentary Collection/
 ├── .claude/                                    # Claude Code 配置目录
 │   ├── commands/                              # 自定义命令
-│   ├── terminology.md                         # 翻译术语表
-│   └── translate_request.md                   # 翻译请求模板
+│   ├── rules/                                 # 项目规则
+│   │   └── translation-format.md              # 翻译格式规范
+│   └── review-request.md                      # 审查请求模板
 ├── anthropic-engineering-articles/            # Anthropic 工程文章翻译（独立 Git 仓库）
 │   ├── 01-contextual-retrieval.md             # 上下文检索技术
-│   ├── 02-building-effective-agents.md        # 构建有效代理
-│   ├── 04-claude-code-best-practices.md       # Claude Code 最佳实践
-│   ├── 06-how-we-built-our-multi-agent-research-system.md  # 多代理研究系统
-│   ├── 08-a-postmortem-of-three-recent-issues.md  # 三个问题的复盘
-│   ├── 09-effective-context-engineering-for-ai-agents.md  # AI 代理上下文工程
-│   ├── 10-building-agents-with-the-claude-agent-sdk.md   # 使用 Agent SDK 构建代理
-│   ├── 11-equipping-agents-for-the-real-world-with-agent-skills.md  # 为现实世界装备代理技能
-│   ├── 13-code-execution-with-mcp.md          # 使用 MCP 执行代码
-│   └── 15-effective-harnesses-for-long-running-agents.md  # 长运行代理的有效控制
+│   ├── 02-building-effective-agents.md        # 构建有效智能体
+│   ├── 03-swe-bench-sonnet.md                 # SWE-bench 基准测试
+│   ├── 04-claude-think-tool.md                # "think" 工具
+│   ├── 05-claude-code-best-practices.md       # Claude Code 最佳实践
+│   ├── 06-multi-agent-research-system.md      # 多智能体研究系统
+│   ├── 07-desktop-extensions.md               # 桌面扩展
+│   ├── 08-writing-tools-for-agents.md         # 写作工具
+│   ├── 09-a-postmortem-of-three-recent-issues.md  # 问题复盘
+│   ├── 10-effective-context-engineering-for-ai-agents.md  # 上下文工程
+│   ├── 11-agent-sdk.md                        # Agent SDK
+│   ├── 12-agent-skills.md                     # Agent 技能
+│   ├── 13-claude-code-sandboxing.md           # Claude Code 沙盒
+│   ├── 14-code-execution-with-mcp.md          # 使用 MCP 执行代码
+│   ├── 15-effective-harnesses-for-long-running-agents.md  # 长运行智能体
+│   ├── 16-advanced-tool-use.md                # 高级工具使用
+│   ├── 17-demystifying-evals-for-ai-agents.md # 评估详解
+│   └── 18-AI-resistant-technical-evaluations.md  # AI 抗拒性评估
 ├── Claude Code CHANGELOG - 双语对照.md        # Claude Code 更新日志双语版
 ├── CLAUDE.md                                  # 项目提示词
 ├── README.md                                  # 项目说明文档（本文件）
@@ -40,7 +49,7 @@ Claude Code Chinese Commentary Collection/
 
 ### 目录说明
 
-- **`.claude/`**：Claude Code 工作配置，包含术语表、翻译模板和自定义命令
+- **`.claude/`**：Claude Code 工作配置，包含规则、翻译模板和审查请求
 - **`anthropic-engineering-articles/`**：Anthropic 官方工程博客文章的中文翻译
 - **`Claude Code CHANGELOG - 双语对照.md`**：Claude Code 官方更新日志的双语对照版本
 - **项目记忆文件**：`CLAUDE.md`、`README.md`、`CHANGELOG.md`、`TASKS.json`、`LAST_CLAUDE_PROGRESS.md`
@@ -49,10 +58,11 @@ Claude Code Chinese Commentary Collection/
 
 ### 翻译工作流程
 
-1. **术语管理**：维护 `.claude/terminology.md` 确保翻译一致性
-2. **翻译模板**：使用 `.claude/translate_request.md` 规范翻译请求
+1. **术语管理**：维护 `.claude/rules/translation-format.md` 确保翻译一致性
+2. **翻译模板**：使用 `.claude/review-request.md` 规范翻译请求
 3. **双语对照**：采用原文与译文对照的格式，便于理解与学习
-4. **质量保证**：遵循术语表，确保专业术语翻译的准确性
+4. **质量保证**：遵循格式规范，确保专业术语翻译的准确性
+5. **Codex 审查**：建立审查协作机制，保证翻译质量
 
 ### 版本控制
 
@@ -62,22 +72,35 @@ Claude Code Chinese Commentary Collection/
 
 ## 当前状态
 
-**格式规范完善期**
+**翻译完成期** 🎉
 
-项目已完成4篇Engineering文章的翻译（ID 19-16），并完成了格式规范制定和已翻译文章的格式修复工作。
+项目已完成所有 18 篇 Anthropic Engineering 文章的翻译工作，文章编号统一为 ID 01-18。
 
 ### 已完成内容
 
-- **翻译 4/19 篇文章**（21%）
-  - ID 19: Designing AI Resistant Technical Evaluations
-  - ID 18: Demystifying Evals for AI Agents
-  - ID 17: Introducing Advanced Tool Use
-  - ID 16: Effective Harnesses for Long-Running Agents
+- **翻译 18/18 篇章**（100%）✅
+  - ID 01: Introducing Contextual Retrieval（上下文检索）
+  - ID 02: Building Effective Agents（构建有效的智能体）
+  - ID 03: SWE-bench Sonnet（SWE-bench 基准测试）
+  - ID 04: The "think" tool（"think" 工具）
+  - ID 05: Claude Code Best Practices（Claude Code 最佳实践）
+  - ID 06: Multi-Agent Research System（多智能体研究系统）
+  - ID 07: Desktop Extensions（桌面扩展）
+  - ID 08: Writing Tools（写作工具）
+  - ID 09: A Postmortem of Three Recent Issues（问题复盘）
+  - ID 10: Effective Context Engineering for AI Agents（上下文工程）
+  - ID 11: Building Agents with the Claude Agent SDK（Agent SDK）
+  - ID 12: Equipping Agents for the Real World with Agent Skills（Agent 技能）
+  - ID 13: Claude Code Sandboxing（Claude Code 沙盒）
+  - ID 14: Code Execution with MCP（使用 MCP 执行代码）
+  - ID 15: Effective Harnesses for Long-Running Agents（长运行智能体）
+  - ID 16: Introducing Advanced Tool Use（高级工具使用）
+  - ID 17: Demystifying Evals for AI Agents（评估详解）
+  - ID 18: Designing AI Resistant Technical Evaluations（AI 抗拒性评估）
 
-- **格式修复 4/4 篇文章**（100%）
-  - 修复正文段落空行问题
-  - 修复标题格式（使用 `|` 分隔符）
-  - 修复代码块、列表、链接、表格等问题
+- **文件编号统一**
+  - 所有文章文件重编号为 01-18
+  - Git 已识别为 rename 操作
 
 - **创建翻译格式规范**
   - 文件：`.claude/rules/translation-format.md`
@@ -89,29 +112,24 @@ Claude Code Chinese Commentary Collection/
   - 审查请求模板：`.claude/review-request.md`
   - 审查报告：`.claude/review-report.md`
 
-### 待进行内容
+### 项目里程碑
 
-- **翻译剩余 15 篇文章**（ID 15-01，跳过 ID 01）
+- 🎉 **所有 Engineering 文章翻译完成！**
+- 📚 涵盖智能体、上下文检索、MCP、Agent SDK 等核心技术
+- 🔄 文章编号统一规范
+
+### 未来计划
+
 - 持续跟进 Claude Code 新版本更新
+- 根据需要翻译新的 Engineering 文章
+- 完善项目文档和总结
 
 ## TODO
 
 ### 翻译任务
-- [ ] 翻译 ID 15: Code Execution with MCP
-- [ ] 翻译 ID 14: Claude Code Sandboxing
-- [ ] 翻译 ID 13: Agent Skills
-- [ ] 翻译 ID 12: Agent SDK
-- [ ] 翻译 ID 11: Context Engineering
-- [ ] 翻译 ID 10: Postmortem
-- [ ] 翻译 ID 09: Writing Tools
-- [ ] 翻译 ID 08: Desktop Extensions
-- [ ] 翻译 ID 07: Multi-Agent Research
-- [ ] 翻译 ID 06: Claude Code Best Practices
-- [ ] 翻译 ID 05: Think Tool
-- [ ] 翻译 ID 04: SWE-Bench
-- [ ] 翻译 ID 03: Building Effective Agents
-- [ ] 翻译 ID 02: Contextual Retrieval
-- [ ] 跳过 ID 01: 重复文章
+- ✅ 所有 18 篇 Engineering 文章翻译完成
+- 🔄 持续跟进 Claude Code 新版本更新
+- 📊 根据需要翻译新文章
 
 ### 注意事项
 - 新翻译文章应直接遵循 `.claude/rules/translation-format.md` 规范
