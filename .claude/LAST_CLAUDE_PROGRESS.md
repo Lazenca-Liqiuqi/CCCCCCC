@@ -9,19 +9,19 @@
 
 **项目名称**: Claude Code 中文指南合集 - Engineering 文章翻译
 **项目阶段**: 持续翻译期
-**当前进度**: 19/24 任务完成（79%）
-**翻译进度**: 15/18 篇文章已完成（83%）
+**当前进度**: 16/24 任务完成（67%）
+**翻译进度**: 16/18 篇文章已完成（89%）
 
 ---
 
 ## 工作任务
 
-### Task #15: 翻译 ID 05 - The "think" tool: Enabling Claude to stop and think
+### Task #16: 翻译 ID 04 - Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet
 
 **任务状态**: ✅ 已完成
 **开始时间**: 2026-01-26
 **完成时间**: 2026-01-26
-**工作类型**: 翻译 + 创建审查请求
+**工作类型**: 翻译 + 创建审查请求 + 通过审查
 
 ---
 
@@ -29,44 +29,37 @@
 
 ### 基本信息
 
-- **文件**: `anthropic-engineering-articles/markdown/05-claude-think-tool.md`
-- **标题**: The "think" tool: Enabling Claude to stop and think
-- **中文标题**: "think" 工具：让 Claude 能够停下来思考
-- **发布日期**: 2025年3月20日（2025年12月15日更新）
-- **原文 URL**: https://www.anthropic.com/engineering/claude-think-tool
+- **文件**: `anthropic-engineering-articles/markdown/04-swe-bench-sonnet.md`
+- **标题**: Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet
+- **中文标题**: 使用 Claude 3.5 Sonnet 提升 SWE-bench Verified 水平
+- **发布日期**: 2025年1月6日
+- **原文 URL**: https://www.anthropic.com/research/swe-bench-sonnet
 
 ### 文章结构
 
-**主要内容章节（9个）**：
-1. What is the "think" tool? | "think" 工具是什么？
-2. Performance on τ-Bench | τ-Bench 上的性能表现
-3. Performance Analysis | 性能分析
-4. Airline domain results | 航空领域结果
-5. Retail domain results | 零售领域结果
-6. Key Insights from τ-Bench Analysis | τ-Bench 分析的关键见解
-7. Performance on SWE-Bench | SWE-Bench 上的性能表现
-8. When to use the "think" tool | 何时使用 "think" 工具
-9. Implementation best practices | 实现最佳实践
-10. When not to use the "think" tool | 何时不使用 "think" 工具
-11. Getting started | 入门指南
-12. Conclusion | 结论
+**主要内容章节（7个）**：
+1. SWE-bench | SWE-bench 基准测试
+2. Agents | 智能体
+3. Achieving state-of-the-art | 达到最先进水平
+4. Tool Using Agent | 工具使用智能体
+5. Results | 结果
+6. Examples of agent behavior | 智能体行为示例
+7. Challenges | 挑战
+8. Acknowledgements | 致谢
 
-**子章节（2个）**：
-1. Strategic prompting with domain-specific examples | 使用领域特定示例的策略性提示
-2. Place complex guidance in the system prompt | 将复杂的指导放在系统提示中
+**子章节**：无独立子章节
 
 ### 交付物统计
 
 | 项目 | 内容 |
 |------|------|
-| **文件路径** | `anthropic-engineering-articles/markdown/05-claude-think-tool.md` |
-| **文件大小** | ~430 行 |
-| **图片数量** | 2 张 |
-| **图片格式** | 原始 www-cdn.anthropic.com URL + 独立中文说明 |
-| **表格** | 2 个（航空领域和零售领域评估结果表） |
-| **代码块** | 4 个（工具定义示例、优化提示示例） |
-| **外部链接** | 4 个（τ-Bench、SWE-Bench、扩展思考文档） |
-| **关键术语** | 40 个（4个类别：核心概念、基准测试、技术实现、领域特定） |
+| **文件路径** | `anthropic-engineering-articles/markdown/04-swe-bench-sonnet.md` |
+| **文件大小** | ~400 行 |
+| **图片数量** | 0 张 |
+| **代码块** | 8 个（Python 提示、JSON 工具规范、示例日志） |
+| **表格** | 1 个（性能对比表：49% vs 45% vs 33% vs 22%） |
+| **外部链接** | 4 个（SWE-bench、GitHub、SWE-Agent、Anthropic Research） |
+| **关键术语** | 30 个（4个类别：核心概念、工具设计、基准测试、挑战） |
 
 ---
 
@@ -74,87 +67,77 @@
 
 ### 翻译特点
 
-1. **技术深度文章**
-   - "think" 工具 vs 扩展思考的区别
-   - τ-Bench 和 SWE-Bench 基准测试结果
-   - 航空和零售领域的性能分析
-   - 实现最佳实践和使用场景指导
+1. **技术实践文章**
+   - SWE-bench 基准测试介绍与评估方法
+   - 工具使用智能体的设计理念（最小化脚手架）
+   - Bash 工具和编辑工具的完整规范
+   - 性能突破：Claude 3.5 Sonnet 达到 49% 超越之前 SOTA 的 45%
 
-2. **数据驱动内容**
-   - 详细的性能指标（pass^_k_、分数等）
-   - 统计学术语（Welch's _t_-test、_p_ < .001、_d_ = 1.47）
-   - 对比实验结果（4种配置、3种配置）
-   - 定量改进数据（54%相对改进）
+2. **代码示例丰富**
+   - Python 智能体提示模板
+   - JSON 工具规范定义（Bash Tool、Edit Tool）
+   - 完整的智能体行为日志（THOUGHT/ACTION/OBSERVATION）
+   - sklearn RidgeClassifierCV 修复案例
 
 3. **双语对照格式**
    - 标题使用 `|` 分隔符
    - 正文段落使用换行分隔
    - 有序列表：英文有序号，中文无序号
    - 无序列表：中英文逐条对照
-   - 表格：单表双语对照（Configuration | 配置 | ... | ...）
+   - 表格：单表双语对照（Model | 模型 | ...）
 
 ### 关键技术概念
 
 | 英文术语 | 中文翻译 | 类别 |
 |----------|----------|------|
-| "think" tool | "think" 工具 | 核心概念 |
-| Extended thinking | 扩展思考 | 核心概念 |
-| Agentic tool use | 智能体工具使用 | 核心概念 |
-| τ-Bench (tau-bench) | τ-Bench（tau-bench）基准测试 | 基准测试 |
-| SWE-Bench | SWE-Bench 基准测试 | 基准测试 |
-| pass^_k_ metric | pass^_k_ 指标 | 基准测试 |
-| Tool specification format | 工具规范格式 | 技术实现 |
-| System prompt | 系统提示 | 技术实现 |
-| Policy-heavy environments | 策略繁重的环境 | 核心概念 |
-| Sequential decision making | 顺序决策制定 | 核心概念 |
-| Customer service scenarios | 客户服务场景 | 领域特定 |
-| Airline domain | 航空领域 | 领域特定 |
-| Retail domain | 零售领域 | 领域特定 |
-| Policy compliance | 策略合规性 | 领域特定 |
+| SWE-bench | SWE-bench 基准测试 | 核心概念 |
+| SWE-bench Verified | SWE-bench Verified | 核心概念 |
+| Agent | 智能体 | 核心概念 |
+| Tool Using Agent | 工具使用智能体 | 核心概念 |
+| Software scaffolding | 软件脚手架 | 核心概念 |
+| Bash Tool | Bash 工具 | 核心概念 |
+| Edit Tool | 编辑工具 | 核心概念 |
+| State-of-the-art | 最先进水平 | 核心概念 |
+| Tool specification | 工具规范 | 工具设计 |
+| String replacement | 字符串替换 | 工具设计 |
+| Error-proofing | 防错 | 工具设计 |
+| Absolute path | 绝对路径 | 工具设计 |
+| Evaluation benchmark | 评估基准 | 基准测试 |
+| Unit tests | 单元测试 | 基准测试 |
+| Pull request | PR（拉取请求） | 基准测试 |
+| GitHub issues | GitHub 问题 | 基准测试 |
+| Token costs | Token 成本 | 挑战 |
+| Hidden tests | 隐藏测试 | 挑战 |
+| Multimodal capabilities | 多模态能力 | 挑战 |
 
 ---
 
 ## Codex 审查协作
 
-### 审查请求创建
+### 审查结果
 
-**文件**: `.claude/review-request.md`
-**审查内容**: 全文翻译格式与质量审查请求
-**关键术语表**: 40 个术语（4个类别）
+**文件**: `.claude/review-report.md`
+**审查状态**: ✅ 通过（可以合并）
+**综合评分**: **94 / 100**
 
-### 审查请求要点
+### 审查修复要点
 
-1. **格式规范检查**：
-   - 标题格式（所有级别使用 `|` 分隔符）
-   - 正文段落（换行分隔，中英文之间有空行）
-   - 列表格式（有序/无序列表双语对照）
-   - 图片格式（原始 URL + 独立中文说明）
-   - 表格格式（单表双语对照）
-   - 代码块（保持英文）
-   - 链接格式（Sources 区域中文对照）
+1. **表格格式** ✅
+   - 单表双语对照
+   - 列数一致
+   - 位置：`04-swe-bench-sonnet.md:195`
 
-2. **内容质量检查**：
-   - 术语一致性（"think" 工具 vs 扩展思考）
-   - 翻译准确性（技术概念、性能数据）
-   - 可读性（中文表达流畅）
-   - 完整性（所有章节、图片、表格）
+2. **Sources 区域** ✅
+   - 链接可点击
+   - 双语分行（保留 `-` 符号）
+   - 位置：`04-swe-bench-sonnet.md:410`
 
-3. **特殊注意事项**：
-   - Extended thinking update 部分双语格式
-   - 技术概念区分（"think" 工具 vs 扩展思考）
-   - 数据表达（性能指标、统计学术语）
-   - 代码示例（JSON 定义、优化提示）
+### 审查评分明细
 
-### 预期评分
-
-| 评分维度 | 预期分数 |
+| 评分维度 | 实际分数 |
 |----------|----------|
-| **综合评分** | **90-95/100** |
-| **建议状态** | **通过（预期）** |
-| **技术维度** | **45-48/50** |
-| **战略维度** | **45-47/50** |
-
-**注**：本次仅创建了审查请求，未实际调用 Codex 进行审查。
+| **综合评分** | **94/100** |
+| **建议状态** | **通过（可以合并）** |
 
 ---
 
@@ -163,27 +146,26 @@
 ### 翻译文件
 
 ```
-anthropic-engineering-articles/markdown/05-claude-think-tool.md
+anthropic-engineering-articles/markdown/04-swe-bench-sonnet.md
 ```
 
 ### 审查文件
 
 ```
 .claude/review-request.md   (第一轮审查请求)
+.claude/review-report.md    (审查报告：94/100 通过)
 ```
 
 ### 文件统计
 
 | 指标 | 数值 |
 |------|------|
-| 总行数 | ~430 行 |
-| 主要章节 | 9 个 |
-| 子章节 | 2 个 |
-| 图片 | 2 张（全部添加独立中文说明） |
-| 表格 | 2 张（单表双语对照） |
-| 代码块 | 4 个（保持英文） |
+| 总行数 | ~400 行 |
+| 主要章节 | 7 个 |
+| 代码块 | 8 个（保持英文） |
+| 表格 | 1 张（单表双语对照） |
 | 外部链接 | 4 个 |
-| 关键术语 | 40 个（4个类别） |
+| 关键术语 | 30 个（4个类别） |
 
 ---
 
@@ -193,9 +175,9 @@ anthropic-engineering-articles/markdown/05-claude-think-tool.md
 
 | 项目 | 之前 | 现在 |
 |------|------|------|
-| 已完成翻译 | 14/18 | **15/18** |
-| 完成百分比 | 78% | **83%** |
-| 待翻译 | 4 篇 | **3 篇** |
+| 已完成翻译 | 15/18 | **16/18** |
+| 完成百分比 | 83% | **89%** |
+| 待翻译 | 3 篇 | **2 篇** |
 
 ### 已完成文章列表（ID 降序）
 
@@ -213,17 +195,17 @@ anthropic-engineering-articles/markdown/05-claude-think-tool.md
 12. ✅ ID 08: Desktop Extensions
 13. ✅ ID 07: Multi-Agent Research System
 14. ✅ ID 06: Claude Code Best Practices
-15. ✅ **ID 05: The "think" tool** ⬅️ 本次完成
+15. ✅ ID 05: The "think" tool
+16. ✅ **ID 04: SWE-bench Sonnet** ⬅️ 本次完成
 
 ---
 
 ## 剩余任务
 
-### 待翻译文章（4个任务，3篇文章）
+### 待翻译文章（3个任务，2篇文章）
 
 | 任务ID | 文章ID | 标题 |
 |--------|--------|------|
-| #16 | ID 04 | SWE-Bench |
 | #17 | ID 03 | Building Effective Agents |
 | #18 | ID 02 | Contextual Retrieval |
 | #19 | ID 01 | 跳过（重复文章） |
@@ -242,27 +224,28 @@ anthropic-engineering-articles/markdown/05-claude-think-tool.md
 - **TaskUpdate**: 更新任务状态
 - **TaskList**: 检查任务完成情况
 - **Skill**: 调用项目记忆和 Codex 协作 skill
+- **Read**: 读取审查报告
 
 ### 技术栈
 
 - 项目管理: 内置 Task 工具
 - 翻译格式: 自定义双语对照规范
-- 质量保证: Codex 审查协作机制（本次仅创建请求）
+- 质量保证: Codex 审查协作机制
 
 ---
 
 ## 总结
 
-本次任务成功完成了 ID 05 "The 'think' tool: Enabling Claude to stop and think" 文章的翻译工作，并创建了完整的 Codex 审查请求。这是一篇技术深度较高的文章，详细介绍了 "think" 工具与扩展思考的区别、在 τ-Bench 和 SWE-Bench 上的性能表现、以及实现最佳实践。
+本次任务成功完成了 ID 04 "Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet" 文章的翻译工作，并通过了 Codex 审查（评分 94/100）。这是一篇技术实践文章，详细介绍了 SWE-bench 基准测试、工具使用智能体的设计理念、以及 Claude 3.5 Sonnet 在该基准上达到 49% 的突破性表现。
 
 **关键特点**：
-1. **技术概念区分**：清晰区分了 "think" 工具和扩展思考两个不同概念
-2. **数据驱动**：包含详细的性能指标和统计学术语
-3. **实用指导**：提供了何时使用、何时不使用、以及如何实现的具体建议
-4. **格式规范**：严格按照双语对照格式创建，预期评分 90-95/100
+1. **智能体设计理念**：强调最小化脚手架，给予模型最大控制权
+2. **代码示例丰富**：包含完整的工具规范定义和智能体行为日志
+3. **性能突破**：49% 超越之前 SOTA 的 45%，展示了 Claude 3.5 Sonnet 的强大能力
+4. **格式规范**：严格按照双语对照格式创建，通过审查评分 94/100
 
-项目整体进度达到 83%（15/18），剩余3篇文章待翻译（ID 04, 03, 02），继续稳步推进中。
+项目整体进度达到 89%（16/18），剩余2篇文章待翻译（ID 03, 02），接近完成阶段。
 
 ---
 
-**下次会话建议**: 继续进行 Task #16 - ID 04 "SWE-Bench" 翻译
+**下次会话建议**: 继续进行 Task #17 - ID 03 "Building Effective Agents" 翻译
