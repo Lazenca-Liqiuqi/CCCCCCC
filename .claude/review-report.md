@@ -1,21 +1,27 @@
-# 翻译格式审查报告（ID04 - 修复后复审）
+# 翻译格式审查报告（ID03 - 修复后复审）
 
-时间：2026-01-26 20:38  
-审查目标：`anthropic-engineering-articles/markdown/04-swe-bench-sonnet.md`
+时间：2026-01-26 21:33  
+审查目标：`anthropic-engineering-articles/markdown/03-building-effective-agents.md`
 
 ## 结论
 
 **建议：通过（可以合并）**  
-**综合评分：94 / 100**
+**综合评分：93 / 100**
 
-本轮修复了文章中仅存的结构性格式问题：结果表格已从“列数不一致/缺少双语列配对”调整为单表双语对照且列数一致；Sources 区域已从“单行用 `|` 拼接双语”改为逐条中英两行（均保留 `-`），避免正文使用 `|` 分隔。其余标题、段落、列表、代码块均符合 `.claude/rules/translation-format.md`。
+本轮已按 `.claude/rules/translation-format.md` 的核心规则完成结构性修复：全篇无序列表已改为逐条中英对照（中英两行均保留 `-`，并保持层级缩进一致）；总结段落的有序列表中文行已去序号并逐条紧随英文项；Sources 已补齐中文可点击链接行；同时为 Model Context Protocol 补齐可点击链接，便于读者追溯原始资源。标题、段落分隔、图片域名与中文说明均通过校验。
 
 ## 关键修复点（已验证）
 
-1) **表格：单表双语对照 + 列数一致**
-- 结果表：`04-swe-bench-sonnet.md:195`
+1) **无序列表：逐条中英对照（包含嵌套列表）**
+- Workflows vs Agents 定义：`03-building-effective-agents.md:17`
+- 框架列表：`03-building-effective-agents.md:42`
+- 并行化示例（含嵌套条目）：`03-building-effective-agents.md:162`
 
-2) **Sources：链接保持可点击，双语分行且保留 `-`**
-- Sources：`04-swe-bench-sonnet.md:410`
+2) **有序列表：中文行去序号并紧随英文项**
+- Summary 三原则：`03-building-effective-agents.md:282`
+
+3) **链接：补齐可点击链接 / Sources 双语链接**
+- MCP（Model Context Protocol）链接：`03-building-effective-agents.md:82`
+- Sources：`03-building-effective-agents.md:398`
 
 [CONVERSATION_ID]: 019bf9a0-6b67-7203-bd45-94da66f8a005

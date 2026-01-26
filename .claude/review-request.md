@@ -4,29 +4,40 @@
 
 | 项目 | 内容 |
 |------|------|
-| **文件** | `04-swe-bench-sonnet.md` |
-| **标题** | Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet |
-| **中文标题** | 使用 Claude 3.5 Sonnet 提升 SWE-bench Verified 水平 |
-| **发布日期** | 2025年1月6日 |
-| **原文 URL** | https://www.anthropic.com/research/swe-bench-sonnet |
+| **文件** | `03-building-effective-agents.md` |
+| **标题** | Building effective agents |
+| **中文标题** | 构建有效的智能体 |
+| **发布日期** | 2024年12月19日 |
+| **原文 URL** | https://www.anthropic.com/research/building-effective-agents |
 | **审查状态** | 第一轮审查 |
 
 ---
 
 ## 文章结构 | Article Structure
 
-### 主要章节（7个）
-1. SWE-bench | SWE-bench 基准测试
-2. Agents | 智能体
-3. Achieving state-of-the-art | 达到最先进水平
-4. Tool Using Agent | 工具使用智能体
-5. Results | 结果
-6. Examples of agent behavior | 智能体行为示例
-7. Challenges | 挑战
-8. Acknowledgements | 致谢
+### 主要章节（8个）
+
+1. What are agents? | 什么是智能体？
+2. When (and when not) to use agents | 何时（以及何时不）使用智能体
+3. When and how to use frameworks | 何时以及如何使用框架
+4. Building blocks, workflows, and agents | 构建模块、工作流和智能体
+   - Building block: The augmented LLM | 构建模块：增强型 LLM
+   - Workflow: Prompt chaining | 工作流：提示链
+   - Workflow: Routing | 工作流：路由
+   - Workflow: Parallelization | 工作流：并行化
+   - Workflow: Orchestrator-workers | 工作流：编排器-工作者
+   - Workflow: Evaluator-optimizer | 工作流：评估器-优化器
+   - Agents | 智能体
+5. Combining and customizing these patterns | 组合和定制这些模式
+6. Summary | 总结
+7. Appendix 1: Agents in practice | 附录 1：实践中的智能体
+8. Appendix 2: Prompt engineering your tools | 附录 2：提示工程你的工具
 
 ### 子章节
-无独立子章节
+
+- Acknowledgements | 致谢
+- A. Customer support | A. 客户支持
+- B. Coding agents | B. 编码智能体
 
 ---
 
@@ -34,66 +45,74 @@
 
 | 项目 | 数值 |
 |------|------|
-| **总行数** | ~400 行 |
-| **主要章节** | 7 个 |
-| **图片数量** | 0 张 |
-| **代码块** | 8 个（Python 提示、JSON 工具规范、示例日志） |
-| **表格** | 1 个（性能对比表） |
-| **外部链接** | 4 个（SWE-bench、GitHub、SWE-Agent、Anthropic Research） |
+| **总行数** | ~600 行 |
+| **主要章节** | 8 个 |
+| **图片数量** | 8 张（流程图和架构图） |
+| **代码块** | 0 个 |
+| **表格** | 0 个 |
+| **外部链接** | 5 个（Anthropic Research、cookbook、框架链接） |
 
 ---
 
 ## 关键术语表 | Key Terminology
 
-### 核心概念术语（10个）
+### 核心概念术语（12个）
 
 | 英文术语 | 中文翻译 |
 |----------|----------|
-| SWE-bench | SWE-bench 基准测试 |
-| SWE-bench Verified | SWE-bench Verified |
 | Agent | 智能体 |
-| Tool Using Agent | 工具使用智能体 |
-| Software scaffolding | 软件脚手架 |
-| Bash Tool | Bash 工具 |
-| Edit Tool | 编辑工具 |
-| State-of-the-art | 最先进水平 |
-| Context length | 上下文长度 |
+| Agentic systems | 智能体系统 |
+| Workflow | 工作流 |
+| Augmented LLM | 增强型 LLM |
+| LLM (Large Language Model) | LLM（大语言模型） |
+| Tool use | 工具使用 |
+| Retrieval | 检索 |
+| Memory | 记忆 |
 | Ground truth | 真实答案 |
+| Orchestrator | 编排器 |
+| Worker | 工作者 |
+| Autonomy | 自主性 |
 
-### 工具设计术语（8个）
-
-| 英文术语 | 中文翻译 |
-|----------|----------|
-| Tool specification | 工具规范 |
-| Tool schema | 工具模式 |
-| Input schema | 输入模式 |
-| String replacement | 字符串替换 |
-| Error-proofing | 防错 |
-| Absolute path | 绝对路径 |
-| Relative path | 相对路径 |
-| Command enumeration | 命令枚举 |
-
-### 基准测试术语（7个）
+### 工作流模式术语（10个）
 
 | 英文术语 | 中文翻译 |
 |----------|----------|
-| Evaluation benchmark | 评估基准 |
-| Unit tests | 单元测试 |
-| Pull request | PR（拉取请求） |
-| GitHub issues | GitHub 问题 |
-| Repository checkout | 代码仓库检出 |
-| Test suite | 测试套件 |
-| Completion rate | 完成率 |
+| Prompt chaining | 提示链 |
+| Routing | 路由 |
+| Parallelization | 并行化 |
+| Sectioning | 分节 |
+| Voting | 投票 |
+| Orchestrator-workers | 编排器-工作者 |
+| Evaluator-optimizer | 评估器-优化器 |
+| Gate | 门 |
+| Checkpoint | 检查点 |
+| Blocker | 障碍 |
 
-### 挑战与问题术语（5个）
+### 框架与工具术语（8个）
 
 | 英文术语 | 中文翻译 |
 |----------|----------|
-| Token costs | Token 成本 |
-| Hidden tests | 隐藏测试 |
-| Multimodal capabilities | 多模态能力 |
-| Model hallucinations | 模型幻觉 |
-| Low-hanging fruit | 低垂果实（容易实现的改进） |
+| LangGraph | LangGraph |
+| Amazon Bedrock | Amazon Bedrock |
+| Rivet | Rivet |
+| Vellum | Vellum |
+| Model Context Protocol | 模型上下文协议 (MCP) |
+| Agent-computer interface | 智能体-计算机接口 (ACI) |
+| Poka-yoke | 防错 |
+| Guardrails | 防护栏 |
+
+### 开发实践术语（8个）
+
+| 英文术语 | 中文翻译 |
+|----------|----------|
+| Sandbox | 沙盒 |
+| Iteration | 迭代 |
+| Evaluation | 评估 |
+| Feedback loop | 反馈循环 |
+| Human oversight | 人工监督 |
+| Usage-based pricing | 基于使用量的定价 |
+| Human-computer interface | 人机交互界面 (HCI) |
+| Docstring | 文档字符串 |
 
 ---
 
@@ -102,8 +121,8 @@
 ### 格式规范检查
 
 1. **标题格式**：
-   - 所有级别的标题（#、##、###）使用 `|` 分隔符
-   - 代码块内的标题保持原样（如 THOUGHT、ACTION、OBSERVATION）
+   - 所有级别的标题（#、##、###、####）使用 `|` 分隔符
+   - 确保标题层级正确（# → ## → ### → ####）
 
 2. **正文段落**：
    - 使用换行分隔，中英文段落之间有空行
@@ -111,37 +130,36 @@
    - 中文段落独立成段
 
 3. **列表格式**：
-   - 有序列表：英文有序号（1. 2. 3.），中文无序号
    - 无序列表：中英文都有 `-` 符号且逐条对照
+   - 嵌套列表：保持缩进格式一致
    - 列表项之间应有空行分隔
 
-4. **表格格式**：
-   - 性能对比表格使用单表双语对照
-   - 表头使用 "英文 | 中文" 格式
-   - 确保所有列都有双语对照
+4. **图片格式**：
+   - 使用原始图片链接（www-cdn.anthropic.com）
+   - 每张图片后面有中文说明
+   - 禁止使用代理 URL（_next/image）
 
-5. **代码块**：
-   - 保持英文不变
-   - 代码注释保持英文
-   - 不使用 `|` 混合注释和代码
-
-6. **链接格式**：
+5. **链接格式**：
    - 保留原始链接
    - Sources 区域添加中文链接行
    - 确保所有链接可点击
 
+6. **特殊格式**：
+   - `__text__` 加粗格式保持一致
+   - 附录章节编号（A. B.）保持一致
+
 ### 内容质量检查
 
 1. **术语一致性**：
-   - SWE-bench 和 SWE-bench Verified 术语是否一致
    - Agent 统一翻译为"智能体"
-   - Tool 统一翻译为"工具"
-   - Scaffolding 统一翻译为"脚手架"
+   - Workflow 统一翻译为"工作流"
+   - LLM 保持原文或翻译为"大语言模型"
+   - Framework 翻译为"框架"
 
 2. **翻译准确性**：
-   - 技术概念是否准确传达
-   - 性能数据（49%、45%、33%、22%）是否正确
-   - 代码示例和配置是否准确
+   - 技术概念是否准确传达（agentic systems、orchestrator-workers、evaluator-optimizer）
+   - 工作流模式的描述是否清晰
+   - 框架名称是否正确（LangGraph、Rivet、Vellum）
 
 3. **可读性**：
    - 中文表达流畅自然
@@ -150,67 +168,68 @@
 
 4. **完整性**：
    - 所有章节完整无遗漏
-   - 所有代码块完整
-   - 表格完整
+   - 8 张图片完整
+   - 附录内容完整
    - Sources 区域完整
 
 ### 特殊注意事项
 
-1. **技术概念区分**：
-   - SWE-bench vs SWE-bench Verified 的区别
-   - Agent（智能体）vs Model（模型）的区别
-   - Tool Using Agent 的设计理念
+1. **架构概念区分**：
+   - Agentic systems（智能体系统）vs workflows（工作流）vs agents（智能体）的准确区分
+   - Orchestrator-workers 与 parallelization 的关键区别（灵活性 vs 预定义）
+   - Evaluator-optimizer 与 prompt chaining 的区别（循环反馈 vs 线性步骤）
 
-2. **代码示例**：
-   - Python 提示模板保持英文
-   - JSON 工具规范保持英文
-   - 智能体行为示例日志保持英文（THOUGHT/ACTION/OBSERVATION）
+2. **工作流模式**：
+   - 6 种工作流模式的准确描述
+   - 每种模式的适用场景和示例
+   - 模式之间的差异和选择标准
 
-3. **数据表达**：
-   - 性能百分比保持原格式（49%、45%等）
-   - 技术参数保持原格式（200k context length）
+3. **框架建议**：
+   - 直接使用 LLM API 的建议
+   - 框架的优缺点说明
+   - 抽象层的理解要求
 
-4. **链接资源**：
-   - SWE-bench 官方网站链接
-   - SWE-bench GitHub 链接
-   - SWE-Agent 框架链接
-   - Anthropic Research 链接
+4. **设计原则**：
+   - 三个核心原则（简单性、透明度、ACI）
+   - HCI 与 ACI 的类比
+   - Poka-yoke（防错）设计理念
 
-5. **列表内容**：
-   - SWE-bench 受欢迎的三个原因
-   - 智能体面临的四个挑战
+5. **实践案例**：
+   - 客户支持场景的 4 个要点
+   - 编码智能体的 4 个优势
+   - SWE-bench 基准测试提及
 
 ---
 
 ## 质量检查清单 | Quality Checklist
 
 ### 基础格式
-- [ ] 所有标题（#、##、###）使用 `|` 分隔符
+- [ ] 所有标题（#、##、###、####）使用 `|` 分隔符
 - [ ] 正文段落使用换行，不使用 `|`
 - [ ] 英文段落和中文段落之间有空行
-- [ ] 有序列表中文行无序号
 - [ ] 无序列表中英文逐条对照
+- [ ] 嵌套列表缩进一致
 
 ### 内容质量
-- [ ] 表格包含中英文对照
+- [ ] 图片使用原始 URL（www-cdn.anthropic.com）
 - [ ] 链接保持可点击状态
-- [ ] 代码块注释不与代码混合
-- [ ] 代码块保持英文
+- [ ] `__text__` 加粗格式正确
+- [ ] 术语翻译一致
 
 ### 完整性检查
-- [ ] 所有7个主要章节完整
-- [ ] 8个代码块保持英文
-- [ ] 1个表格有中文对照
+- [ ] 所有8个主要章节完整
+- [ ] 2个附录完整（实践中的智能体、提示工程你的工具）
+- [ ] 8张图片完整
 - [ ] Sources 区域有中文对照
 - [ ] 英文段落中没有中文字符
 - [ ] 中文段落翻译完整，无遗漏
 
 ### 术语一致性
-- [ ] SWE-bench 翻译一致
 - [ ] Agent 翻译一致（智能体）
-- [ ] Tool 翻译一致（工具）
-- [ ] Scaffolding 翻译一致（脚手架）
-- [ ] 性能数据表达一致
+- [ ] Workflow 翻译一致（工作流）
+- [ ] Orchestrator 翻译一致（编排器）
+- [ ] Evaluator-optimizer 翻译一致（评估器-优化器）
+- [ ] Framework 翻译一致（框架）
 
 ---
 
@@ -227,18 +246,18 @@
 - 严格按照格式规范创建，格式问题较少
 - 技术内容准确，术语翻译一致
 - 双语对照完整，章节结构清晰
-- 代码块、表格、链接格式正确
+- 图片、链接格式正确
 - Sources 区域包含中文对照
 
 ---
 
 ## 特别说明 | Special Notes
 
-1. **首次翻译**：这是 ID 04 的首次翻译，无修复历史
+1. **首次翻译**：这是 ID 03 的首次翻译，无修复历史
 2. **格式规范**：已严格按照 `.claude/rules/translation-format.md` 创建
-3. **技术准确性**：已确保技术概念和数据准确性
-4. **完整性**：所有章节、代码块、表格已完整翻译
-5. **代码块处理**：所有代码块（Python、JSON、日志）保持英文不变
+3. **技术准确性**：已确保技术概念和架构模式准确性
+4. **完整性**：所有章节、附录、图片已完整翻译
+5. **图片处理**：所有 8 张图片使用原始 URL（www-cdn.anthropic.com）
 
 **会话 ID**: 当前会话
 **请求时间**: 2026-01-26

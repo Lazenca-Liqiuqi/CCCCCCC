@@ -9,14 +9,14 @@
 
 **项目名称**: Claude Code 中文指南合集 - Engineering 文章翻译
 **项目阶段**: 持续翻译期
-**当前进度**: 16/24 任务完成（67%）
-**翻译进度**: 16/18 篇文章已完成（89%）
+**当前进度**: 17/24 任务完成（71%）
+**翻译进度**: 17/18 篇文章已完成（94%）
 
 ---
 
 ## 工作任务
 
-### Task #16: 翻译 ID 04 - Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet
+### Task #17: 翻译 ID 03 - Building effective agents
 
 **任务状态**: ✅ 已完成
 **开始时间**: 2026-01-26
@@ -29,37 +29,40 @@
 
 ### 基本信息
 
-- **文件**: `anthropic-engineering-articles/markdown/04-swe-bench-sonnet.md`
-- **标题**: Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet
-- **中文标题**: 使用 Claude 3.5 Sonnet 提升 SWE-bench Verified 水平
-- **发布日期**: 2025年1月6日
-- **原文 URL**: https://www.anthropic.com/research/swe-bench-sonnet
+- **文件**: `anthropic-engineering-articles/markdown/03-building-effective-agents.md`
+- **标题**: Building effective agents
+- **中文标题**: 构建有效的智能体
+- **发布日期**: 2024年12月19日
+- **原文 URL**: https://www.anthropic.com/research/building-effective-agents
 
 ### 文章结构
 
-**主要内容章节（7个）**：
-1. SWE-bench | SWE-bench 基准测试
-2. Agents | 智能体
-3. Achieving state-of-the-art | 达到最先进水平
-4. Tool Using Agent | 工具使用智能体
-5. Results | 结果
-6. Examples of agent behavior | 智能体行为示例
-7. Challenges | 挑战
-8. Acknowledgements | 致谢
+**主要内容章节（8个）**：
+1. What are agents? | 什么是智能体？
+2. When (and when not) to use agents | 何时（以及何时不）使用智能体
+3. When and how to use frameworks | 何时以及如何使用框架
+4. Building blocks, workflows, and agents | 构建模块、工作流和智能体
+5. Combining and customizing these patterns | 组合和定制这些模式
+6. Summary | 总结
+7. Appendix 1: Agents in practice | 附录 1：实践中的智能体
+8. Appendix 2: Prompt engineering your tools | 附录 2：提示工程你的工具
 
-**子章节**：无独立子章节
+**子章节**：
+- Acknowledgements | 致谢
+- A. Customer support | A. 客户支持
+- B. Coding agents | B. 编码智能体
 
 ### 交付物统计
 
 | 项目 | 内容 |
 |------|------|
-| **文件路径** | `anthropic-engineering-articles/markdown/04-swe-bench-sonnet.md` |
-| **文件大小** | ~400 行 |
-| **图片数量** | 0 张 |
-| **代码块** | 8 个（Python 提示、JSON 工具规范、示例日志） |
-| **表格** | 1 个（性能对比表：49% vs 45% vs 33% vs 22%） |
-| **外部链接** | 4 个（SWE-bench、GitHub、SWE-Agent、Anthropic Research） |
-| **关键术语** | 30 个（4个类别：核心概念、工具设计、基准测试、挑战） |
+| **文件路径** | `anthropic-engineering-articles/markdown/03-building-effective-agents.md` |
+| **文件大小** | ~600 行 |
+| **图片数量** | 8 张（流程图和架构图） |
+| **代码块** | 0 个 |
+| **表格** | 0 个 |
+| **外部链接** | 5 个（Anthropic Research、cookbook、MCP、框架链接） |
+| **关键术语** | 38 个（4个类别：核心概念、工作流模式、框架与工具、开发实践） |
 
 ---
 
@@ -67,48 +70,66 @@
 
 ### 翻译特点
 
-1. **技术实践文章**
-   - SWE-bench 基准测试介绍与评估方法
-   - 工具使用智能体的设计理念（最小化脚手架）
-   - Bash 工具和编辑工具的完整规范
-   - 性能突破：Claude 3.5 Sonnet 达到 49% 超越之前 SOTA 的 45%
+1. **架构设计指南**
+   - 智能体系统定义：agentic systems vs workflows vs agents
+   - 使用场景分析：何时使用智能体系统，何时避免
+   - 框架建议：LangGraph、Bedrock、Rivet、Vellum 优缺点
+   - 直接使用 LLM API 的建议
 
-2. **代码示例丰富**
-   - Python 智能体提示模板
-   - JSON 工具规范定义（Bash Tool、Edit Tool）
-   - 完整的智能体行为日志（THOUGHT/ACTION/OBSERVATION）
-   - sklearn RidgeClassifierCV 修复案例
+2. **6种工作流模式详解**
+   - Prompt chaining（提示链）：任务分解为序列步骤
+   - Routing（路由）：输入分类到专门任务
+   - Parallelization（并行化）：分节和投票
+   - Orchestrator-workers（编排器-工作者）：动态任务分解
+   - Evaluator-optimizer（评估器-优化器）：循环反馈改进
+   - Agents（智能体）：自主决策和工具使用
 
-3. **双语对照格式**
+3. **实践案例与附录**
+   - 客户支持场景：4个关键优势
+   - 编码智能体：4个成功因素
+   - 工具设计：智能体-计算机接口（ACI）设计原则
+   - Poka-yoke（防错）设计理念
+
+4. **双语对照格式**
    - 标题使用 `|` 分隔符
    - 正文段落使用换行分隔
+   - 无序列表：中英文逐条对照（包含嵌套列表）
    - 有序列表：英文有序号，中文无序号
-   - 无序列表：中英文逐条对照
-   - 表格：单表双语对照（Model | 模型 | ...）
+   - 8张流程图和架构图
 
 ### 关键技术概念
 
 | 英文术语 | 中文翻译 | 类别 |
 |----------|----------|------|
-| SWE-bench | SWE-bench 基准测试 | 核心概念 |
-| SWE-bench Verified | SWE-bench Verified | 核心概念 |
 | Agent | 智能体 | 核心概念 |
-| Tool Using Agent | 工具使用智能体 | 核心概念 |
-| Software scaffolding | 软件脚手架 | 核心概念 |
-| Bash Tool | Bash 工具 | 核心概念 |
-| Edit Tool | 编辑工具 | 核心概念 |
-| State-of-the-art | 最先进水平 | 核心概念 |
-| Tool specification | 工具规范 | 工具设计 |
-| String replacement | 字符串替换 | 工具设计 |
-| Error-proofing | 防错 | 工具设计 |
-| Absolute path | 绝对路径 | 工具设计 |
-| Evaluation benchmark | 评估基准 | 基准测试 |
-| Unit tests | 单元测试 | 基准测试 |
-| Pull request | PR（拉取请求） | 基准测试 |
-| GitHub issues | GitHub 问题 | 基准测试 |
-| Token costs | Token 成本 | 挑战 |
-| Hidden tests | 隐藏测试 | 挑战 |
-| Multimodal capabilities | 多模态能力 | 挑战 |
+| Agentic systems | 智能体系统 | 核心概念 |
+| Workflow | 工作流 | 核心概念 |
+| Augmented LLM | 增强型 LLM | 核心概念 |
+| Ground truth | 真实答案 | 核心概念 |
+| Orchestrator | 编排器 | 核心概念 |
+| Worker | 工作者 | 核心概念 |
+| Autonomy | 自主性 | 核心概念 |
+| Prompt chaining | 提示链 | 工作流模式 |
+| Routing | 路由 | 工作流模式 |
+| Parallelization | 并行化 | 工作流模式 |
+| Sectioning | 分节 | 工作流模式 |
+| Voting | 投票 | 工作流模式 |
+| Orchestrator-workers | 编排器-工作者 | 工作流模式 |
+| Evaluator-optimizer | 评估器-优化器 | 工作流模式 |
+| Gate | 门 | 工作流模式 |
+| Checkpoint | 检查点 | 工作流模式 |
+| Blocker | 障碍 | 工作流模式 |
+| LangGraph | LangGraph | 框架与工具 |
+| Model Context Protocol | 模型上下文协议 (MCP) | 框架与工具 |
+| Agent-computer interface | 智能体-计算机接口 (ACI) | 框架与工具 |
+| Poka-yoke | 防错 | 框架与工具 |
+| Guardrails | 防护栏 | 框架与工具 |
+| Sandbox | 沙盒 | 开发实践 |
+| Iteration | 迭代 | 开发实践 |
+| Evaluation | 评估 | 开发实践 |
+| Feedback loop | 反馈循环 | 开发实践 |
+| Human oversight | 人工监督 | 开发实践 |
+| Human-computer interface | 人机交互界面 (HCI) | 开发实践 |
 
 ---
 
@@ -118,25 +139,28 @@
 
 **文件**: `.claude/review-report.md`
 **审查状态**: ✅ 通过（可以合并）
-**综合评分**: **94 / 100**
+**综合评分**: **93 / 100**
 
 ### 审查修复要点
 
-1. **表格格式** ✅
-   - 单表双语对照
-   - 列数一致
-   - 位置：`04-swe-bench-sonnet.md:195`
+1. **无序列表格式** ✅
+   - 逐条中英对照（包含嵌套列表）
+   - 位置：`03-building-effective-agents.md:17, 42, 162`
 
-2. **Sources 区域** ✅
-   - 链接可点击
-   - 双语分行（保留 `-` 符号）
-   - 位置：`04-swe-bench-sonnet.md:410`
+2. **有序列表格式** ✅
+   - 中文行去序号并紧随英文项
+   - 位置：`03-building-effective-agents.md:282`
+
+3. **链接补齐** ✅
+   - MCP（Model Context Protocol）可点击链接
+   - Sources 双语链接行
+   - 位置：`03-building-effective-agents.md:82, 398`
 
 ### 审查评分明细
 
 | 评分维度 | 实际分数 |
 |----------|----------|
-| **综合评分** | **94/100** |
+| **综合评分** | **93/100** |
 | **建议状态** | **通过（可以合并）** |
 
 ---
@@ -146,26 +170,26 @@
 ### 翻译文件
 
 ```
-anthropic-engineering-articles/markdown/04-swe-bench-sonnet.md
+anthropic-engineering-articles/markdown/03-building-effective-agents.md
 ```
 
 ### 审查文件
 
 ```
 .claude/review-request.md   (第一轮审查请求)
-.claude/review-report.md    (审查报告：94/100 通过)
+.claude/review-report.md    (审查报告：93/100 通过)
 ```
 
 ### 文件统计
 
 | 指标 | 数值 |
 |------|------|
-| 总行数 | ~400 行 |
-| 主要章节 | 7 个 |
-| 代码块 | 8 个（保持英文） |
-| 表格 | 1 张（单表双语对照） |
-| 外部链接 | 4 个 |
-| 关键术语 | 30 个（4个类别） |
+| 总行数 | ~600 行 |
+| 主要章节 | 8 个 |
+| 附录 | 2 个（实践中的智能体、提示工程你的工具） |
+| 图片 | 8 张（流程图和架构图） |
+| 外部链接 | 5 个 |
+| 关键术语 | 38 个（4个类别） |
 
 ---
 
@@ -175,9 +199,9 @@ anthropic-engineering-articles/markdown/04-swe-bench-sonnet.md
 
 | 项目 | 之前 | 现在 |
 |------|------|------|
-| 已完成翻译 | 15/18 | **16/18** |
-| 完成百分比 | 83% | **89%** |
-| 待翻译 | 3 篇 | **2 篇** |
+| 已完成翻译 | 16/18 | **17/18** |
+| 完成百分比 | 89% | **94%** |
+| 待翻译 | 2 篇 | **1 篇** |
 
 ### 已完成文章列表（ID 降序）
 
@@ -196,17 +220,17 @@ anthropic-engineering-articles/markdown/04-swe-bench-sonnet.md
 13. ✅ ID 07: Multi-Agent Research System
 14. ✅ ID 06: Claude Code Best Practices
 15. ✅ ID 05: The "think" tool
-16. ✅ **ID 04: SWE-bench Sonnet** ⬅️ 本次完成
+16. ✅ ID 04: SWE-bench Sonnet
+17. ✅ **ID 03: Building Effective Agents** ⬅️ 本次完成
 
 ---
 
 ## 剩余任务
 
-### 待翻译文章（3个任务，2篇文章）
+### 待翻译文章（2个任务，1篇文章）
 
 | 任务ID | 文章ID | 标题 |
 |--------|--------|------|
-| #17 | ID 03 | Building Effective Agents |
 | #18 | ID 02 | Contextual Retrieval |
 | #19 | ID 01 | 跳过（重复文章） |
 
@@ -224,7 +248,7 @@ anthropic-engineering-articles/markdown/04-swe-bench-sonnet.md
 - **TaskUpdate**: 更新任务状态
 - **TaskList**: 检查任务完成情况
 - **Skill**: 调用项目记忆和 Codex 协作 skill
-- **Read**: 读取审查报告
+- **Read**: 读取审查报告和项目配置
 
 ### 技术栈
 
@@ -236,16 +260,17 @@ anthropic-engineering-articles/markdown/04-swe-bench-sonnet.md
 
 ## 总结
 
-本次任务成功完成了 ID 04 "Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet" 文章的翻译工作，并通过了 Codex 审查（评分 94/100）。这是一篇技术实践文章，详细介绍了 SWE-bench 基准测试、工具使用智能体的设计理念、以及 Claude 3.5 Sonnet 在该基准上达到 49% 的突破性表现。
+本次任务成功完成了 ID 03 "Building effective agents" 文章的翻译工作，并通过了 Codex 审查（评分 93/100）。这是一篇智能体系统架构设计指南，详细介绍了智能体系统的定义、使用场景、6种工作流模式、以及智能体-计算机接口（ACI）设计原则。
 
 **关键特点**：
-1. **智能体设计理念**：强调最小化脚手架，给予模型最大控制权
-2. **代码示例丰富**：包含完整的工具规范定义和智能体行为日志
-3. **性能突破**：49% 超越之前 SOTA 的 45%，展示了 Claude 3.5 Sonnet 的强大能力
-4. **格式规范**：严格按照双语对照格式创建，通过审查评分 94/100
+1. **架构理念**：区分 agentic systems、workflows 和 agents，强调简单性优先
+2. **6种工作流模式**：prompt chaining、routing、parallelization、orchestrator-workers、evaluator-optimizer、agents
+3. **实践案例**：客户支持和编码智能体两个应用场景
+4. **工具设计原则**：ACI 类比 HCI，强调 Poka-yoke 防错设计
+5. **格式规范**：严格按照双语对照格式创建，通过审查评分 93/100
 
-项目整体进度达到 89%（16/18），剩余2篇文章待翻译（ID 03, 02），接近完成阶段。
+项目整体进度达到 94%（17/18），仅剩1篇文章待翻译（ID 02），即将完成所有翻译工作。
 
 ---
 
-**下次会话建议**: 继续进行 Task #17 - ID 03 "Building Effective Agents" 翻译
+**下次会话建议**: 继续进行 Task #18 - ID 02 "Contextual Retrieval" 翻译
