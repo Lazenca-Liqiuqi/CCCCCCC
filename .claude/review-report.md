@@ -1,64 +1,56 @@
-# 翻译格式审查报告（ID 08）
+# 翻译格式审查报告（ID07）
 
-时间：2026-01-25 23:37
+时间：2026-01-26 17:33  
+审查目标：`anthropic-engineering-articles/markdown/07-multi-agent-research-system.md`
 
-> 说明：当前 `.claude/review-request.md` 仍为 ID 09；本报告按你的指令“审查 08”，审查目标为 `anthropic-engineering-articles/markdown/08-desktop-extensions.md`。
+## 结论
 
-## 综合结论
-**综合评分：79/100**
+**建议：有条件通过（建议修正后再合并）**  
+**综合评分：87 / 100**
 
-- 技术维度：40/50
-- 战略维度：39/50
+主要原因：整体中英对照结构稳定、标题格式合规、列表对照做得较好；但存在少量“英文段落混入中文字符”的硬性违规，以及图片与 Sources 的双语呈现未完全按规范落地。
 
-**建议：有条件通过（建议先修再合并）**
+## 亮点（做得好的地方）
 
-## 技术维度评分（50分）
-- 标题格式正确性：10/10
-- 正文格式正确性：20/20
-- 列表格式正确性：4/10
-- 代码块格式正确性：1/5
-- 图片链接正确性：5/5
+- 全部标题均为 `英文 | 中文` 格式（如第 1、17、49、69、113、137、161、175、183、203 行）。
+- 段落层面大多数保持“英文段落 + 空行 + 中文段落”的对照结构（抽样检查 115-118、119-122、127-130、131-134、139-142 等段落均符合）。
+- 有序列表遵循“英文保留序号、中文去序号”的规则（75-105 行段落组）。
+- 图片链接域名合规，均为 `www-cdn.anthropic.com`（55、65、171 行）。
+- 未发现占位链接 `example.com`。
 
-## 战略维度评分（50分）
-- 需求匹配度：14/15
-- 格式规范一致性：12/20
-- 翻译质量：8/10
-- 可维护性：5/5
+## 需要修复的问题（按优先级）
 
-## 关键发现（问题清单）
-### A. 无序列表中文行缺少 `-`（破坏列表结构，属于格式硬伤）
-规范要求无序列表“保持原有的列表符号”，但多处英文为 `- ...`、中文译文变成普通段落（缺 `-`），导致渲染时中文不再作为列表项。
+### P0（硬性违规，建议立即修）
 
-典型位置（仅列部分）：
-- `anthropic-engineering-articles/markdown/08-desktop-extensions.md:23` / `anthropic-engineering-articles/markdown/08-desktop-extensions.md:25`
-- `anthropic-engineering-articles/markdown/08-desktop-extensions.md:147` / `anthropic-engineering-articles/markdown/08-desktop-extensions.md:149`
-- `anthropic-engineering-articles/markdown/08-desktop-extensions.md:394` / `anthropic-engineering-articles/markdown/08-desktop-extensions.md:396`
-- `anthropic-engineering-articles/markdown/08-desktop-extensions.md:506` / `anthropic-engineering-articles/markdown/08-desktop-extensions.md:508`
-- `anthropic-engineering-articles/markdown/08-desktop-extensions.md:602` / `anthropic-engineering-articles/markdown/08-desktop-extensions.md:604`
+1) **英文段落混入中文字符**（违反“英文段落中禁止出现中文字符”）
+- 证据：第 143 行英文段落中出现“缓解措施”“确定性保障如重试逻辑和定期检查点”等中文片段。  
+  - 建议：将该英文段落中的中文片段恢复为英文（例如“mitigations”“deterministic safeguards such as retries and periodic checkpoints”等），并保证对应中文段落（145 行）保留中文表达即可。
 
-### B. 多处 `json` 代码块出现“重复键”以承载中英对照（会误导读者，且不可复制）
-多段 ` ```json ` 示例把同一个字段写两次（英文值一行、中文值一行），例如 `"description"` 连续重复，这会让示例难以作为“可用配置/参考实现”使用。
+### P1（规范一致性问题，建议修）
 
-典型位置（仅列部分）：
-- `anthropic-engineering-articles/markdown/08-desktop-extensions.md:230`、`anthropic-engineering-articles/markdown/08-desktop-extensions.md:231`
-- `anthropic-engineering-articles/markdown/08-desktop-extensions.md:249`、`anthropic-engineering-articles/markdown/08-desktop-extensions.md:250`
-- `anthropic-engineering-articles/markdown/08-desktop-extensions.md:251`、`anthropic-engineering-articles/markdown/08-desktop-extensions.md:252`
-- `anthropic-engineering-articles/markdown/08-desktop-extensions.md:284`、`anthropic-engineering-articles/markdown/08-desktop-extensions.md:285`
-- `anthropic-engineering-articles/markdown/08-desktop-extensions.md:528`、`anthropic-engineering-articles/markdown/08-desktop-extensions.md:529`
+2) **图片缺少独立的中文图片说明行**
+- 规范示例要求：图片行后应追加一行“中文图片说明”。当前三处图片均未提供独立中文说明行，仅把中英混在图片 alt 中。  
+- 证据：第 55、65、171 行为图片行；其后紧接空行/正文/分隔线（如 55 行后 56 为空行、57 为正文；65 行后 66 为空行、67 为分隔线；171 行后 172 为空行、173 为分隔线）。  
+  - 建议（两种二选一，推荐 A）：  
+    - A：图片 alt 保留英文（或简短英文），图片下一行新增中文说明（不放在 alt 里）。  
+    - B：若坚持 alt 中英并列，也仍需在下一行提供中文图片说明，以符合统一阅读体验与检索习惯。
 
-### C. 存在明显占位链接（需替换为真实链接）
-- 文末“Submit your extension”使用 `example.com` 占位：`anthropic-engineering-articles/markdown/08-desktop-extensions.md:756`、`anthropic-engineering-articles/markdown/08-desktop-extensions.md:758`。
+3) **Sources 区域缺少中文对照**
+- 证据：第 203-205 行仅有英文 bullet：`- [How we built our multi-agent research system](...)`，无对应中文行。  
+  - 建议：补充中文对照行，并保持无序列表中文行也保留 `-`，例如：  
+    - `- [How we built our multi-agent research system](...)`  
+    - `- [我们如何构建多智能体研究系统](...)`
 
-## 优点（做得好的地方）
-- 标题层级清晰，且标题均为“英文 | 中文”：`anthropic-engineering-articles/markdown/08-desktop-extensions.md:1`、`:17`、`:47`、`:89`、`:349`、`:468`、`:542`、`:618`、`:664`、`:688`、`:742`。
-- 正文段落严格按“英文段落 → 空行 → 中文段落”对照（未发现相邻中英直连）。
-- 代码块边界成对闭合（未发现 fence 破坏）：如 `anthropic-engineering-articles/markdown/08-desktop-extensions.md:163`、`anthropic-engineering-articles/markdown/08-desktop-extensions.md:196`。
-- 图片为原始 `www-cdn.anthropic.com` 链接且有中文说明：`anthropic-engineering-articles/markdown/08-desktop-extensions.md:752`、`anthropic-engineering-articles/markdown/08-desktop-extensions.md:754`。
-- Sources 区域提供了可点击链接：`anthropic-engineering-articles/markdown/08-desktop-extensions.md:763`、`anthropic-engineering-articles/markdown/08-desktop-extensions.md:766`。
+### P2（可选优化，不影响显示）
 
-## 修改建议（按优先级）
-1. 批量修复无序列表中文行：为每个中文译文行补上 `- `（保持与英文一致的列表符号），例如从 `anthropic-engineering-articles/markdown/08-desktop-extensions.md:25` 开始同类问题。
-2. 重构 `json` 示例的中英对照方式：避免在 JSON 内重复键；建议做法是“保留英文原样 + 在相邻中文段落解释字段含义/示例值”，或改为 `jsonc` 并用注释写中文说明（但不要重复键）。
-3. 将 `Submit your extension` 的占位 URL 替换为原文真实链接：`anthropic-engineering-articles/markdown/08-desktop-extensions.md:756`、`anthropic-engineering-articles/markdown/08-desktop-extensions.md:758`。
+4) **部分中文强调段落在 `__...__` 后缺少空格**
+- 现状：例如第 145、149、153、157、191、195、199 行形如 `__中文标题。__中文正文...`。  
+  - 影响：渲染通常正常，但可读性略受影响、与英文行风格不一致。  
+  - 建议：统一为 `__中文标题。__ 中文正文...`（在强调结束后加一个空格）。
+
+## 总结建议
+
+- 若你只关心“是否影响显示效果”：上述问题大多不会破版；但 **第 143 行英文混入中文字符** 属于格式规范的硬性违规，后续自动检查/批处理时更容易踩雷，建议至少修掉这一处。
+- 若你想保持仓库整体一致性：建议同时补齐图片中文说明与 Sources 双语对照，这两类问题在后续批量阅读、检索、复用时价值更高。
 
 [CONVERSATION_ID]: 019bf489-67c1-7362-a343-d5114f763579

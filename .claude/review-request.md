@@ -1,287 +1,289 @@
-# 翻译格式审查请求 - ID 09
+# 翻译审查请求 - ID 07
+
+时间：2026-01-26
 
 ## 项目基本信息
 
 **项目名称**: Claude Code 中文指南合集 - Engineering 文章翻译
-**文章**: 09-writing-tools-for-agents.md
-**标题**: Writing effective tools for AI agents—using AI agents
-**主题**: 为AI智能体编写有效工具——使用AI智能体
-**翻译日期**: 2026-01-25
+**项目阶段**: 持续翻译期
+**当前进度**: 16/19 篇文章已完成（84%）
 
-## 项目结构与状态
+## 项目状态与进展
 
-### 目录结构
-```
-anthropic-engineering-articles/
-└── markdown/
-    ├── 19-AI-resistant-technical-evaluations.md
-    ├── 18-demystifying-evals-for-ai-agents.md
-    ├── 17-advanced-tool-use.md
-    ├── 16-effective-harnesses-for-long-running-agents.md
-    ├── 15-code-execution-with-mcp.md
-    ├── 14-claude-code-sandboxing.md
-    ├── 13-agent-skills.md
-    ├── 12-agent-sdk.md
-    ├── 11-effective-context-engineering-for-ai-agents.md
-    ├── 10-a-postmortem-of-three-recent-issues.md
-    └── 09-writing-tools-for-agents.md (本次翻译)
-```
+### 本次工作内容
 
-### 项目状态
-- **已完成翻译**: 11/19 篇文章（58%）
-- **格式规范**: `.claude/rules/translation-format.md`
-- **上一次审查**: ID 10 评分 88/100（修复后预期 98-100/100）
+**任务**: Task #13 - 翻译 ID 07: Multi-Agent Research System
 
-## 用户的原始需求
+**文章信息**:
+- **标题**: How we built our multi-agent research system
+- **中文标题**: 我们如何构建多智能体研究系统
+- **发布日期**: 2025-06-13
+- **原文 URL**: https://www.anthropic.com/engineering/multi-agent-research-system
+- **文件路径**: `anthropic-engineering-articles/markdown/07-multi-agent-research-system.md`
 
-翻译 Anthropic Engineering 文章 ID 09，遵循项目的翻译格式规范，创建中英文双语对照版本。
+### 文章结构分析
 
-## 本次工作内容与交付物
+**主要内容章节**:
+1. **引言** - 多智能体系统概述与 Research 功能介绍
+2. **Benefits of a multi-agent system** | 多智能体系统的优势
+   - 研究工作的不可预测性
+   - 子智能体的压缩作用
+   - 多智能体系统的性能优势
+   - Token 使用与性能关系
+   - 经济可行性与适用场景
 
-### 工作内容
-1. 获取原文：https://www.anthropic.com/engineering/writing-tools-for-agents
-2. 全文翻译，包含以下章节：
-   - 引言：使用 MCP 协议为 LLM 智能体配备工具
-   - What is a tool?：工具的本质（确定性系统与非确定性智能体之间的契约）
-   - How to write tools：如何编写工具
-     - Building a prototype（构建原型）
-     - Running an evaluation（运行评估）
-       - Generating evaluation tasks（生成评估任务）
-       - Running the evaluation（运行评估）
-       - Analyzing results（分析结果）
-     - Collaborating with agents（与智能体协作）
-   - Principles for writing effective tools：编写有效工具的原则
-     - Choosing the right tools for agents（为智能体选择正确的工具）
-     - Namespacing your tools（为工具添加命名空间）
-     - Returning meaningful context from your tools（从工具返回有意义的上下文）
-     - Optimizing tool responses for token efficiency（优化工具响应以提高标记效率）
-     - Prompt-engineering your tool descriptions（对工具描述进行提示工程）
-   - Looking ahead：展望未来
-   - Acknowledgements：致谢
-   - Footnotes：脚注（1个）
+3. **Architecture overview for Research** | Research 架构概览
+   - 编排者-工作者模式
+   - 动态多步搜索 vs 静态 RAG
+   - 完整工作流程图
 
-### 交付物
-- **文件**: `anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md`
-- **行数**: ~550 行
-- **图片**: 8 张（已转换为原始 www-cdn.anthropic.com URL）
-- **链接**: 文档、API、SWE-bench、开发者指南等资源链接
+4. **Prompt engineering and evaluations for research agents** | 研究智能体的提示工程与评估
+   - 8 个核心原则：
+     1. Think like your agents（像你的智能体一样思考）
+     2. Teach the orchestrator how to delegate（教导编排者如何委派）
+     3. Scale effort to query complexity（根据查询复杂性调整工作量）
+     4. Tool design and selection are critical（工具设计和选择至关重要）
+     5. Let agents improve themselves（让智能体自我改进）
+     6. Start wide, then narrow down（先宽泛，后深入）
+     7. Guide the thinking process（指导思考过程）
+     8. Parallel tool calling transforms speed and performance（并行工具调用转变速度和性能）
 
-## 需要审查的目标文件与范围
+5. **Effective evaluation of agents** | 智能体的有效评估
+   - 多智能体系统的评估挑战
+   - 立即开始小样本评估
+   - LLM 作为评估者
+   - 人类评估的重要性
+   - 涌现行为与协作框架
 
-### 目标文件
-```
-anthropic-engineering-articles/markdown/09-writing-tools-for-agents.md
-```
+6. **Production reliability and engineering challenges** | 生产可靠性与工程挑战
+   - 智能体的有状态性与错误复合
+   - 调试的新方法
+   - 部署的协调挑战
+   - 同步执行的瓶颈
 
-### 审查范围
-全文翻译格式与质量审查
+7. **Conclusion** | 结论
+   - 原型到生产的差距
+   - 多智能体系统的价值
+   - Clio 嵌入图展示用例
 
-## 审查要点
+8. **Acknowledgements** | 致谢
 
-### 1. 标题格式审查
+9. **Appendix** | 附录
+   - 终态评估
+   - 长期对话管理
+   - 文件系统输出最小化"传话游戏"
 
-- [ ] **主标题格式**: `# English Title | 中文标题`
-- [ ] **二级标题格式**: `## English Subtitle | 中文副标题`
-- [ ] **三级标题格式**: `### English Section | 中文章节`
-- [ ] **四级标题格式**: `#### English Subsection | 中文小节`
+### 交付物统计
 
-**检查项**:
-- 所有级别标题是否使用 `|` 分隔符
-- 中英文顺序是否正确（英文在前，中文在后）
-- 标题层级是否正确（#、##、###、####）
+| 项目 | 内容 |
+|------|------|
+| **文件路径** | `anthropic-engineering-articles/markdown/07-multi-agent-research-system.md` |
+| **文件大小** | ~540 行 |
+| **图片数量** | 3 张 |
+| **图片格式** | 原始 www-cdn.anthropic.com URL |
+| **关键术语** | ~45 个 |
+| **外部链接** | 1 个 |
 
-### 2. 正文段落格式审查
+## 关键术语表
 
-- [ ] **换行格式**: 正文段落使用换行分隔，**不使用** `|` 分隔符
-- [ ] **空行要求**: 英文段落和中文段落之间**必须有空行**
-- [ ] **纯英文段落**: 英文段落中**禁止出现中文字符**（如中文标点、中英混杂等）
-- [ ] **纯中文段落**: 中文段落翻译完整，无遗漏
+| 英文术语 | 中文翻译 |
+|----------|----------|
+| Multi-agent system | 多智能体系统 |
+| Agent | 智能体 |
+| Subagent | 子智能体 |
+| Orchestrator-worker pattern | 编排者-工作者模式 |
+| Lead agent | 主导智能体 |
+| Open-ended problems | 开放式问题 |
+| Path-dependent | 路径依赖 |
+| Context window | 上下文窗口 |
+| Separation of concerns | 关注点分离 |
+| Breadth-first queries | 广度优先查询 |
+| Token usage | Token 使用 |
+| Retrieval Augmented Generation (RAG) | 检索增强生成（RAG） |
+| Static retrieval | 静态检索 |
+| Dynamic search | 动态搜索 |
+| Prompt engineering | 提示工程 |
+| Tool design | 工具设计 |
+| Emergent behaviors | 涌现行为 |
+| Evaluation | 评估 |
+| LLM-as-judge | LLM 作为评估者 |
+| Stateful | 有状态的 |
+| Rainbow deployments | 彩虹部署 |
+| Synchronous execution | 同步执行 |
+| Asynchronous execution | 异步执行 |
+| Extended thinking mode | 扩展思考模式 |
+| Interleaved thinking | 交错思考 |
+| Tool calls | 工具调用 |
+| Checkpoints | 检查点 |
+| Deterministic safeguards | 确定性保障 |
+| Production tracing | 生产跟踪 |
+| End-state evaluation | 终态评估 |
+| Long-horizon conversation | 长期对话 |
+| Context management | 上下文管理 |
+| Game of telephone | 传话游戏 |
+| Artifact systems | 工件系统 |
+| Handoffs | 交接 |
+| MCP (Model Context Protocol) | 模型上下文协议（MCP） |
+| Clio embedding plot | Clio 嵌入图 |
+| BrowseComp evaluation | BrowseComp 评估 |
+| SEO-optimized content farms | SEO 优化的内容农场 |
 
-**检查项**:
-- 每对英中文段落之间是否有空行
-- 英文段落是否纯英文（无中文字符）
-- 中文段落是否完整翻译原文内容
+## 审查范围
 
-### 3. 有序列表格式审查
+### 需要审查的文件
 
-- [ ] **英文行格式**: `1. English item with description.`
-- [ ] **中文行格式**: 无序号，直接文本
-- [ ] **交错排列**: 英文项后紧跟中文译文
+**主要审查目标**:
+- `anthropic-engineering-articles/markdown/07-multi-agent-research-system.md`
 
-**检查项**:
-- 英文行是否保留序号（`1.` `2.`）
-- 中文行是否删除序号
-- 列表项是否按"英文项→中文译文"交错排列
-- 列表项翻译是否完整
+### 审查重点
 
-### 4. 无序列表格式审查
+#### 格式规范检查
 
-- [ ] 保持原有的列表符号（`-`）
-- [ ] 中英文对照完整
-- [ ] 英文项后紧跟中文译文
+根据 `.claude/rules/translation-format.md` 规范，请检查：
 
-**检查项**:
-- 列表符号是否正确
-- 每个列表项是否有中英文对照
-- 是否按交错格式排列
+1. **标题格式**
+   - 所有级别标题（#、##、###、####）是否使用 `|` 分隔符
+   - 格式：`English Title | 中文标题`
 
-### 5. 图片格式审查
+2. **正文段落格式**
+   - 英文段落和中文段落之间是否有空行
+   - 是否使用换行分隔（不使用 `|`）
+   - 英文段落中是否没有中文字符
+   - 中文段落中是否没有未翻译的英文单词（专有名词除外）
 
-- [ ] **原始 URL**: 使用 `https://www-cdn.anthropic.com/images/...`
-- [ ] **禁止格式**: 禁止使用代理 URL（`_next/image?url=...`）
-- [ ] **图片说明**: 添加中文图片说明
+3. **有序列表格式**
+   - 英文行保留序号（`1.` `2.` `3.` 等）
+   - 中文行删除序号
 
-**检查项**:
-- 图片 URL 是否为原始 www-cdn.anthropic.com 链接
-- 是否包含中文图片描述
-- 图片链接是否可访问
+4. **无序列表格式**
+   - 英文行和中文行是否都保留 `-` 符号
+   - 英文行和中文行之间是否有空行
 
-### 6. 链接格式审查
+5. **图片格式**
+   - 是否使用原始 www-cdn.anthropic.com URL
+   - 是否禁止使用代理 URL（`_next/image?url=...`）
+   - 是否有中文图片说明
 
-- [ ] **保留链接**: 保持 markdown 链接格式 `[Link text](https://...)`
-- [ ] **资源链接**: 为提到的资源添加链接
-  - 文档 (documentation, guide, cookbook)
-  - API 参考 (API reference, docs.anthropic.com)
-  - 博客文章 (blog post, SWE-bench)
-  - 官网 (Developer Guide)
+6. **链接格式**
+   - 是否保留可点击的 markdown 链接
+   - 链接文本是否翻译为中文
 
-**检查项**:
-- 链接是否可点击
-- 提到的资源是否都有链接
-- 链接格式是否正确
+7. **代码块格式**
+   - 是否保持原样，不翻译
+   - 注释是否添加中文翻译（如有）
 
-### 7. 代码块格式审查
+#### 内容质量检查
 
-- [ ] 保持原样，不翻译代码
-- [ ] 代码示例保持原样
-- [ ] 命令保持原样
+1. **翻译准确性**
+   - 术语翻译是否一致（参考术语表）
+   - 技术概念翻译是否准确
+   - 是否遗漏重要信息
 
-**检查项**:
-- 代码是否保持原样
-- 文件名和术语是否正确保留
+2. **完整性**
+   - 所有章节是否都翻译
+   - 图片是否都有中文说明
+   - 外部链接是否保持可点击
 
-### 8. 术语一致性审查
+3. **可读性**
+   - 中文表达是否流畅自然
+   - 专业术语是否统一
 
-- [ ] 专业术语翻译一致
-- [ ] 参考术语表
+#### 特别注意事项
 
-**关键术语**:
-- Model Context Protocol (MCP) | 模型上下文协议（MCP）
-- Tool | 工具
-- Agent | 智能体
-- Deterministic systems | 确定性系统
-- Non-deterministic systems | 非确定性系统
-- Contract | 契约
-- Affordances | 可供性
-- Context | 上下文
-- Ergonomic | 符合人体工程学（的）
-- Prototype | 原型
-- Evaluation | 评估
-- MCP server | MCP 服务器
-- Desktop extension (DXT) | 桌面扩展（DXT）
-- API call | API 调用
-- Prompt | 提示
-- Response | 响应
-- Knowledge base | 知识库
-- Microservice | 微服务
-- Sandbox environment | 沙箱环境
-- Stress-test | 压力测试
-- Verifier | 验证器
-- Ground truth | 基本事实
-- System prompt | 系统提示
-- Chain-of-thought (CoT) | 思维链（CoT）
-- Interleaved thinking | 交错思考
-- Runtime | 运行时间
-- Token consumption | 标记消耗
-- Workflow | 工作流程
-- Consolidate | 整合/合并
-- Namespacing | 命名空间
-- Prefix | 前缀
-- Suffix | 后缀
-- Context relevance | 上下文相关性
-- Technical identifier | 技术标识符
-- UUID | UUID
-- Hallucination | 幻觉
-- Retrieval task | 检索任务
-- ResponseFormat | ResponseFormat（响应格式）
-- Enum | 枚举
-- Verbosity | 详细程度
-- Pagination | 分页
-- Range selection | 范围选择
-- Truncation | 截断
-- Input validation | 输入验证
-- Error response | 错误响应
-- Traceback | 回溯
-- Token-efficient | 节省标记的
-- Prompt-engineering | 提示工程
-- Specialized query format | 专门的查询格式
-- Niche terminology | 小众术语
-- Data model | 数据模型
-- SWE-bench Verified | SWE-bench Verified
-- State-of-the-art | 最先进的
-- Open-world access | 开放世界访问
-- Destructive changes | 破坏性更改
+1. **粗体标记**
+   - 文中使用 `__text__` 格式的粗体标记，需要检查中英文是否都保持一致
 
-### 9. 完整性审查
+2. **代码/命令示例**
+   - 文中可能包含工具调用示例、命令等
+   - 确认这些内容保持原样，不翻译
 
-- [ ] 文章内容完整，无遗漏段落
-- [ ] 所有图片都已翻译说明
-- [ ] 所有章节都已翻译
-- [ ] 脚注（Footnotes）已翻译
+3. **专有名词**
+   - Claude、Research、Opus、Sonnet 等专有名词保持英文
+   - Clio、BrowseComp 等内部名称保持英文
 
-## 评分标准
+4. **数字和单位**
+   - 90.2%、4×、15×、200,000 等保持原格式
+   - Claude Opus 4、Claude Sonnet 4 等版本号保持原格式
 
-### 技术维度 (50分)
+## 审查评分标准
 
-| 检查项 | 分值 | 评分标准 |
-|--------|------|----------|
-| 标题格式正确性 | 10分 | 所有标题使用 `|` 分隔符，层级正确 |
-| 正文格式正确性 | 20分 | 换行格式，空行分隔，无中文字符混杂 |
-| 列表格式正确性 | 10分 | 有序列表中文行无序号，交错排列正确 |
-| 代码块格式正确性 | 5分 | 代码保持原样，文件名正确 |
-| 图片链接正确性 | 5分 | 使用原始 URL，图片说明完整 |
+### 技术维度（50分）
 
-### 战略维度 (50分)
+1. **标题格式正确性**（10分）
+   - 所有标题使用 `|` 分隔符
+   - 中英文顺序正确
 
-| 检查项 | 分值 | 评分标准 |
-|--------|------|----------|
-| 需求匹配度 | 15分 | 是否满足用户的翻译需求 |
-| 格式规范一致性 | 20分 | 是否遵循 `.claude/rules/translation-format.md` |
-| 翻译质量 | 10分 | 术语准确，表达流畅 |
-| 可维护性 | 5分 | 文件命名、目录结构是否符合规范 |
+2. **正文格式正确性**（20分）
+   - 空行分隔正确
+   - 无 `|` 混合使用
+   - 英文段落无中文字符
 
-### 综合评分
+3. **列表格式正确性**（10分）
+   - 有序列表：英文有序号，中文无序号
+   - 无序列表：中英文都有 `-` 符号且有空行分隔
 
-- **90-100分**: 通过 - 无需修改或仅做微小调整
-- **75-89分**: 有条件通过 - 需要修复部分问题
-- **60-74分**: 退回 - 需要重大修改
-- **60分以下**: 退回 - 需要重新翻译
+4. **代码块格式正确性**（5分）
+   - 保持原样，不翻译
+   - 无 `|` 混合
+
+5. **图片链接正确性**（5分）
+   - 使用原始 URL
+   - 有中文说明
+
+### 战略维度（50分）
+
+1. **需求匹配度**（15分）
+   - 符合双语对照规范
+   - 适合中文开发者阅读
+
+2. **格式规范一致性**（20分）
+   - 遵循 translation-format.md
+   - 无系统性问题
+
+3. **翻译质量**（10分）
+   - 术语翻译一致
+   - 技术概念准确
+   - 表达流畅自然
+
+4. **可维护性**（5分）
+   - 格式清晰统一
+   - 易于后续更新
 
 ## 输出要求
 
-请输出结构化的审查报告到 `.claude/review-report.md`，包含：
+请提供：
 
-1. **综合评分**: X/100
-2. **技术维度评分**: X/50
-   - 标题格式正确性: X/10
-   - 正文格式正确性: X/20
-   - 列表格式正确性: X/10
-   - 代码块格式正确性: X/5
-   - 图片链接正确性: X/5
-3. **战略维度评分**: X/50
-   - 需求匹配度: X/15
-   - 格式规范一致性: X/20
-   - 翻译质量: X/10
-   - 可维护性: X/5
-4. **建议**: 通过 / 有条件通过 / 退回
-5. **关键发现**: 发现的问题清单（如有）
-6. **优点**: 做得好的地方
-7. **修改建议**: 需要修改的具体内容和位置
+1. **综合评分**（0-100分）
+   - 技术维度评分（0-50分）
+   - 战略维度评分（0-50分）
+   - 明确建议（通过/退回/有条件通过）
+
+2. **问题清单**
+   - 按优先级排序（高/中/低）
+   - 说明具体位置（行号）
+   - 描述问题和修复建议
+   - 提供修复前后对比示例
+
+3. **优点列表**
+   - 做得好的地方
+   - 值得保持的优点
+
+4. **修改建议**
+   - 按优先级排序
+   - 提供具体修复方案
+
+## 预期问题提示
+
+基于以往经验，可能需要注意：
+
+1. **无序列表格式**：中文行可能缺少 `-` 符号或空行分隔
+2. **粗体标记**：`__text__` 格式在中文段落中可能遗漏
+3. **数字和单位**：需要保持原格式，不翻译
+4. **专有名词**：确保保持英文（Claude、Research、Opus、Sonnet 等）
+5. **长段落**：需要检查空行分隔是否正确
+6. **链接**：确保文中提到的资源（如 Cookbook）有可点击链接
 
 ---
 
-**审查请求生成时间**: 2026-01-25
-**任务ID**: #11
-**文件**: 09-writing-tools-for-agents.md
-
-请开始审查！
+**会话 ID**: 019bf489-67c1-7362-a343-d5114f763579
+**请求时间**: 2026-01-26
