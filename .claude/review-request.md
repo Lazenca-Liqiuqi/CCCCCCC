@@ -4,40 +4,34 @@
 
 | 项目 | 内容 |
 |------|------|
-| **文件** | `03-building-effective-agents.md` |
-| **标题** | Building effective agents |
-| **中文标题** | 构建有效的智能体 |
-| **发布日期** | 2024年12月19日 |
-| **原文 URL** | https://www.anthropic.com/research/building-effective-agents |
+| **文件** | `01-contextual-retrieval.md` |
+| **标题** | Introducing Contextual Retrieval |
+| **中文标题** | 介绍上下文检索 |
+| **发布日期** | 2024年9月19日 |
+| **原文 URL** | https://www.anthropic.com/news/contextual-retrieval |
 | **审查状态** | 第一轮审查 |
 
 ---
 
 ## 文章结构 | Article Structure
 
-### 主要章节（8个）
+### 主要章节（10个）
 
-1. What are agents? | 什么是智能体？
-2. When (and when not) to use agents | 何时（以及何时不）使用智能体
-3. When and how to use frameworks | 何时以及如何使用框架
-4. Building blocks, workflows, and agents | 构建模块、工作流和智能体
-   - Building block: The augmented LLM | 构建模块：增强型 LLM
-   - Workflow: Prompt chaining | 工作流：提示链
-   - Workflow: Routing | 工作流：路由
-   - Workflow: Parallelization | 工作流：并行化
-   - Workflow: Orchestrator-workers | 工作流：编排器-工作者
-   - Workflow: Evaluator-optimizer | 工作流：评估器-优化器
-   - Agents | 智能体
-5. Combining and customizing these patterns | 组合和定制这些模式
-6. Summary | 总结
-7. Appendix 1: Agents in practice | 附录 1：实践中的智能体
-8. Appendix 2: Prompt engineering your tools | 附录 2：提示工程你的工具
-
-### 子章节
-
-- Acknowledgements | 致谢
-- A. Customer support | A. 客户支持
-- B. Coding agents | B. 编码智能体
+1. Introduction | 引言 - RAG 的局限性和上下文检索介绍
+2. A note on simply using a longer prompt | 关于简单使用更长提示的说明
+3. A primer on RAG: scaling to larger knowledge bases | RAG 基础：扩展到更大的知识库
+4. The context conundrum in traditional RAG | 传统 RAG 中的上下文难题
+5. Introducing Contextual Retrieval | 介绍上下文检索
+6. Implementing Contextual Retrieval | 实现上下文检索
+7. Using Prompt Caching to reduce the costs | 使用提示缓存降低成本
+   - Methodology | 方法论
+   - Performance improvements | 性能改进
+   - Implementation considerations | 实现考虑
+8. Further boosting performance with Reranking | 通过重排序进一步提升性能
+   - Performance improvements | 性能改进
+   - Cost and latency considerations | 成本和延迟考虑
+9. Conclusion | 结论
+10. Appendix I | 附录 I
 
 ---
 
@@ -45,12 +39,12 @@
 
 | 项目 | 数值 |
 |------|------|
-| **总行数** | ~600 行 |
-| **主要章节** | 8 个 |
-| **图片数量** | 8 张（流程图和架构图） |
-| **代码块** | 0 个 |
+| **总行数** | ~350 行 |
+| **主要章节** | 10 个 |
+| **图片数量** | 5 张（架构图和结果图） |
+| **代码块** | 2 个（Haiku 提示、代码示例） |
 | **表格** | 0 个 |
-| **外部链接** | 5 个（Anthropic Research、cookbook、框架链接） |
+| **外部链接** | 5 个（Cookbook、文档、Engineering Blog） |
 
 ---
 
@@ -60,59 +54,55 @@
 
 | 英文术语 | 中文翻译 |
 |----------|----------|
-| Agent | 智能体 |
-| Agentic systems | 智能体系统 |
-| Workflow | 工作流 |
-| Augmented LLM | 增强型 LLM |
-| LLM (Large Language Model) | LLM（大语言模型） |
-| Tool use | 工具使用 |
-| Retrieval | 检索 |
-| Memory | 记忆 |
-| Ground truth | 真实答案 |
-| Orchestrator | 编排器 |
-| Worker | 工作者 |
-| Autonomy | 自主性 |
+| Contextual Retrieval | 上下文检索 |
+| RAG (Retrieval-Augmented Generation) | 检索增强生成 |
+| Contextual Embeddings | 上下文嵌入 |
+| Contextual BM25 | 上下文 BM25 |
+| Reranking | 重排序 |
+| Embeddings | 嵌入 |
+| Vector embeddings | 向量嵌入 |
+| BM25 | BM25 排序算法 |
+| TF-IDF | 词频-逆文档频率 |
+| Prompt caching | 提示缓存 |
+| Recall@20 | 前20项召回率 |
+| Top-K chunks | 前 K 个块 |
 
-### 工作流模式术语（10个）
-
-| 英文术语 | 中文翻译 |
-|----------|----------|
-| Prompt chaining | 提示链 |
-| Routing | 路由 |
-| Parallelization | 并行化 |
-| Sectioning | 分节 |
-| Voting | 投票 |
-| Orchestrator-workers | 编排器-工作者 |
-| Evaluator-optimizer | 评估器-优化器 |
-| Gate | 门 |
-| Checkpoint | 检查点 |
-| Blocker | 障碍 |
-
-### 框架与工具术语（8个）
+### RAG 技术术语（8个）
 
 | 英文术语 | 中文翻译 |
 |----------|----------|
-| LangGraph | LangGraph |
-| Amazon Bedrock | Amazon Bedrock |
-| Rivet | Rivet |
-| Vellum | Vellum |
-| Model Context Protocol | 模型上下文协议 (MCP) |
-| Agent-computer interface | 智能体-计算机接口 (ACI) |
-| Poka-yoke | 防错 |
-| Guardrails | 防护栏 |
+| Knowledge base | 知识库 |
+| Context window | 上下文窗口 |
+| Chunk | 文本块 |
+| Chunk boundaries | 块边界 |
+| Chunk overlap | 块重叠 |
+| Semantic similarity | 语义相似性 |
+| Lexical matching | 词法匹配 |
+| Rank fusion | 排序融合 |
 
-### 开发实践术语（8个）
+### 模型与工具术语（8个）
 
 | 英文术语 | 中文翻译 |
 |----------|----------|
-| Sandbox | 沙盒 |
-| Iteration | 迭代 |
-| Evaluation | 评估 |
-| Feedback loop | 反馈循环 |
-| Human oversight | 人工监督 |
-| Usage-based pricing | 基于使用量的定价 |
-| Human-computer interface | 人机交互界面 (HCI) |
-| Docstring | 文档字符串 |
+| Claude 3 Haiku | Claude 3 Haiku 模型 |
+| Gemini Text 004 | Gemini Text 004 嵌入模型 |
+| Voyage embeddings | Voyage 嵌入 |
+| Cohere reranker | Cohere 重排序器 |
+| Vector database | 向量数据库 |
+| Embedding model | 嵌入模型 |
+| Reranking model | 重排序模型 |
+| Reranker | 重排序器 |
+
+### 性能与评估术语（6个）
+
+| 英文术语 | 中文翻译 |
+|----------|----------|
+| Retrieval failure rate | 检索失败率 |
+| Retrieval accuracy | 检索准确性 |
+| Latency | 延迟 |
+| Cost-effective | 成本效益 |
+| Top-N chunks | 前 N 个块 |
+| Evaluation metrics | 评估指标 |
 
 ---
 
@@ -130,36 +120,43 @@
    - 中文段落独立成段
 
 3. **列表格式**：
-   - 无序列表：中英文都有 `-` 符号且逐条对照
-   - 嵌套列表：保持缩进格式一致
+   - 有序列表：英文有序号，中文无序号
+   - 无序列表：中英文逐条对照
    - 列表项之间应有空行分隔
 
-4. **图片格式**：
+4. **代码块格式**：
+   - 保持原有代码格式
+   - 代码注释不与代码混合
+   - 中英文对照注释
+
+5. **图片格式**：
    - 使用原始图片链接（www-cdn.anthropic.com）
    - 每张图片后面有中文说明
    - 禁止使用代理 URL（_next/image）
 
-5. **链接格式**：
+6. **链接格式**：
    - 保留原始链接
    - Sources 区域添加中文链接行
    - 确保所有链接可点击
 
-6. **特殊格式**：
+7. **特殊格式**：
    - `__text__` 加粗格式保持一致
-   - 附录章节编号（A. B.）保持一致
+   - 代码块使用正确的 markdown 格式
 
 ### 内容质量检查
 
 1. **术语一致性**：
-   - Agent 统一翻译为"智能体"
-   - Workflow 统一翻译为"工作流"
-   - LLM 保持原文或翻译为"大语言模型"
-   - Framework 翻译为"框架"
+   - RAG 统一翻译为"检索增强生成"
+   - Contextual Retrieval 统一翻译为"上下文检索"
+   - Embeddings 统一翻译为"嵌入"
+   - Reranking 统一翻译为"重排序"
+   - Chunk 统一翻译为"块"或"文本块"
 
 2. **翻译准确性**：
-   - 技术概念是否准确传达（agentic systems、orchestrator-workers、evaluator-optimizer）
-   - 工作流模式的描述是否清晰
-   - 框架名称是否正确（LangGraph、Rivet、Vellum）
+   - 技术概念是否准确传达（Contextual Embeddings、Contextual BM25）
+   - RAG 工作流程的描述是否清晰
+   - 性能指标是否正确（49%、67% 改进）
+   - 成本数字是否准确（$1.02 per million tokens）
 
 3. **可读性**：
    - 中文表达流畅自然
@@ -168,36 +165,39 @@
 
 4. **完整性**：
    - 所有章节完整无遗漏
-   - 8 张图片完整
-   - 附录内容完整
+   - 5 张图片完整
+   - 2 个代码块完整
    - Sources 区域完整
 
 ### 特殊注意事项
 
-1. **架构概念区分**：
-   - Agentic systems（智能体系统）vs workflows（工作流）vs agents（智能体）的准确区分
-   - Orchestrator-workers 与 parallelization 的关键区别（灵活性 vs 预定义）
-   - Evaluator-optimizer 与 prompt chaining 的区别（循环反馈 vs 线性步骤）
+1. **技术概念区分**：
+   - Contextual Embeddings（上下文嵌入）vs Contextual BM25（上下文 BM25）
+   - Embeddings（语义嵌入）vs BM25（词法匹配）
+   - RAG（检索增强生成）的完整工作流程
+   - Prompt caching（提示缓存）在成本优化中的作用
 
-2. **工作流模式**：
-   - 6 种工作流模式的准确描述
-   - 每种模式的适用场景和示例
-   - 模式之间的差异和选择标准
+2. **性能指标**：
+   - 检索失败率降低 35%（Contextual Embeddings）
+   - 检索失败率降低 49%（Contextual Embeddings + Contextual BM25）
+   - 检索失败率降低 67%（+ Reranking）
+   - 成本：$1.02 per million document tokens
 
-3. **框架建议**：
-   - 直接使用 LLM API 的建议
-   - 框架的优缺点说明
-   - 抽象层的理解要求
+3. **实现细节**：
+   - Claude 3 Haiku 提示格式
+   - 块分割策略（800 tokens）
+   - Top-K 选择（5、10、20 chunks）
+   - 重排序工作流程
 
-4. **设计原则**：
-   - 三个核心原则（简单性、透明度、ACI）
-   - HCI 与 ACI 的类比
-   - Poka-yoke（防错）设计理念
+4. **应用场景**：
+   - 知识库大小阈值（200,000 tokens）
+   - 不同嵌入模型的性能差异
+   - 成本和延迟的权衡考虑
 
-5. **实践案例**：
-   - 客户支持场景的 4 个要点
-   - 编码智能体的 4 个优势
-   - SWE-bench 基准测试提及
+5. **代码和示例**：
+   - Haiku 提示示例的中英文对照
+   - SEC 文件示例的准确性
+   - 块转换示例的清晰度
 
 ---
 
@@ -207,29 +207,37 @@
 - [ ] 所有标题（#、##、###、####）使用 `|` 分隔符
 - [ ] 正文段落使用换行，不使用 `|`
 - [ ] 英文段落和中文段落之间有空行
+- [ ] 有序列表中文行无序号
 - [ ] 无序列表中英文逐条对照
-- [ ] 嵌套列表缩进一致
 
 ### 内容质量
 - [ ] 图片使用原始 URL（www-cdn.anthropic.com）
+- [ ] 代码块格式正确，注释不与代码混合
 - [ ] 链接保持可点击状态
 - [ ] `__text__` 加粗格式正确
 - [ ] 术语翻译一致
 
 ### 完整性检查
-- [ ] 所有8个主要章节完整
-- [ ] 2个附录完整（实践中的智能体、提示工程你的工具）
-- [ ] 8张图片完整
+- [ ] 所有10个主要章节完整
+- [ ] 附录 I 完整
+- [ ] 5张图片完整
+- [ ] 2个代码块完整
 - [ ] Sources 区域有中文对照
 - [ ] 英文段落中没有中文字符
 - [ ] 中文段落翻译完整，无遗漏
 
 ### 术语一致性
-- [ ] Agent 翻译一致（智能体）
-- [ ] Workflow 翻译一致（工作流）
-- [ ] Orchestrator 翻译一致（编排器）
-- [ ] Evaluator-optimizer 翻译一致（评估器-优化器）
-- [ ] Framework 翻译一致（框架）
+- [ ] RAG 翻译一致（检索增强生成）
+- [ ] Contextual Retrieval 翻译一致（上下文检索）
+- [ ] Embeddings 翻译一致（嵌入）
+- [ ] Reranking 翻译一致（重排序）
+- [ ] Chunk 翻译一致（块/文本块）
+
+### 技术准确性
+- [ ] 性能指标数字正确（35%、49%、67%）
+- [ ] 成本数字正确（$1.02 per million tokens）
+- [ ] Haiku 提示格式准确
+- [ ] 块大小数字准确（800 tokens、8k token documents）
 
 ---
 
@@ -246,18 +254,21 @@
 - 严格按照格式规范创建，格式问题较少
 - 技术内容准确，术语翻译一致
 - 双语对照完整，章节结构清晰
-- 图片、链接格式正确
+- 图片、代码块、链接格式正确
 - Sources 区域包含中文对照
+- 性能指标和成本数字准确
 
 ---
 
 ## 特别说明 | Special Notes
 
-1. **首次翻译**：这是 ID 03 的首次翻译，无修复历史
+1. **首次翻译**：这是 ID 02 的首次翻译，无修复历史
 2. **格式规范**：已严格按照 `.claude/rules/translation-format.md` 创建
-3. **技术准确性**：已确保技术概念和架构模式准确性
-4. **完整性**：所有章节、附录、图片已完整翻译
-5. **图片处理**：所有 8 张图片使用原始 URL（www-cdn.anthropic.com）
+3. **技术准确性**：已确保技术概念和性能指标准确性
+4. **完整性**：所有章节、图片、代码块已完整翻译
+5. **图片处理**：所有 5 张图片使用原始 URL（www-cdn.anthropic.com）
+6. **代码块**：包含 Haiku 提示示例和代码示例，需要检查格式
+7. **性能指标**：重点检查 35%、49%、67% 改进数字的准确性
 
 **会话 ID**: 当前会话
 **请求时间**: 2026-01-26
