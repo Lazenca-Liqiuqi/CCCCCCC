@@ -152,7 +152,7 @@ Claude Code Chinese Commentary Collection/
 
 ## 版本
 
-**当前版本**：0.1.0
+**当前版本**：0.2.0
 
 详见 [CHANGELOG.md](./CHANGELOG.md)
 
