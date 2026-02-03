@@ -8,7 +8,7 @@ As model capabilities improve, we can now build general-purpose agents that inte
 
 随着模型能力的提升，我们现在可以构建与完整计算环境交互的通用智能体。例如，Claude Code 可以使用本地代码执行和文件系统完成跨领域的复杂任务。但随着这些智能体变得更强大，我们需要更加可组合、可扩展和可移植的方式来为它们配备特定领域的专业知识。
 
-This led us to create __Agent Skills__: organized folders of instructions, scripts, and resources that agents can discover and load dynamically to perform better at specific tasks. Skills extend Claude's capabilities by packaging your expertise into composable resources for Claude, transforming general-purpose agents into specialized agents that fit your needs.
+This led us to create **Agent Skills**: organized folders of instructions, scripts, and resources that agents can discover and load dynamically to perform better at specific tasks. Skills extend Claude's capabilities by packaging your expertise into composable resources for Claude, transforming general-purpose agents into specialized agents that fit your needs.
 
 这促使我们创造了 **Agent Skills**：有组织的指令、脚本和资源文件夹，智能体可以发现并动态加载这些内容以在特定任务中表现得更好。技能通过将你的专业知识打包成 Claude 可组合使用的资源来扩展 Claude 的能力，将通用智能体转变为符合你需求的专业智能体。
 
@@ -33,7 +33,7 @@ At its simplest, a skill is a directory that contains a `SKILL.md file`. This fi
 
 最简单的说，技能是一个包含 `SKILL.md 文件的目录`。该文件必须以 YAML frontmatter 开头，其中包含一些必需的元数据：`name` 和 `description`。在启动时，智能体会将每个已安装技能的 `name` 和 `description` 预加载到其系统提示中。
 
-This metadata is the __first level__ of _progressive disclosure_: it provides just enough information for Claude to know when each skill should be used without loading all of it into context. The actual body of this file is the __second level__ of detail. If Claude thinks the skill is relevant to the current task, it will load the skill by reading its full `SKILL.md` into context.
+This metadata is the **first level** of _progressive disclosure_: it provides just enough information for Claude to know when each skill should be used without loading all of it into context. The actual body of this file is the **second level** of detail. If Claude thinks the skill is relevant to the current task, it will load the skill by reading its full `SKILL.md` into context.
 
 这些元数据是 **渐进式披露** 的 **第一级**：它提供刚好足够的信息，让 Claude 知道何时应该使用每个技能，而无需将所有内容加载到上下文中。该文件的实际正文是 **第二级** 详细信息。如果 Claude 认为该技能与当前任务相关，它将通过读取完整的 `SKILL.md` 到上下文中来加载该技能。
 
@@ -44,7 +44,7 @@ A SKILL.md file must begin with YAML Frontmatter that contains a file name and d
 
 SKILL.md 文件必须以 YAML Frontmatter 开头，其中包含文件名和描述，这些内容在启动时会被加载到系统提示中。
 
-As skills grow in complexity, they may contain too much context to fit into a single `SKILL.md`, or context that's relevant only in specific scenarios. In these cases, skills can bundle additional files within the skill directory and reference them by name from `SKILL.md`. These additional linked files are the __third level__ (and beyond) of detail, which Claude can choose to navigate and discover only as needed.
+As skills grow in complexity, they may contain too much context to fit into a single `SKILL.md`, or context that's relevant only in specific scenarios. In these cases, skills can bundle additional files within the skill directory and reference them by name from `SKILL.md`. These additional linked files are the **third level** (and beyond) of detail, which Claude can choose to navigate and discover only as needed.
 
 随着技能变得越来越复杂，它们可能包含太多上下文，无法放入单个 `SKILL.md` 中，或者包含仅在特定场景中相关的上下文。在这些情况下，技能可以在技能目录中捆绑其他文件，并从 `SKILL.md` 中按名称引用它们。这些附加的链接文件是 **第三级**（及更高级）的详细信息，Claude 可以选择仅在需要时导航和发现这些内容。
 
@@ -130,19 +130,19 @@ Here are some helpful guidelines for getting started with authoring and testing 
 
 以下是一些有助于开始编写和测试技能的指南：
 
-- __Start with evaluation:__ Identify specific gaps in your agents' capabilities by running them on representative tasks and observing where they struggle or require additional context. Then build skills incrementally to address these shortcomings.
+- **Start with evaluation:** Identify specific gaps in your agents' capabilities by running them on representative tasks and observing where they struggle or require additional context. Then build skills incrementally to address these shortcomings.
 
 - **从评估开始**：通过在代表性任务上运行智能体并观察它们在哪些方面遇到困难或需要额外上下文，来识别智能体能力的具体差距。然后逐步构建技能来解决这些不足。
 
-- __Structure for scale:__ When the `SKILL.md` file becomes unwieldy, split its content into separate files and reference them. If certain contexts are mutually exclusive or rarely used together, keeping the paths separate will reduce the token usage. Finally, code can serve as both executable tools and as documentation. It should be clear whether Claude should run scripts directly or read them into context as reference.
+- **Structure for scale:** When the `SKILL.md` file becomes unwieldy, split its content into separate files and reference them. If certain contexts are mutually exclusive or rarely used together, keeping the paths separate will reduce the token usage. Finally, code can serve as both executable tools and as documentation. It should be clear whether Claude should run scripts directly or read them into context as reference.
 
 - **为扩展而构建**：当 `SKILL.md` 文件变得难以处理时，将其内容拆分为单独文件并引用它们。如果某些上下文互斥或很少一起使用，保持路径分离将减少令牌使用。最后，代码既可以作为可执行工具，也可以作为文档。应该清楚 Claude 是应该直接运行脚本还是将它们作为参考读入上下文。
 
-- __Think from Claude's perspective:__ Monitor how Claude uses your skill in real scenarios and iterate based on observations: watch for unexpected trajectories or overreliance on certain contexts. Pay special attention to the `name` and `description` of your skill. Claude will use these when deciding whether to trigger the skill in response to its current task.
+- **Think from Claude's perspective:** Monitor how Claude uses your skill in real scenarios and iterate based on observations: watch for unexpected trajectories or overreliance on certain contexts. Pay special attention to the `name` and `description` of your skill. Claude will use these when deciding whether to trigger the skill in response to its current task.
 
 - **从 Claude 的角度思考**：观察 Claude 在实际场景中如何使用你的技能，并根据观察结果进行迭代：注意意外的轨迹或对某些上下文的过度依赖。特别注意技能的 `name` 和 `description`。Claude 在决定是否响应当前任务而触发技能时会使用这些信息。
 
-- __Iterate with Claude:__ As you work on a task with Claude, ask Claude to capture its successful approaches and common mistakes into reusable context and code within a skill. If it goes off track when using a skill to complete a task, ask it to self-reflect on what went wrong. This process will help you discover what context Claude actually needs, instead of trying to anticipate it upfront.
+- **Iterate with Claude:** As you work on a task with Claude, ask Claude to capture its successful approaches and common mistakes into reusable context and code within a skill. If it goes off track when using a skill to complete a task, ask it to self-reflect on what went wrong. This process will help you discover what context Claude actually needs, instead of trying to anticipate it upfront.
 
 - **与 Claude 一起迭代**：当你与 Claude 一起完成任务时，让 Claude 将其成功的方法和常见错误捕获到技能中的可重用上下文和代码中。如果在使用技能完成任务时偏离了轨道，让它自我反思出了什么问题。这个过程将帮助你发现 Claude 实际需要什么上下文，而不是试图提前预测。
 

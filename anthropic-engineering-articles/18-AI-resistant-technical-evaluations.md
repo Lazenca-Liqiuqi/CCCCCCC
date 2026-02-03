@@ -44,17 +44,17 @@ Take-homes have a bad reputation. Usually they're filled with generic problems w
 The format also offers advantages over live interviews for evaluating performance engineering skills:
 这种格式在评估性能工程技能方面也比现场面试有优势：
 
-__Longer time horizon:__ Engineers rarely face deadlines of less than an hour when coding. A 4-hour window (later reduced to 2 hours) better reflects the actual nature of the job. It's still shorter than most real tasks, but we need to balance that with how onerous it is.
-__更长的时间跨度：__ 工程师在编码时很少面临少于一个小时的截止日期。4 小时的时间窗口（后来减少到 2 小时）更好地反映了工作的实际性质。它仍然比大多数真实任务短，但我们需要平衡这一点与它的繁重程度。
+*Longer time horizon:* Engineers rarely face deadlines of less than an hour when coding. A 4-hour window (later reduced to 2 hours) better reflects the actual nature of the job. It's still shorter than most real tasks, but we need to balance that with how onerous it is.
+*更长的时间跨度：* 工程师在编码时很少面临少于一个小时的截止日期。4 小时的时间窗口（后来减少到 2 小时）更好地反映了工作的实际性质。它仍然比大多数真实任务短，但我们需要平衡这一点与它的繁重程度。
 
-__Realistic environment:__ No one watching or expecting narration. Candidates work in their own editor without distraction.
-__真实环境：__ 没有人观看或期望叙述。候选人在自己的编辑器中工作而不受干扰。
+*Realistic environment:* No one watching or expecting narration. Candidates work in their own editor without distraction.
+*真实环境：* 没有人观看或期望叙述。候选人在自己的编辑器中工作而不受干扰。
 
-__Time for comprehension and tooling:__ Performance optimization requires understanding existing systems and sometimes building debugging tools. Both are hard to realistically evaluate in a normal 50 minute interview.
-__理解和工具的时间：__ 性能优化需要理解现有系统，有时还需要构建调试工具。这两者在正常的 50 分钟面试中都很难现实地评估。
+*Time for comprehension and tooling:* Performance optimization requires understanding existing systems and sometimes building debugging tools. Both are hard to realistically evaluate in a normal 50 minute interview.
+*理解和工具的时间：* 性能优化需要理解现有系统，有时还需要构建调试工具。这两者在正常的 50 分钟面试中都很难现实地评估。
 
-__Compatibility with AI assistance:__ Anthropic's general candidate guidance asks candidates to complete take-homes without AI unless indicated otherwise. For this take-home, we explicitly indicate otherwise.
-__与 AI 辅助的兼容性：__ Anthropic 的一般候选人指导要求候选人在没有 AI 的情况下完成笔试测试，除非另有说明。对于这项笔试测试，我们明确表示相反。
+*Compatibility with AI assistance:* Anthropic's general candidate guidance asks candidates to complete take-homes without AI unless indicated otherwise. For this take-home, we explicitly indicate otherwise.
+*与 AI 辅助的兼容性：* Anthropic 的一般候选人指导要求候选人在没有 AI 的情况下完成笔试测试，除非另有说明。对于这项笔试测试，我们明确表示相反。
 
 Longer-horizon problems are harder for AI to solve completely, so candidates can use AI tools (as they would on the job) while still needing to demonstrate their own skills.
 更长时间跨度的问题对 AI 来说更难完全解决，因此候选人可以使用 AI 工具（就像他们在工作中一样），同时仍然需要展示他们自己的技能。
@@ -62,17 +62,17 @@ Longer-horizon problems are harder for AI to solve completely, so candidates can
 Beyond these format-specific goals, I applied the same principles I use when designing any interview to make the take-home:
 除了这些格式特定的目标之外，我应用了我在设计任何面试时使用的相同原则来使笔试测试：
 
-__Representative of real work:__ The problem should give candidates a taste of what the job actually involves.
-__代表真实工作：__ 问题应该让候选人体验工作的实际内容。
+*Representative of real work:* The problem should give candidates a taste of what the job actually involves.
+*代表真实工作：* 问题应该让候选人体验工作的实际内容。
 
-__High signal:__ The take-home should avoid problems that hinge on a single insight and ensure candidates have many chances to show their full abilities — leaving as little as possible to chance. It should also have a wide scoring distribution,and ensure enough depth that even strong candidates don't finish everything.
-__高信噪比：__ 笔试测试应该避免依赖于单一洞察的问题，并确保候选人有多次机会展示他们的全部能力——尽可能少地留下运气成分。它还应该有一个广泛的评分分布，并确保足够的深度，即使是强大的候选人也无法完成所有事情。
+*High signal:* The take-home should avoid problems that hinge on a single insight and ensure candidates have many chances to show their full abilities — leaving as little as possible to chance. It should also have a wide scoring distribution,and ensure enough depth that even strong candidates don't finish everything.
+*高信噪比：* 笔试测试应该避免依赖于单一洞察的问题，并确保候选人有多次机会展示他们的全部能力——尽可能少地留下运气成分。它还应该有一个广泛的评分分布，并确保足够的深度，即使是强大的候选人也无法完成所有事情。
 
-__No specific domain knowledge:__ People with good fundamentals can learn specifics on the job. Requiring narrow expertise unnecessarily limits the candidate pool.
-__没有特定的领域知识：__ 基础好的人可以在工作中学习具体细节。要求狭窄的专业知识会不必要地限制候选人库。
+*No specific domain knowledge:* People with good fundamentals can learn specifics on the job. Requiring narrow expertise unnecessarily limits the candidate pool.
+*没有特定的领域知识：* 基础好的人可以在工作中学习具体细节。要求狭窄的专业知识会不必要地限制候选人库。
 
-__Fun:__ Fast development loops, interesting problems with depth, and room for creativity.
-__有趣：__ 快速的开发循环，有深度的有趣问题，以及创造力的空间。
+*Fun:* Fast development loops, interesting problems with depth, and room for creativity.
+*有趣：* 快速的开发循环，有深度的有趣问题，以及创造力的空间。
 
 ### The Simulated Machine | 模拟机器
 
@@ -193,18 +193,18 @@ The released version starts from scratch (like version 1) but uses version 2's i
 Performance benchmarks (measured in clock cycles from the simulated machine):
 性能基准测试（从模拟机器测量的时钟周期）：
 
-- __2164 cycles__: Claude Opus 4 after many hours in the test-time compute harness
-__2164 周期：__ Claude Opus 4 在测试时计算工具中工作许多小时后
-- __1790 cycles__: Claude Opus 4.5 in a casual Claude Code session, approximately matching the best human performance in 2 hours
-__1790 周期：__ Claude Opus 4.5 在随意的 Claude Code 会话中，大约匹配 2 小时内最好的人类表现
-- __1579 cycles__: Claude Opus 4.5 after 2 hours in our test-time compute harness
-__1579 周期：__ Claude Opus 4.5 在我们的测试时计算工具中 2 小时后
-- __1548 cycles__: Claude Sonnet 4.5 after many more than 2 hours of test-time compute
-__1548 周期：__ Claude Sonnet 4.5 经过超过 2 小时的测试时计算
-- __1487 cycles__: Claude Opus 4.5 after 11.5 hours in the harness
-__1487 周期：__ Claude Opus 4.5 在工具中 11.5 小时后
-- __1363 cycles__: Claude Opus 4.5 in an improved test time compute harness after many hours
-__1363 周期：__ Claude Opus 4.5 在改进的测试时计算工具中经过许多小时后
+- *2164 cycles*: Claude Opus 4 after many hours in the test-time compute harness
+*2164 周期：* Claude Opus 4 在测试时计算工具中工作许多小时后
+- *1790 cycles*: Claude Opus 4.5 in a casual Claude Code session, approximately matching the best human performance in 2 hours
+*1790 周期：* Claude Opus 4.5 在随意的 Claude Code 会话中，大约匹配 2 小时内最好的人类表现
+- *1579 cycles*: Claude Opus 4.5 after 2 hours in our test-time compute harness
+*1579 周期：* Claude Opus 4.5 在我们的测试时计算工具中 2 小时后
+- *1548 cycles*: Claude Sonnet 4.5 after many more than 2 hours of test-time compute
+*1548 周期：* Claude Sonnet 4.5 经过超过 2 小时的测试时计算
+- *1487 cycles*: Claude Opus 4.5 after 11.5 hours in the harness
+*1487 周期：* Claude Opus 4.5 在工具中 11.5 小时后
+- *1363 cycles*: Claude Opus 4.5 in an improved test time compute harness after many hours
+*1363 周期：* Claude Opus 4.5 在改进的测试时计算工具中经过许多小时后
 
 Download it on [GitHub](https://github.com/anthropics/ai-resistant-evals). If you optimize below 1487 cycles, beating Claude's best performance at launch, email us at performance-recruiting@anthropic.com with your code and a resume.
 

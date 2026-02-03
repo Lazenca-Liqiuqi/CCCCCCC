@@ -36,19 +36,19 @@ We believe giving Claude a computer unlocks the ability to build agents that are
 
 我们相信，为 Claude 配备计算机解锁了构建比以往更有效的智能体的能力。例如，使用我们的 SDK，开发者可以构建：
 
-- __Finance agents__: Build agents that can understand your portfolio and goals, as well as help you evaluate investments by accessing external APIs, storing data and running code to make calculations.
+- **Finance agents**: Build agents that can understand your portfolio and goals, as well as help you evaluate investments by accessing external APIs, storing data and running code to make calculations.
 
 - **金融智能体**：构建能够理解你的投资组合和目标的智能体，以及通过访问外部 API、存储数据和运行代码进行计算来帮助你评估投资。
 
-- __Personal assistant agents__. Build agents that can help you book travel and manage your calendar, as well as schedule appointments, put together briefs, and more by connecting to your internal data sources and tracking context across applications.
+- **Personal assistant agents**. Build agents that can help you book travel and manage your calendar, as well as schedule appointments, put together briefs, and more by connecting to your internal data sources and tracking context across applications.
 
 - **个人助理智能体**：构建可以帮助你预订旅行和管理日历，以及通过连接到你的内部数据源和跨应用程序跟踪上下文来安排约会、整理简报等的智能体。
 
-- __Customer support agents:__ Build agents that can handle high ambiguity user requests, like customer service tickets, by collecting and reviewing user data, connecting to external APIs, messaging users back and escalating to humans when needed.
+- **Customer support agents:** Build agents that can handle high ambiguity user requests, like customer service tickets, by collecting and reviewing user data, connecting to external APIs, messaging users back and escalating to humans when needed.
 
 - **客户支持智能体**：构建可以处理高模糊性用户请求（如客户服务工单）的智能体，通过收集和审查用户数据，连接到外部 API，回复用户消息，并在需要时升级给人工处理。
 
-- __Deep research agents__: Build agents that can conduct comprehensive research across large document collections by searching through file systems, analyzing and synthesizing information from multiple sources, cross-referencing data across files, and generating detailed reports.
+- **Deep research agents**: Build agents that can conduct comprehensive research across large document collections by searching through file systems, analyzing and synthesizing information from multiple sources, cross-referencing data across files, and generating detailed reports.
 
 - **深度研究智能体**：构建可以通过搜索文件系统、分析和综合来自多个来源的信息、交叉引用文件之间的数据以及生成详细报告，从而对大型文档集合进行综合研究的智能体。
 
@@ -79,7 +79,7 @@ When developing an agent, you want to give it more than just a prompt: it needs 
 
 在开发智能体时，你想给它的不仅仅是一个提示：它需要能够获取和更新自己的上下文。以下是 SDK 中的功能如何提供帮助。
 
-### __Agentic search and the file system__ | __智能体搜索和文件系统__
+### **Agentic search and the file system** | **智能体搜索和文件系统**
 
 The file system represents information that _could_ be pulled into the model's context.
 
@@ -96,13 +96,13 @@ Our email agent might store previous conversations in a folder called 'Conversat
 ![Image 2: File system as context for an email agent](https://www-cdn.anthropic.com/images/4zrzovbb/website/d5e3b46900277431b86467fdc308b64e61edd740-2292x623.png)
 图片2说明：电子邮件智能体的文件系统作为上下文。
 
-### __Semantic search__ | __语义搜索__
+### **Semantic search** | **语义搜索**
 
 Semantic search is usually faster than agentic search, but less accurate, more difficult to maintain, and less transparent. It involves 'chunking' the relevant context, embedding these chunks as vectors, and then searching for concepts by querying those vectors. Given its limitations, we suggest starting with agentic search, and only adding semantic search if you need faster results or more variations.
 
 语义搜索通常比智能体搜索更快，但准确性较低，更难维护，透明度也较低。它涉及将相关上下文"分块"，将这些块嵌入为向量，然后通过查询这些向量来搜索概念。鉴于其局限性，我们建议从智能体搜索开始，仅在需要更快的结果或更多变化时才添加语义搜索。
 
-### __Subagents__ | __子智能体__
+### **Subagents** | **子智能体**
 
 Claude Agent SDK supports subagents by default. Subagents are useful for two main reasons. First, they enable parallelization: you can spin up multiple subagents to work on different tasks simultaneously. Second, they help manage context: subagents use their own isolated context windows, and only send relevant information back to the orchestrator, rather than their full context. This makes them ideal for tasks that require sifting through large amounts of information where most of it won't be useful.
 
@@ -112,7 +112,7 @@ When designing our email agent, we might give it a 'search subagent' capability.
 
 在设计我们的电子邮件智能体时，我们可能会给它一个"搜索子智能体"功能。然后，电子邮件智能体可以并行启动多个搜索子智能体——每个对电子邮件历史运行不同的查询——并让它们只返回相关摘录而不是完整的电子邮件线程。
 
-### __Compaction__ | __压缩__
+### **Compaction** | **压缩**
 
 When agents are running for long periods of time, context maintenance becomes critical. The Claude Agent SDK's compact feature automatically summarizes previous messages when the context limit approaches, so your agent won't run out of context. This is built on Claude Code's compact slash command.
 
@@ -124,7 +124,7 @@ Once you've gathered context, you'll want to give your agent flexible ways of ta
 
 一旦你收集了上下文，你会想给你的智能体灵活的采取行动的方式。
 
-### __Tools__ | __工具__
+### **Tools** | **工具**
 
 Tools are the primary building blocks of execution for your agent. Tools are prominent in Claude's context window, making them the primary actions Claude will consider when deciding how to complete a task. This means you should be conscious about how you design your tools to maximize context efficiency. You can see more best practices in our blog post, [Writing effective tools for agents – with agents](https://www.anthropic.com/engineering/writing-effective-tools).
 
@@ -138,7 +138,7 @@ For our email agent, we might define tools like "`fetchInbox`" or "`searchEmails
 
 对于我们的电子邮件智能体，我们可能会将诸如 "`fetchInbox`" 或 "`searchEmails`" 之类的工具定义为智能体的主要、最频繁的行动。
 
-### __Bash & scripts__ | __Bash 和脚本__
+### **Bash & scripts** | **Bash 和脚本**
 
 Bash is useful as a general-purpose tool to allow the agent to do flexible work using a computer.
 
@@ -151,7 +151,7 @@ In our email agent, the user might have important information stored in their at
 ![Image 3: Claude using bash to process email attachments](https://www-cdn.anthropic.com/images/4zrzovbb/website/e2a32595e35164f46c054dc003197e622ca95180-2292x623.png)
 图片3说明：Claude 使用 bash 处理电子邮件附件。
 
-### __Code generation__ | __代码生成__
+### **Code generation** | **代码生成**
 
 The Claude Agent SDK excels at code generation—and for good reason. Code is precise, composable, and infinitely reusable, making it an ideal output for agents that need to perform complex operations reliably.
 
@@ -172,7 +172,7 @@ In our email agent, we might want to allow users to create rules for inbound ema
 ![Image 4: Code generation for email rules](https://www-cdn.anthropic.com/images/4zrzovbb/website/180c83cc0f6f0ea26e18cbfbc59040cab6767b55-2292x1290.png)
 图片4说明：用于电子邮件规则的代码生成。
 
-### __MCPs__ | __MCP 协议__
+### **MCPs** | **MCP 协议**
 
 The Model Context Protocol (MCP) provides standardized integrations to external services, handling authentication and API calls automatically. This means you can connect your agent to tools like Slack, GitHub, Google Drive, or Asana without writing custom integration code or managing OAuth flows yourself.
 
@@ -196,7 +196,7 @@ The key is giving Claude concrete ways to evaluate its work. Here are three appr
 
 关键是给 Claude 具体的方式来评估其工作。以下是我们发现有效的三种方法：
 
-### __Defining rules__ | __定义规则__
+### **Defining rules** | **定义规则**
 
 The best form of feedback is providing clearly defined rules for an output, then explaining which rules failed and why.
 
@@ -210,7 +210,7 @@ When generating an email, you may want Claude to check that the email address is
 
 在生成电子邮件时，你可能希望 Claude 检查电子邮件地址是否有效（如果无效，则抛出错误），以及用户以前是否向他们发送过电子邮件（如果是，则发出警告）。
 
-### __Visual feedback__ | __视觉反馈__
+### **Visual feedback** | **视觉反馈**
 
 When using an agent to complete visual tasks, like UI generation or testing, visual feedback (in the form of screenshots or renders) can be helpful. For example, if sending an email with HTML formatting, you could screenshot the generated email and provide it back to the model for visual verification and iterative refinement. The model would then check whether the visual output matches what was requested.
 
@@ -220,21 +220,21 @@ For instance:
 
 例如：
 
-- __Layout__ - Are elements positioned correctly? Is spacing appropriate?
+- **Layout** - Are elements positioned correctly? Is spacing appropriate?
 
-- __布局__ - 元素是否正确定位？间距是否合适？
+- **布局** - 元素是否正确定位？间距是否合适？
 
-- __Styling__ - Do colors, fonts, and formatting appear as intended?
+- **Styling** - Do colors, fonts, and formatting appear as intended?
 
-- __样式__ - 颜色、字体和格式是否按预期显示？
+- **样式** - 颜色、字体和格式是否按预期显示？
 
-- __Content hierarchy__ - Is information presented in the right order with proper emphasis?
+- **Content hierarchy** - Is information presented in the right order with proper emphasis?
 
-- __内容层次结构__ - 信息是否按正确的顺序呈现，并具有适当的强调？
+- **内容层次结构** - 信息是否按正确的顺序呈现，并具有适当的强调？
 
-- __Responsiveness__ - Does it look broken or cramped? (though a single screenshot has limited viewport info)
+- **Responsiveness** - Does it look broken or cramped? (though a single screenshot has limited viewport info)
 
-- __响应性__ - 它看起来是否破损或拥挤？（尽管单个屏幕截图的视口信息有限）
+- **响应性** - 它看起来是否破损或拥挤？（尽管单个屏幕截图的视口信息有限）
 
 Using an MCP server like Playwright, you can automate this visual feedback loop—taking screenshots of rendered HTML, capturing different viewport sizes, and even testing interactive elements—all within your agent's workflow.
 
@@ -247,7 +247,7 @@ Visual feedback from a large-language model (LLM) can provide helpful guidance t
 
 来自大型语言模型（LLM）的视觉反馈可以为你的智能体提供有用的指导。
 
-### __LLM as a judge__ | __LLM 作为评判者__
+### **LLM as a judge** | **LLM 作为评判者**
 
 You can also have another language model "judge" the output of your agent based on fuzzy rules. This is generally not a very robust method, and can have heavy latency tradeoffs, but for applications where any boost in performance is worth the cost, it can be helpful.
 

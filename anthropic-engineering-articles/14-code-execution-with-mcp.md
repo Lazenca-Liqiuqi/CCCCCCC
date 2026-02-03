@@ -28,7 +28,7 @@ As MCP usage scales, there are two common patterns that can increase agent cost 
 工具定义过载上下文窗口；
 中间工具结果消耗额外令牌。
 
-### 1. Tool Definitions Overload the Context Window | 工具定义过载上下文窗口
+### Tool Definitions Overload the Context Window | 工具定义过载上下文窗口
 
 Most MCP clients load all tool definitions upfront directly into context, exposing them to the model using a direct tool-calling syntax. These tool definitions might look like:
 
@@ -57,7 +57,7 @@ Tool descriptions occupy more context window space, increasing response time and
 
 工具描述占用更多上下文窗口空间，增加响应时间和成本。在智能体连接到数千个工具的情况下，它们需要处理数十万个令牌才能读取请求。
 
-### 2. Intermediate Tool Results Consume Additional Tokens | 中间工具结果消耗额外令牌
+### Intermediate Tool Results Consume Additional Tokens | 中间工具结果消耗额外令牌
 
 Most MCP clients allow models to directly call MCP tools. For example, you might ask your agent: "Download my meeting transcript from Google Drive and attach it to the Salesforce lead."
 

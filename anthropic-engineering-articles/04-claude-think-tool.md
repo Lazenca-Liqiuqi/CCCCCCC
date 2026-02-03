@@ -100,11 +100,11 @@ The results showed dramatic improvements when Claude 3.7 effectively used the "t
 
 结果显示，当 Claude 3.7 在基准测试的"航空"和"零售"客户服务领域有效使用"think"工具时，出现了显著改进：
 
-- __Airline domain__: The "think" tool with an optimized prompt achieved 0.570 on the pass^1 metric, compared to just 0.370 for the baseline—a 54% relative improvement;
-- __航空领域__："think"工具配合优化提示在 pass^1 指标上达到 0.570，而基线仅为 0.370——相对改进 54%；
+- **Airline domain**: The "think" tool with an optimized prompt achieved 0.570 on the pass^1 metric, compared to just 0.370 for the baseline—a 54% relative improvement;
+- **航空领域**："think"工具配合优化提示在 pass^1 指标上达到 0.570，而基线仅为 0.370——相对改进 54%；
 
-- __Retail domain__: The "think" tool alone achieves 0.812, compared to 0.783 for the baseline.
-- __零售领域__：仅"think"工具就达到 0.812，而基线为 0.783。
+- **Retail domain**: The "think" tool alone achieves 0.812, compared to 0.783 for the baseline.
+- **零售领域**：仅"think"工具就达到 0.812，而基线为 0.783。
 
 ![Claude 3.7 Sonnet's performance on the "airline" domain of the Tau-Bench eval under four different configurations](https://www-cdn.anthropic.com/images/4zrzovbb/website/ff91e5c84be59ae71306bcc60adba9affed86484-2200x1300.jpg)
 
@@ -130,9 +130,7 @@ The best performance in the airline domain was achieved by pairing the "think" t
 航空领域的最佳性能是通过将"think"工具与优化提示配对实现的，该提示提供了在分析客户请求时要使用的推理方法类型的示例。以下是优化提示的示例：
 
 ```
-## Using the think tool
-
-## 使用 think 工具
+## Using the think tool | 使用 think 工具
 
 Before taking any action or responding to the user after receiving tool results, use the think tool as a scratchpad to:
 
@@ -277,11 +275,11 @@ Our detailed analysis revealed several patterns that can help you implement the 
 
 我们的详细分析揭示了几个可以帮助您有效实现"think"工具的模式：
 
-1. __Prompting matters significantly on difficult domains__. Simply making the "think" tool available might improve performance somewhat, but pairing it with optimized prompting yielded dramatically better results for difficult domains. However, easier domains may benefit from simply having access to "think."
-__在困难领域提示非常重要__。简单地提供"think"工具可能会在一定程度上提高性能，但将其与优化提示配对在困难领域产生了明显更好的结果。然而，较容易的领域可能仅从获得"think"访问权限中受益。
+1. **Prompting matters significantly on difficult domains**. Simply making the "think" tool available might improve performance somewhat, but pairing it with optimized prompting yielded dramatically better results for difficult domains. However, easier domains may benefit from simply having access to "think."
+**在困难领域提示非常重要**。简单地提供"think"工具可能会在一定程度上提高性能，但将其与优化提示配对在困难领域产生了明显更好的结果。然而，较容易的领域可能仅从获得"think"访问权限中受益。
 
-2. __Improved consistency across trials__. The improvements from using "think" were maintained for pass^k up to k=5, indicating that the tool helped Claude handle edge cases and unusual scenarios more effectively.
-__试验间的一致性提高__。使用"think"的改进在 k=5 的 pass^k 中得以保持，表明该工具帮助 Claude 更有效地处理边缘情况和异常场景。
+2. **Improved consistency across trials**. The improvements from using "think" were maintained for pass^k up to k=5, indicating that the tool helped Claude handle edge cases and unusual scenarios more effectively.
+**试验间的一致性提高**。使用"think"的改进在 k=5 的 pass^k 中得以保持，表明该工具帮助 Claude 更有效地处理边缘情况和异常场景。
 
 ---
 
@@ -320,14 +318,14 @@ Based on these evaluation results, we've identified specific scenarios where Cla
 
 基于这些评估结果，我们确定了 Claude 最受益于"think"工具的特定场景：
 
-1. __Tool output analysis.__ When Claude needs to carefully process the output of previous tool calls before acting and might need to backtrack in its approach;
-__工具输出分析__。当 Claude 需要在行动之前仔细处理先前工具调用的输出，并且可能需要回溯其方法时；
+1. **Tool output analysis.** When Claude needs to carefully process the output of previous tool calls before acting and might need to backtrack in its approach;
+**工具输出分析**。当 Claude 需要在行动之前仔细处理先前工具调用的输出，并且可能需要回溯其方法时；
 
-2. __Policy-heavy environments__. When Claude needs to follow detailed guidelines and verify compliance; and
-__策略繁重的环境__。当 Claude 需要遵循详细指导原则并验证合规性时；以及
+2. **Policy-heavy environments**. When Claude needs to follow detailed guidelines and verify compliance; and
+**策略繁重的环境**。当 Claude 需要遵循详细指导原则并验证合规性时；以及
 
-3. __Sequential decision making__. When each action builds on previous ones and mistakes are costly (often found in multi-step domains).
-__顺序决策制定__。当每个行动都建立在前一个行动之上且错误代价高昂时（通常在多步骤领域中发现）。
+3. **Sequential decision making**. When each action builds on previous ones and mistakes are costly (often found in multi-step domains).
+**顺序决策制定**。当每个行动都建立在前一个行动之上且错误代价高昂时（通常在多步骤领域中发现）。
 
 ---
 
@@ -337,7 +335,7 @@ To get the most out of the "think" tool with Claude, we recommend the following 
 
 为了从 Claude 的"think"工具中获得最大收益，我们根据我们的 τ-bench 实验推荐以下实现实践。
 
-### 1. Strategic prompting with domain-specific examples | 1. 使用领域特定示例的策略性提示
+### Strategic prompting with domain-specific examples | 使用领域特定示例的策略性提示
 
 The most effective approach is to provide clear instructions on when and how to use the "think" tool, such as the one used for the τ-bench airline domain. Providing examples tailored to your specific use case significantly improves how effectively the model uses the "think" tool:
 
@@ -355,7 +353,7 @@ The most effective approach is to provide clear instructions on when and how to 
 - How to check if all necessary information has been collected.
 - 如何检查是否已收集所有必要信息。
 
-### 2. Place complex guidance in the system prompt | 2. 将复杂的指导放在系统提示中
+### Place complex guidance in the system prompt | 将复杂的指导放在系统提示中
 
 We found that, when they were long and/or complex, including instructions about the "think" tool in the system prompt was more effective than placing them in the tool description itself. This approach provides broader context and helps the model better integrate the thinking process into its overall behavior.
 
@@ -369,11 +367,11 @@ Whereas the "think" tool can offer substantial improvements, it is not applicabl
 
 虽然"think"工具可以提供显著改进，但它并不适用于所有工具使用用例，并且确实会带来增加提示长度和输出 token 的成本。具体来说，我们发现"think"工具在以下用例中没有提供任何改进：
 
-1. __Non-sequential tool calls__. If Claude only needs to make a single tool call or multiple parallel calls to complete a task, there is unlikely to be any improvements from adding in "think."
-__非顺序工具调用__。如果 Claude 只需要进行单个工具调用或多个并行调用来完成任务，添加"think"不太可能带来任何改进。
+1. **Non-sequential tool calls**. If Claude only needs to make a single tool call or multiple parallel calls to complete a task, there is unlikely to be any improvements from adding in "think."
+**非顺序工具调用**。如果 Claude 只需要进行单个工具调用或多个并行调用来完成任务，添加"think"不太可能带来任何改进。
 
-2. __Simple instruction following__. When there are not many constraints to which Claude needs to adhere, and its default behaviour is good enough, there are unlikely to be gains from additional "think"-ing.
-__简单指令遵循__。当 Claude 需要遵守的约束不多，并且其默认行为足够好时，额外的"思考"不太可能带来收益。
+2. **Simple instruction following**. When there are not many constraints to which Claude needs to adhere, and its default behaviour is good enough, there are unlikely to be gains from additional "think"-ing.
+**简单指令遵循**。当 Claude 需要遵守的约束不多，并且其默认行为足够好时，额外的"思考"不太可能带来收益。
 
 ---
 
@@ -383,14 +381,14 @@ The "think" tool is a straightforward addition to your Claude implementation tha
 
 "think"工具是对您的 Claude 实现的直接补充，只需几个步骤即可产生有意义的改进：
 
-1. __Test with agentic tool use scenarios.__ Start with challenging use cases—ones where Claude currently struggles with policy compliance or complex reasoning in long tool call chains.
-__使用智能体工具使用场景进行测试__。从具有挑战性的用例开始——Claude 目前在策略合规性或长工具调用链中的复杂推理方面遇到困难的用例。
+1. **Test with agentic tool use scenarios.** Start with challenging use cases—ones where Claude currently struggles with policy compliance or complex reasoning in long tool call chains.
+**使用智能体工具使用场景进行测试**。从具有挑战性的用例开始——Claude 目前在策略合规性或长工具调用链中的复杂推理方面遇到困难的用例。
 
-2. __Add the tool definition__. Implement a "think" tool customized to your domain. It requires minimal code but enables more structured reasoning. Also consider including instructions on when and how to use the tool, with examples relevant to your domain to the system prompt.
-__添加工具定义__。实现一个针对您的领域定制的"think"工具。它需要最少的代码但能够实现更结构化的推理。还要考虑在系统提示中包含有关何时以及如何使用工具的说明，以及与您的领域相关的示例。
+2. **Add the tool definition**. Implement a "think" tool customized to your domain. It requires minimal code but enables more structured reasoning. Also consider including instructions on when and how to use the tool, with examples relevant to your domain to the system prompt.
+**添加工具定义**。实现一个针对您的领域定制的"think"工具。它需要最少的代码但能够实现更结构化的推理。还要考虑在系统提示中包含有关何时以及如何使用工具的说明，以及与您的领域相关的示例。
 
-3. __Monitor and refine__. Watch how Claude uses the tool in practice, and adjust your prompts to encourage more effective thinking patterns.
-__监控和优化__。观察 Claude 在实践中如何使用该工具，并调整您的提示以鼓励更有效的思考模式。
+3. **Monitor and refine**. Watch how Claude uses the tool in practice, and adjust your prompts to encourage more effective thinking patterns.
+**监控和优化**。观察 Claude 在实践中如何使用该工具，并调整您的提示以鼓励更有效的思考模式。
 
 The best part is that adding this tool has minimal downside in terms of performance outcomes. It doesn't change external behavior unless Claude decides to use it, and doesn't interfere with your existing tools or workflows.
 

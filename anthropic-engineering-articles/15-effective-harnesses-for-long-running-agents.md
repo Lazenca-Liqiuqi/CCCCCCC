@@ -8,9 +8,9 @@ The core challenge of long-running agents is that they must work in discrete ses
 
 长时间运行智能体的核心挑战是它们必须在离散的会话中工作，每个新会话开始时都没有之前发生的事情的记忆。想象一个由轮班工程师组成的软件项目，每个新工程师到来时都没有记忆之前轮班发生了什么。由于上下文窗口有限，而且大多数复杂项目无法在单个窗口内完成，智能体需要一种方法来弥合编码会话之间的差距。
 
-We developed a two-fold solution to enable the Claude Agent SDK to work effectively across many context windows: an __initializer agent__ that sets up the environment on the first run, and a __coding agent__ that is tasked with making incremental progress in every session, while leaving clear artifacts for the next session. You can find code examples in the accompanying [quickstart](https://docs.anthropic.com/en/docs/build-with-claude/agent-sdk).
+We developed a two-fold solution to enable the Claude Agent SDK to work effectively across many context windows: an *initializer agent* that sets up the environment on the first run, and a *coding agent* that is tasked with making incremental progress in every session, while leaving clear artifacts for the next session. You can find code examples in the accompanying [quickstart](https://docs.anthropic.com/en/docs/build-with-claude/agent-sdk).
 
-我们开发了一个双重解决方案，使 Claude Agent SDK 能够在许多上下文窗口中有效工作：一个在第一次运行时设置环境的 __初始化智能体__，和一个在每个会话中负责取得增量进展同时为下一个会话留下清晰工件的 __编码智能体__。你可以在附带的快速入门中找到代码示例。
+我们开发了一个双重解决方案，使 Claude Agent SDK 能够在许多上下文窗口中有效工作：一个在第一次运行时设置环境的 *初始化智能体*，和一个在每个会话中负责取得增量进展同时为下一个会话留下清晰工件的 *编码智能体*。你可以在附带的快速入门中找到代码示例。
 
 ## The Long-Running Agent Problem | 长时间运行智能体的问题
 

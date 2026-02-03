@@ -54,7 +54,7 @@ Below we describe the three bugs that caused the degradation, when they occurred
 
 下面我们描述导致质量下降的三个 Bug、它们发生的时间以及我们如何解决它们：
 
-### 1. Context window routing error | 上下文窗口路由错误
+### Context window routing error | 上下文窗口路由错误
 
 On August 5, some Sonnet 4 requests were misrouted to servers configured for the upcoming 1M token context window. This bug initially affected 0.8% of requests. On August 29, a routine load balancing change unintentionally increased the number of short-context requests routed to the 1M context servers. At the worst impacted hour on August 31, 16% of Sonnet 4 requests were affected.
 
@@ -72,7 +72,7 @@ However, some users were affected more severely, as our routing is "sticky". Thi
 
 **解决方案：** 我们修复了路由逻辑，以确保短上下文和长上下文请求被定向到正确的服务器池。我们在9月4日部署了修复。到我们的官方平台和 Google Cloud 的 Vertex AI 的推出在9月16日完成，到 AWS Bedrock 的推出在9月18日完成。
 
-### 2. Output corruption | 输出损坏
+### Output corruption | 输出损坏
 
 On August 25, we deployed a misconfiguration to the Claude API TPU servers that caused an error during token generation. An issue caused by a runtime performance optimization occasionally assigned a high probability to tokens that should rarely be produced given the context, for example producing Thai or Chinese characters in response to English prompts, or producing obvious syntax errors in code. A small subset of users that asked a question in English might have seen "สวัสดี" in the middle of the response, for example.
 
@@ -86,7 +86,7 @@ This corruption affected requests made to Opus 4.1 and Opus 4 on August 25-28, a
 
 **解决方案：** 我们在9月2日确认了问题并回滚了变更。我们已向我们的部署流程添加了意外字符输出的检测测试。
 
-### 3. Approximate top-k XLA:TPU miscompilation | 近似 top-k XLA:TPU 错误编译
+### Approximate top-k XLA:TPU miscompilation | 近似 top-k XLA:TPU 错误编译
 
 On August 25, we deployed code to improve how Claude selects tokens during text generation. This change inadvertently triggered a latent bug in the XLA:TPU compiler, which has been confirmed to affect requests to Claude Haiku 3.5.
 

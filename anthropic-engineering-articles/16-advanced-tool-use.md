@@ -26,25 +26,24 @@ Today, we're releasing three features that make this possible:
 
 今天，我们发布了三个实现这一点的功能：
 
-- __Tool Search Tool,__ which allows Claude to use search tools to access thousands of tools without consuming its context window
-- __工具搜索工具__，允许 Claude 使用搜索工具访问数千个工具，而不会消耗其上下文窗口
+- *Tool Search Tool,* which allows Claude to use search tools to access thousands of tools without consuming its context window
+- *工具搜索工具*，允许 Claude 使用搜索工具访问数千个工具，而不会消耗其上下文窗口
 
-- __Programmatic Tool Calling__, which allows Claude to invoke tools in a code execution environment reducing the impact on the model's context window
-- __编程式工具调用__，允许 Claude 在代码执行环境中调用工具，减少对模型上下文窗口的影响
+- *Programmatic Tool Calling*, which allows Claude to invoke tools in a code execution environment reducing the impact on the model's context window
+- *编程式工具调用*，允许 Claude 在代码执行环境中调用工具，减少对模型上下文窗口的影响
 
-- __Tool Use Examples__, which provides a universal standard for demonstrating how to effectively use a given tool
-- __工具使用示例__，提供了演示如何有效使用给定工具的通用标准
+- *Tool Use Examples*, which provides a universal standard for demonstrating how to effectively use a given tool
+- *工具使用示例*，提供了演示如何有效使用给定工具的通用标准
 
-In internal testing, we've found these features have helped us build things that wouldn't have been possible with conventional tool use patterns. For example, __Claude for Excel__ uses Programmatic Tool Calling to read and modify spreadsheets with thousands of rows without overloading the model's context window.
+In internal testing, we've found these features have helped us build things that wouldn't have been possible with conventional tool use patterns. For example, *Claude for Excel* uses Programmatic Tool Calling to read and modify spreadsheets with thousands of rows without overloading the model's context window.
 
-在内部测试中，我们发现这些功能帮助我们构建了使用传统工具使用模式无法实现的东西。例如，__Excel 版 Claude__ 使用编程式工具调用来读取和修改具有数千行的电子表格，而不会使模型的上下文窗口过载。
+在内部测试中，我们发现这些功能帮助我们构建了使用传统工具使用模式无法实现的东西。例如，*Excel 版 Claude* 使用编程式工具调用来读取和修改具有数千行的电子表格，而不会使模型的上下文窗口过载。
 
 Based on our experience, we believe these features open up new possibilities for what you can build with Claude.
 
 根据我们的经验，我们认为这些功能为你使用 Claude 构建的东西开辟了新的可能性。
 
-## Tool Search Tool
-工具搜索工具
+## Tool Search Tool | 工具搜索工具
 
 ### The Challenge | 挑战
 挑战
@@ -125,13 +124,13 @@ This way, Claude has access to your full tool library while only paying the toke
 
 这样，Claude 可以访问你的完整工具库，而只为其实际需要的工具支付令牌成本。
 
-__Prompt caching note:__ Tool Search Tool doesn't break prompt caching because deferred tools are excluded from the initial prompt entirely. They're only added to context after Claude searches for them, so your system prompt and core tool definitions remain cacheable.
+*Prompt caching note:* Tool Search Tool doesn't break prompt caching because deferred tools are excluded from the initial prompt entirely. They're only added to context after Claude searches for them, so your system prompt and core tool definitions remain cacheable.
 
-__提示缓存说明：__ 工具搜索工具不会破坏提示缓存，因为延迟的工具完全从初始提示中排除。它们只有在 Claude 搜索它们之后才会添加到上下文中，因此你的系统提示和核心工具定义仍然可缓存。
+*提示缓存说明：* 工具搜索工具不会破坏提示缓存，因为延迟的工具完全从初始提示中排除。它们只有在 Claude 搜索它们之后才会添加到上下文中，因此你的系统提示和核心工具定义仍然可缓存。
 
-__Implementation:__
+*Implementation:*
 
-__实现：__
+*实现：*
 
 ```json
 {
@@ -179,9 +178,9 @@ Like any architectural decision, enabling the Tool Search Tool involves trade-of
 
 与任何架构决策一样，启用工具搜索工具涉及权衡。该功能在工具调用之前添加了搜索步骤，因此当上下文节省和准确性提高超过额外延迟时，它提供最佳投资回报率。
 
-__Use it when:__
+*Use it when:*
 
-__使用它时：__
+*使用它时：*
 
 - Tool definitions consuming >10K tokens
 - 工具定义消耗 >10K 个令牌
@@ -192,9 +191,9 @@ __使用它时：__
 - 10+ tools available
 - 可用 10+ 个工具
 
-__Less beneficial when:__
+*Less beneficial when:*
 
-__不太有益时：__
+*不太有益时：*
 
 - Small tool library (<10 tools)
 - 小型工具库（<10 个工具）
@@ -203,8 +202,7 @@ __不太有益时：__
 - Tool definitions are compact
 - 工具定义紧凑
 
-## Programmatic Tool Calling
-编程式工具调用
+## Programmatic Tool Calling | 编程式工具调用
 
 ### The Challenge | 挑战
 挑战
@@ -213,11 +211,11 @@ Traditional tool calling creates two fundamental problems as workflows become mo
 
 传统工具调用在工作流变得更加复杂时会产生两个基本问题：
 
-- __Context pollution from intermediate results__: When Claude analyzes a 10MB log file for error patterns, the entire file enters its context window, even though Claude only needs a summary of error frequencies. When fetching customer data across multiple tables, every record accumulates in context regardless of relevance. These intermediate results consume massive token budgets and can push important information out of the context window entirely.
-- __来自中间结果的上下文污染：__ 当 Claude 分析 10MB 日志文件以查找错误模式时，整个文件进入其上下文窗口，尽管 Claude 只需要错误频率的摘要。当跨多个表获取客户数据时，每条记录都会累积在上下文中，无论是否相关。这些中间结果消耗大量的令牌预算，并且可能将重要信息完全推出上下文窗口。
+- *Context pollution from intermediate results*: When Claude analyzes a 10MB log file for error patterns, the entire file enters its context window, even though Claude only needs a summary of error frequencies. When fetching customer data across multiple tables, every record accumulates in context regardless of relevance. These intermediate results consume massive token budgets and can push important information out of the context window entirely.
+- *来自中间结果的上下文污染：* 当 Claude 分析 10MB 日志文件以查找错误模式时，整个文件进入其上下文窗口，尽管 Claude 只需要错误频率的摘要。当跨多个表获取客户数据时，每条记录都会累积在上下文中，无论是否相关。这些中间结果消耗大量的令牌预算，并且可能将重要信息完全推出上下文窗口。
 
-- __Inference overhead and manual synthesis__: Each tool call requires a full model inference pass. After receiving results, Claude must "eyeball" the data to extract relevant information, reason about how pieces fit together, and decide what to do next—all through natural language processing. A five tool workflow means five inference passes plus Claude parsing each result, comparing values, and synthesizing conclusions. This is both slow and error-prone.
-- __推理开销和手动综合：__ 每个工具调用都需要完整的模型推理过程。接收结果后，Claude 必须"目测"数据以提取相关信息，推理各部分如何组合在一起，并决定下一步做什么——所有这些都通过自然语言处理。五个工具的工作流程意味着五次推理过程加上 Claude 解析每个结果、比较值和综合结论。这既缓慢又容易出错。
+- *Inference overhead and manual synthesis*: Each tool call requires a full model inference pass. After receiving results, Claude must "eyeball" the data to extract relevant information, reason about how pieces fit together, and decide what to do next—all through natural language processing. A five tool workflow means five inference passes plus Claude parsing each result, comparing values, and synthesizing conclusions. This is both slow and error-prone.
+- *推理开销和手动综合：* 每个工具调用都需要完整的模型推理过程。接收结果后，Claude 必须"目测"数据以提取相关信息，推理各部分如何组合在一起，并决定下一步做什么——所有这些都通过自然语言处理。五个工具的工作流程意味着五次推理过程加上 Claude 解析每个结果、比较值和综合结论。这既缓慢又容易出错。
 
 ### Our Solution | 我们的解决方案
 我们的解决方案
@@ -248,9 +246,9 @@ You have three tools available:
 - `get_budget_by_level(level)` - Returns budget limits for an employee level
 - `get_budget_by_level(level)` - 返回员工级别的预算限制
 
-__Traditional approach:__
+*Traditional approach:*
 
-__传统方法：__
+*传统方法：*
 
 - Fetch team members → 20 people
 - 获取团队成员 → 20 人
@@ -265,9 +263,9 @@ __传统方法：__
 - More round-trips to the model, significant context consumption
 - 更多的模型往返，大量的上下文消耗
 
-__With Programmatic Tool Calling:__
+*With Programmatic Tool Calling:*
 
-__使用编程式工具调用：__
+*使用编程式工具调用：*
 
 Instead of each tool result returning to Claude, Claude writes a Python script that orchestrates the entire workflow. The script runs in the Code Execution tool (a sandboxed environment), pausing when it needs results from your tools. When you return tool results via the API, they're processed by the script rather than consumed by the model. The script continues executing, and Claude only sees the final output.
 
@@ -327,14 +325,14 @@ The efficiency gains are substantial:
 
 效率收益是巨大的：
 
-- __Token savings__: By keeping intermediate results out of Claude's context, PTC dramatically reduces token consumption. Average usage dropped from 43,588 to 27,297 tokens, a 37% reduction on complex research tasks.
-- __令牌节省：__ 通过将中间结果排除在 Claude 的上下文之外，PTC 显著减少了令牌消耗。平均使用量从 43,588 个令牌下降到 27,297 个令牌，在复杂研究任务上减少了 37%。
+- *Token savings*: By keeping intermediate results out of Claude's context, PTC dramatically reduces token consumption. Average usage dropped from 43,588 to 27,297 tokens, a 37% reduction on complex research tasks.
+- *令牌节省：* 通过将中间结果排除在 Claude 的上下文之外，PTC 显著减少了令牌消耗。平均使用量从 43,588 个令牌下降到 27,297 个令牌，在复杂研究任务上减少了 37%。
 
-- __Reduced latency__: Each API round-trip requires model inference (hundreds of milliseconds to seconds). When Claude orchestrates 20+ tool calls in a single code block, you eliminate 19+ inference passes. The API handles tool execution without returning to the model each time.
-- __降低延迟：__ 每次 API 往返都需要模型推理（几百毫秒到几秒）。当 Claude 在单个代码块中编排 20+ 个工具调用时，你消除了 19+ 次推理过程。API 处理工具执行，而无需每次都返回模型。
+- *Reduced latency*: Each API round-trip requires model inference (hundreds of milliseconds to seconds). When Claude orchestrates 20+ tool calls in a single code block, you eliminate 19+ inference passes. The API handles tool execution without returning to the model each time.
+- *降低延迟：* 每次 API 往返都需要模型推理（几百毫秒到几秒）。当 Claude 在单个代码块中编排 20+ 个工具调用时，你消除了 19+ 次推理过程。API 处理工具执行，而无需每次都返回模型。
 
-- __Improved accuracy__: By writing explicit orchestration logic, Claude makes fewer errors than when juggling multiple tool results in natural language. Internal knowledge retrieval improved from 25.6% to 28.5%; GIA benchmarks from 46.5% to 51.2%.
-- __提高准确性：__ 通过编写显式的编排逻辑，Claude 比在自然语言中处理多个工具结果时犯的错误更少。内部知识检索从 25.6% 提高到 28.5%；GIA 基准测试从 46.5% 提高到 51.2%。
+- *Improved accuracy*: By writing explicit orchestration logic, Claude makes fewer errors than when juggling multiple tool results in natural language. Internal knowledge retrieval improved from 25.6% to 28.5%; GIA benchmarks from 46.5% to 51.2%.
+- *提高准确性：* 通过编写显式的编排逻辑，Claude 比在自然语言中处理多个工具结果时犯的错误更少。内部知识检索从 25.6% 提高到 28.5%；GIA 基准测试从 46.5% 提高到 51.2%。
 
 Production workflows involve messy data, conditional logic, and operations that need to scale. Programmatic Tool Calling lets Claude handle that complexity programmatically while keeping its focus on actionable results rather than raw data processing.
 
@@ -342,7 +340,7 @@ Production workflows involve messy data, conditional logic, and operations that 
 
 ### How Programmatic Tool Calling Works | 编程式工具调用的工作原理
 
-#### 1. Mark tools as callable from code | 将工具标记为可从代码调用
+#### Mark tools as callable from code | 将工具标记为可从代码调用
 
 Add code_execution to tools, and set allowed_callers to opt-in tools for programmatic execution:
 将 code_execution 添加到工具，并设置 allowed_callers 以选择加入编程执行的工具：
@@ -376,7 +374,7 @@ The API converts these tool definitions into Python functions that Claude can ca
 
 API 将这些工具定义转换为 Claude 可以调用的 Python 函数。
 
-#### 2. Claude writes orchestration code | Claude 编写编排代码
+#### Claude writes orchestration code | Claude 编写编排代码
 
 Instead of requesting tools one at a time, Claude generates Python code:
 Claude 生成 Python 代码，而不是一次请求一个工具：
@@ -392,7 +390,7 @@ Claude 生成 Python 代码，而不是一次请求一个工具：
 }
 ```
 
-#### 3. Tools execute without hitting Claude's context | 工具执行而不影响 Claude 的上下文
+#### Tools execute without hitting Claude's context | 工具执行而不影响 Claude 的上下文
 
 When the code calls get_expenses(), you receive a tool request with a caller field:
 当代码调用 get_expenses() 时，你会收到一个带有 caller 字段的工具请求：
@@ -414,7 +412,7 @@ You provide the result, which is processed in the Code Execution environment rat
 
 你提供的结果在代码执行环境中处理，而不是在 Claude 的上下文中。这个请求-响应周期对代码中的每个工具调用重复。
 
-#### 4. Only final output enters context | 只有最终输出进入上下文
+#### Only final output enters context | 只有最终输出进入上下文
 
 When the code finishes running, only the results of the code are returned to Claude:
 当代码完成运行时，只有代码的结果返回给 Claude：
@@ -439,9 +437,9 @@ Programmatic Tool Calling adds a code execution step to your workflow. This extr
 
 编程式工具调用为你的工作流程添加了一个代码执行步骤。当令牌节省、延迟改进和准确性提高很大时，这个额外开销是值得的。
 
-__Most beneficial when:__
+*Most beneficial when:*
 
-__最有益时：__
+*最有益时：*
 
 - Processing large datasets where you only need aggregates or summaries
 - 处理大型数据集，只需要聚合或摘要
@@ -454,9 +452,9 @@ __最有益时：__
 - Running parallel operations across many items (checking 50 endpoints, for example)
 - 跨许多项目运行并行操作（例如，检查 50 个端点）
 
-__Less beneficial when:__
+*Less beneficial when:*
 
-__不太有益时：__
+*不太有益时：*
 
 - Making simple single-tool invocations
 - 进行简单的单工具调用
@@ -465,8 +463,7 @@ __不太有益时：__
 - Running quick lookups with small responses
 - 运行具有小响应的快速查找
 
-## Tool Use Examples
-工具使用示例
+## Tool Use Examples | 工具使用示例
 
 ### The Challenge | 挑战
 挑战
@@ -520,13 +517,13 @@ The schema defines what's valid, but leaves critical questions unanswered:
 
 模式定义了什么是有效的，但没有回答关键问题：
 
-- __Format ambiguity:__ Should `due_date` use "2024-11-06", "Nov 6, 2024", or "2024-11-06T00:00:00Z"?
-- __格式模糊：__ `due_date` 应该使用 "2024-11-06"、"Nov 6, 2024" 还是 "2024-11-06T00:00:00Z"？
-- __ID conventions:__ Is `reporter.id` a UUID, "USR-12345", or just "12345"?
-- __ID 约定：__ `reporter.id` 是 UUID、"USR-12345" 还是 "12345"？
-- __Nested structure usage:__ When should Claude populate `reporter.contact`?
-- __嵌套结构使用：__ Claude 应该何时填充 `reporter.contact`？
-- __Parameter correlations:__ How do `escalation.level` and `escalation.sla_hours` relate to priority?
+- *Format ambiguity:* Should `due_date` use "2024-11-06", "Nov 6, 2024", or "2024-11-06T00:00:00Z"?
+- *格式模糊：* `due_date` 应该使用 "2024-11-06"、"Nov 6, 2024" 还是 "2024-11-06T00:00:00Z"？
+- *ID conventions:* Is `reporter.id` a UUID, "USR-12345", or just "12345"?
+- *ID 约定：* `reporter.id` 是 UUID、"USR-12345" 还是 "12345"？
+- *Nested structure usage:* When should Claude populate `reporter.contact`?
+- *嵌套结构使用：* Claude 应该何时填充 `reporter.contact`？
+- *Parameter correlations:* How do `escalation.level` and `escalation.sla_hours` relate to priority?
 - **参数相关性：** `escalation.level` 和 `escalation.sla_hours` 与优先级有何关系？
 
 These ambiguities can lead to malformed tool calls and inconsistent parameter usage.
@@ -583,11 +580,11 @@ From these three examples, Claude learns:
 
 从这三个示例中，Claude 学到了：
 
-- __Format conventions__: Dates use YYYY-MM-DD, user IDs follow USR-XXXXX, labels use kebab-case
-- __格式约定：__ 日期使用 YYYY-MM-DD，用户 ID 遵循 USR-XXXXX，标签使用 kebab-case
-- __Nested structure patterns__: How to construct the reporter object with its nested contact object
+- *Format conventions*: Dates use YYYY-MM-DD, user IDs follow USR-XXXXX, labels use kebab-case
+- *格式约定：* 日期使用 YYYY-MM-DD，用户 ID 遵循 USR-XXXXX，标签使用 kebab-case
+- *Nested structure patterns*: How to construct the reporter object with its nested contact object
 - __嵌套结构模式：** 如何构造带有嵌套联系人对象的报告者对象
-- __Optional parameter correlations__: Critical bugs have full contact info + escalation with tight SLAs; feature requests have reporter but no contact/escalation; internal tasks have title only
+- *Optional parameter correlations*: Critical bugs have full contact info + escalation with tight SLAs; feature requests have reporter but no contact/escalation; internal tasks have title only
 - **可选参数相关性：** 关键错误具有完整的联系信息 + 升级以及严格的 SLA；功能请求有报告者但没有联系人/升级；内部任务只有标题
 
 In our own internal testing, tool use examples improved accuracy from 72% to 90% on complex parameter handling.
@@ -601,9 +598,9 @@ Tool Use Examples add tokens to your tool definitions, so they're most valuable 
 
 工具使用示例为你的工具定义添加令牌，因此当准确性提高超过额外成本时，它们最有价值。
 
-__Most beneficial when:__
+*Most beneficial when:*
 
-__最有益时：__
+*最有益时：*
 
 - Complex nested structures where valid JSON doesn't imply correct usage
 - 复杂的嵌套结构，其中有效的 JSON 并不意味着正确的使用
@@ -614,9 +611,9 @@ __最有益时：__
 - Similar tools where examples clarify which one to use (e.g., `create_ticket` vs. `create_incident`)
 - 相似的工具，其中示例阐明了使用哪一个（例如，`create_ticket` 与 `create_incident`）
 
-__Less beneficial when:__
+*Less beneficial when:*
 
-__不太有益时：__
+*不太有益时：*
 
 - Simple single-parameter tools with obvious usage
 - 具有明显用法的简单单参数工具
@@ -625,8 +622,7 @@ __不太有益时：__
 - Validation concerns better handled by JSON Schema constraints
 - 最好由 JSON 模式约束处理的验证问题
 
-## Best Practices
-最佳实践
+## Best Practices | 最佳实践
 
 Building agents that take real-world actions means handling scale, complexity, and precision simultaneously. These three features work together to solve different bottlenecks in tool use workflows. Here's how to combine them effectively.
 
@@ -735,8 +731,7 @@ Craft examples for behavioral clarity:
 - Focus on ambiguity (only add examples where correct usage isn't obvious from schema)
 - 专注于模糊性（仅在模式中不清楚正确用法的地方添加示例）
 
-## Getting Started
-入门
+## Getting Started | 入门
 
 These features are available in beta. To enable them, add the beta header and include the tools you need:
 

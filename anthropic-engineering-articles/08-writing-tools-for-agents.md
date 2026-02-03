@@ -124,9 +124,9 @@ Held-out test set performance of our internal Slack tools
 
 我们内部 Slack 工具的保留测试集性能
 
-__Generating evaluation tasks__
+*Generating evaluation tasks*
 
-__生成评估任务__
+*生成评估任务*
 
 With your early prototype, Claude Code can quickly explore your tools and create dozens of prompt and response pairs. Prompts should be inspired by real-world uses and be based on realistic data sources and services (for example, internal knowledge bases and microservices). We recommend you avoid overly simplistic or superficial "sandbox" environments that don't stress-test your tools with sufficient complexity. Strong evaluation tasks might require multiple tool calls—potentially dozens.
 
@@ -172,9 +172,9 @@ For each prompt-response pair, you can optionally also specify the tools you exp
 
 对于每个提示-响应对，你还可以选择指定你期望智能体在解决任务时调用的工具，以测量智能体是否在评估期间成功掌握每个工具的用途。然而，由于可能有多种正确的有效路径来解决任务，尽量避免过度指定或过度拟合策略。
 
-__Running the evaluation__
+*Running the evaluation*
 
-__运行评估__
+*运行评估*
 
 We recommend running your evaluation programmatically with direct LLM API calls. Use simple agentic loops (`while`-loops wrapping alternating LLM API and tool calls): one loop for each evaluation task. Each evaluation agent should be given a single task prompt and your tools.
 
@@ -200,9 +200,9 @@ Held-out test set performance of our internal Asana tools
 
 我们内部 Asana 工具的保留测试集性能
 
-__Analyzing results__
+*Analyzing results*
 
-__分析结果__
+*分析结果*
 
 Agents are your helpful partners in spotting issues and providing feedback on everything from contradictory tool descriptions to inefficient tool implementations and confusing tool schemas. However, keep in mind that what agents omit in their feedback and responses can often be more important than what they include. LLMs don't always say what they mean.
 

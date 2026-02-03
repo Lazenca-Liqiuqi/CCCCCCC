@@ -10,13 +10,13 @@ In this post, we share what we've learned from working with our customers and bu
 
 ## What are agents? | 什么是智能体？
 
-"Agent" can be defined in several ways. Some customers define agents as fully autonomous systems that operate independently over extended periods, using various tools to accomplish complex tasks. Others use the term to describe more prescriptive implementations that follow predefined workflows. At Anthropic, we categorize all these variations as __agentic systems__, but draw an important architectural distinction between __workflows__ and __agents__:
+"Agent" can be defined in several ways. Some customers define agents as fully autonomous systems that operate independently over extended periods, using various tools to accomplish complex tasks. Others use the term to describe more prescriptive implementations that follow predefined workflows. At Anthropic, we categorize all these variations as *agentic systems*, but draw an important architectural distinction between *workflows* and *agents*:
 
 "智能体"可以有几种定义方式。一些客户将智能体定义为在较长时间段内独立运行、使用各种工具完成复杂任务的完全自主系统。另一些客户则用这个术语来描述遵循预定义工作流的更具规定性的实现。在 Anthropic，我们将所有这些变体归类为**智能体系统**，但在**工作流**和**智能体**之间划定了重要的架构区别：
 
-- __Workflows__ are systems where LLMs and tools are orchestrated through predefined code paths.
+- *Workflows* are systems where LLMs and tools are orchestrated through predefined code paths.
 - **工作流**是通过预定义代码路径编排 LLM 和工具的系统。
-- __Agents__, on the other hand, are systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks.
+- *Agents*, on the other hand, are systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks.
 - **智能体**则是 LLM 动态指导自身流程和工具使用、保持对如何完成任务进行控制的系统。
 
 Below, we will explore both types of agentic systems in detail. In Appendix 1 ("Agents in Practice"), we describe two domains where customers have found particular value in using these kinds of systems.
@@ -97,11 +97,11 @@ The prompt chaining workflow
 
 提示链工作流
 
-__When to use this workflow:__ This workflow is ideal for situations where the task can be easily and cleanly decomposed into fixed subtasks. The main goal is to trade off latency for higher accuracy, by making each LLM call an easier task.
+*When to use this workflow:* This workflow is ideal for situations where the task can be easily and cleanly decomposed into fixed subtasks. The main goal is to trade off latency for higher accuracy, by making each LLM call an easier task.
 
 **何时使用此工作流：** 此工作流非常适合可以轻松清晰地分解为固定子任务的情况。主要目标是通过使每个 LLM 调用成为更容易的任务，以延迟换取更高的准确性。
 
-__Examples where prompt chaining is useful:__
+*Examples where prompt chaining is useful:*
 
 **提示链有用的示例：**
 
@@ -121,11 +121,11 @@ The routing workflow
 
 路由工作流
 
-__When to use this workflow:__ Routing works well for complex tasks where there are distinct categories that are better handled separately, and where classification can be handled accurately, either by an LLM or a more traditional classification model/algorithm.
+*When to use this workflow:* Routing works well for complex tasks where there are distinct categories that are better handled separately, and where classification can be handled accurately, either by an LLM or a more traditional classification model/algorithm.
 
 **何时使用此工作流：** 路由适用于有不同类别需要单独处理、并且可以准确进行分类的复杂任务，无论是通过 LLM 还是更传统的分类模型/算法。
 
-__Examples where routing is useful:__
+*Examples where routing is useful:*
 
 **路由有用的示例：**
 
@@ -141,25 +141,25 @@ LLMs can sometimes work simultaneously on a task and have their outputs aggregat
 
 LLM 有时可以同时处理一个任务，并以编程方式聚合其输出。此工作流（并行化）表现为两种主要变体：
 
-- __Sectioning__: Breaking a task into independent subtasks run in parallel.
+- *Sectioning*: Breaking a task into independent subtasks run in parallel.
 - **分节**：将任务分解为并行运行的独立子任务。
 
-- __Voting:__ Running the same task multiple times to get diverse outputs.
+- *Voting:* Running the same task multiple times to get diverse outputs.
 - **投票**：多次运行同一任务以获得多样化的输出。
 
 The parallelization workflow
 
 并行化工作流
 
-__When to use this workflow:__ Parallelization is effective when the divided subtasks can be parallelized for speed, or when multiple perspectives or attempts are needed for higher confidence results. For complex tasks with multiple considerations, LLMs generally perform better when each consideration is handled by a separate LLM call, allowing focused attention on each specific aspect.
+*When to use this workflow:* Parallelization is effective when the divided subtasks can be parallelized for speed, or when multiple perspectives or attempts are needed for higher confidence results. For complex tasks with multiple considerations, LLMs generally perform better when each consideration is handled by a separate LLM call, allowing focused attention on each specific aspect.
 
 **何时使用此工作流：** 当分解的子任务可以并行化以提高速度，或者需要多个视角或尝试以获得更高置信度的结果时，并行化是有效的。对于具有多个考虑因素的复杂任务，当每个考虑因素由单独的 LLM 调用处理时，LLM 通常表现更好，从而允许专注于每个特定方面。
 
-__Examples where parallelization is useful:__
+*Examples where parallelization is useful:*
 
 **并行化有用的示例：**
 
-- __Sectioning__:
+- *Sectioning*:
 - **分节**：
   - Implementing guardrails where one model instance processes user queries while another screens them for inappropriate content or requests. This tends to perform better than having the same LLM call handle both guardrails and the core response.
   - 实现防护栏，其中一个模型实例处理用户查询，另一个模型实例筛选不当内容或请求。这往往比让同一个 LLM 调用处理防护栏和核心响应表现更好。
@@ -167,7 +167,7 @@ __Examples where parallelization is useful:__
   - Automating evals for evaluating LLM performance, where each LLM call evaluates a different aspect of the model's performance on a given prompt.
   - 自动化评估以评估 LLM 性能，其中每个 LLM 调用评估模型在给定提示上的不同方面的性能。
 
-- __Voting__:
+- *Voting*:
 - **投票**：
   - Reviewing a piece of code for vulnerabilities, where several different prompts review and flag the code if they find a problem.
   - 审查代码是否存在漏洞，其中几个不同的提示审查代码并在发现问题时标记。
@@ -185,11 +185,11 @@ The orchestrator-workers workflow
 
 编排器-工作者工作流
 
-__When to use this workflow:__ This workflow is well-suited for complex tasks where you can't predict the subtasks needed (in coding, for example, the number of files that need to be changed and the nature of the change in each file likely depend on the task). Whereas it's topographically similar, the key difference from parallelization is its flexibility—subtasks aren't pre-defined, but determined by the orchestrator based on the specific input.
+*When to use this workflow:* This workflow is well-suited for complex tasks where you can't predict the subtasks needed (in coding, for example, the number of files that need to be changed and the nature of the change in each file likely depend on the task). Whereas it's topographically similar, the key difference from parallelization is its flexibility—subtasks aren't pre-defined, but determined by the orchestrator based on the specific input.
 
 **何时使用此工作流：** 此工作流非常适合无法预测所需子任务的复杂任务（例如，在编码中，需要更改的文件数量和每个文件中更改的性质可能取决于任务）。尽管在拓扑上相似，但与并行化的关键区别在于其灵活性——子任务不是预定义的，而是由编排器根据特定输入确定的。
 
-__Example where orchestrator-workers is useful:__
+*Example where orchestrator-workers is useful:*
 
 **编排器-工作者有用的示例：**
 
@@ -209,11 +209,11 @@ The evaluator-optimizer workflow
 
 评估器-优化器工作流
 
-__When to use this workflow:__ This workflow is particularly effective when we have clear evaluation criteria, and when iterative refinement provides measurable value. The two signs of good fit are, first, that LLM responses can be demonstrably improved when a human articulates their feedback; and second, that the LLM can provide such feedback. This is analogous to the iterative writing process a human writer might go through when producing a polished document.
+*When to use this workflow:* This workflow is particularly effective when we have clear evaluation criteria, and when iterative refinement provides measurable value. The two signs of good fit are, first, that LLM responses can be demonstrably improved when a human articulates their feedback; and second, that the LLM can provide such feedback. This is analogous to the iterative writing process a human writer might go through when producing a polished document.
 
 **何时使用此工作流：** 当我们有明确的评估标准，并且迭代改进可提供可衡量的价值时，此工作流特别有效。适合的两个标志是：首先，当人类表达他们的反馈时，LLM 响应可以明显改善；其次，LLM 可以提供此类反馈。这类似于人类作家在生成润色文档时可能经历的迭代写作过程。
 
-__Examples where evaluator-optimizer is useful:__
+*Examples where evaluator-optimizer is useful:*
 
 **评估器-优化器有用的示例：**
 
@@ -237,7 +237,7 @@ Autonomous agent
 
 自主智能体
 
-__When to use agents:__ Agents can be used for open-ended problems where it's difficult or impossible to predict the required number of steps, and where you can't hardcode a fixed path. The LLM will potentially operate for many turns, and you must have some level of trust in its decision-making. Agents' autonomy makes them ideal for scaling tasks in trusted environments.
+*When to use agents:* Agents can be used for open-ended problems where it's difficult or impossible to predict the required number of steps, and where you can't hardcode a fixed path. The LLM will potentially operate for many turns, and you must have some level of trust in its decision-making. Agents' autonomy makes them ideal for scaling tasks in trusted environments.
 
 **何时使用智能体：** 智能体可用于难以或无法预测所需步骤数量、并且无法硬编码固定路径的开放式问题。LLM 可能会运行许多轮，并且你必须对其决策有一定程度的信任。智能体的自主性使其成为在受信任的环境中扩展任务的理想选择。
 
@@ -245,7 +245,7 @@ The autonomous nature of agents means higher costs, and the potential for compou
 
 智能体的自主性质意味着更高的成本以及复合错误的潜在可能性。我们建议在沙盒环境中进行广泛的测试，并配合适当的防护措施。
 
-__Examples where agents are useful:__
+*Examples where agents are useful:*
 
 **智能体有用的示例：**
 
@@ -279,13 +279,13 @@ When implementing agents, we try to follow three core principles:
 
 在实现智能体时，我们尝试遵循三个核心原则：
 
-1. Maintain __simplicity__ in your agent's design.
+1. Maintain *simplicity* in your agent's design.
 在智能体设计中保持**简单性**。
 
-2. Prioritize __transparency__ by explicitly showing the agent's planning steps.
+2. Prioritize *transparency* by explicitly showing the agent's planning steps.
 通过明确显示智能体的规划步骤来优先考虑**透明度**。
 
-3. Carefully craft your agent-computer interface (ACI) through thorough tool __documentation and testing__.
+3. Carefully craft your agent-computer interface (ACI) through thorough tool *documentation and testing*.
 通过彻底的工具**文档和测试**精心设计智能体-计算机接口（ACI）。
 
 Frameworks can help you get started quickly, but don't hesitate to reduce abstraction layers and build with basic components as you move to production. By following these principles, you can create agents that are not only powerful but also reliable, maintainable, and trusted by their users.

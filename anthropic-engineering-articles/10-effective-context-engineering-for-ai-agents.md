@@ -1,10 +1,10 @@
 # Effective context engineering for AI agents | AI 智能体的有效上下文工程
 
-After a few years of prompt engineering being the focus of attention in applied AI, a new term has come to prominence: __context engineering__. Building with language models is becoming less about finding the right words and phrases for your prompts, and more about answering the broader question of "what configuration of context is most likely to generate our model's desired behavior?"
+After a few years of prompt engineering being the focus of attention in applied AI, a new term has come to prominence: **context engineering**. Building with language models is becoming less about finding the right words and phrases for your prompts, and more about answering the broader question of "what configuration of context is most likely to generate our model's desired behavior?"
 
 在应用人工智能领域，经过几年以提示工程为关注焦点的时期后，一个新术语开始崭露头角：**上下文工程**。使用语言模型进行构建，越来越不是关于为你的提示找到正确的词语和短语，而是更多地关于回答一个更广泛的问题："什么配置的上下文最有可能生成我们模型的期望行为？"
 
-__Context__ refers to the set of tokens included when sampling from a large-language model (LLM). The __engineering__ problem at hand is optimizing the utility of those tokens against the inherent constraints of LLMs in order to consistently achieve a desired outcome. Effectively wrangling LLMs often requires _thinking in context_ — in other words: considering the holistic state available to the LLM at any given time and what potential behaviors that state might yield.
+**Context** refers to the set of tokens included when sampling from a large-language model (LLM). The **engineering** problem at hand is optimizing the utility of those tokens against the inherent constraints of LLMs in order to consistently achieve a desired outcome. Effectively wrangling LLMs often requires _thinking in context_ — in other words: considering the holistic state available to the LLM at any given time and what potential behaviors that state might yield.
 
 **上下文**是指从大型语言模型（LLM）采样时包含的标记集合。手头的**工程**问题是在 LLM 的固有约束下优化这些标记的效用，以持续实现期望的结果。有效地处理 LLM 通常需要**在上下文中思考**——换句话说：考虑 LLM 在任何给定时间可用的整体状态，以及该状态可能产生的潜在行为。
 
@@ -12,7 +12,7 @@ In this post, we'll explore the emerging art of context engineering and offer a 
 
 在本文中，我们将探索上下文工程这一新兴艺术，并为构建可控制、有效的智能体提供一个完善的心智模型。
 
-At Anthropic, we view context engineering as the natural progression of prompt engineering. Prompt engineering refers to methods for writing and organizing LLM instructions for optimal outcomes (see our docs for an overview and useful prompt engineering strategies). __Context engineering__ refers to the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference, including all the other information that may land there outside of the prompts.
+At Anthropic, we view context engineering as the natural progression of prompt engineering. Prompt engineering refers to methods for writing and organizing LLM instructions for optimal outcomes (see our docs for an overview and useful prompt engineering strategies). **Context engineering** refers to the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference, including all the other information that may land there outside of the prompts.
 
 在 Anthropic，我们将上下文工程视为提示工程的自然演进。提示工程指的是为获得最佳结果而编写和组织 LLM 指令的方法（请参阅我们的文档以获取概述和有用的提示工程策略）。**上下文工程**指的是在 LLM 推理期间策划和维护最优标记（信息）集合的策略集合，包括可能在提示之外到达那里的所有其他信息。
 
@@ -64,7 +64,7 @@ Given that LLMs are constrained by a finite attention budget, _good_ context eng
 
 鉴于 LLM 受到有限注意力预算的约束，**好的**上下文工程意味着找到**尽可能最小的**高信号标记集合，以最大化某些期望结果的可能性。实施这种实践说起来容易做起来难，但在以下部分，我们概述了这个指导原则在上下文的不同组件中的实际意义。
 
-__System prompts__ should be extremely clear and use simple, direct language that presents ideas at the _right altitude_ for the agent. The right altitude is the Goldilocks zone between two common failure modes. At one extreme, we see engineers hardcoding complex, brittle logic in their prompts to elicit exact agentic behavior. This approach creates fragility and increases maintenance complexity over time. At the other extreme, engineers sometimes provide vague, high-level guidance that fails to give the LLM concrete signals for desired outputs or falsely assumes shared context. The optimal altitude strikes a balance: specific enough to guide behavior effectively, yet flexible enough to provide the model with strong heuristics to guide behavior.
+**System prompts** should be extremely clear and use simple, direct language that presents ideas at the _right altitude_ for the agent. The right altitude is the Goldilocks zone between two common failure modes. At one extreme, we see engineers hardcoding complex, brittle logic in their prompts to elicit exact agentic behavior. This approach creates fragility and increases maintenance complexity over time. At the other extreme, engineers sometimes provide vague, high-level guidance that fails to give the LLM concrete signals for desired outputs or falsely assumes shared context. The optimal altitude strikes a balance: specific enough to guide behavior effectively, yet flexible enough to provide the model with strong heuristics to guide behavior.
 
 **系统提示**应该极其清晰，使用简单、直接的语言，为智能体在**正确的高度**呈现想法。正确的高度是两种常见失败模式之间的金发姑娘区域。在一个极端，我们看到工程师在提示中硬编码复杂、脆弱的逻辑，以引发精确的智能体行为。这种方法随着时间的推移产生脆弱性并增加维护复杂性。在另一个极端，工程师有时提供模糊的、高层级的指导，未能为 LLM 提供期望输出的具体信号或错误地假设共享上下文。最优高度在两者之间取得平衡：足够具体以有效指导行为，又足够灵活以提供模型强启发式方法来指导行为。
 
@@ -84,7 +84,7 @@ Regardless of how you decide to structure your system prompt, you should be stri
 
 无论你决定如何构建系统提示，你都应该努力争取完全概述你期望行为的最小信息集合。（请注意，最小不一定意味着短；你仍然需要提前给智能体足够的信息以确保它遵守期望的行为。）最好从使用可用的最佳模型测试最小提示开始，看看它在你的任务上如何表现，然后根据初始测试期间发现的失败模式添加清晰的指令和示例以提高性能。
 
-__Tools__ allow agents to operate with their environment and pull in new, additional context as they work. Because tools define the contract between agents and their information/action space, it's extremely important that tools promote efficiency, both by returning information that is token efficient and by encouraging efficient agent behaviors.
+**Tools** allow agents to operate with their environment and pull in new, additional context as they work. Because tools define the contract between agents and their information/action space, it's extremely important that tools promote efficiency, both by returning information that is token efficient and by encouraging efficient agent behaviors.
 
 **工具**允许智能体在其环境中操作并在工作时引入新的、额外的上下文。因为工具定义了智能体与其信息/操作空间之间的契约，工具促进效率极其重要，既通过返回标记效率的信息，又通过鼓励高效的智能体行为。
 
@@ -152,7 +152,7 @@ Waiting for larger context windows might seem like an obvious tactic. But it's l
 
 等待更大的上下文窗口似乎是一个明显的策略。但很可能在可预见的未来，所有大小的上下文窗口都将受到上下文污染和信息相关性问题的困扰——至少在期望最强智能体性能的情况下。为了使智能体能够在扩展的时间跨度内有效地工作，我们开发了几种直接解决这些上下文污染约束的技术：压缩、结构化笔记和多智能体架构。
 
-__Compaction__
+**Compaction**
 
 **压缩**
 
@@ -172,7 +172,7 @@ An example of low-hanging superfluous content is clearing tool calls and results
 
 多余内容的一个简单例子是清除工具调用和结果——一旦工具在消息历史深处被调用，智能体为什么需要再次看到原始结果？最安全的、最轻微的压缩形式之一是工具结果清除，最近在 [Claude 开发者平台](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering) 上作为功能推出。
 
-__Structured note-taking__
+**Structured note-taking**
 
 **结构化笔记**
 
@@ -196,7 +196,7 @@ As part of our Sonnet 4.5 launch, we released a memory tool in public beta on th
 
 作为我们 Sonnet 4.5 发布的一部分，我们在 Claude 开发者平台上发布了公共测试版的记忆工具，使通过文件系统更容易在上下文窗口之外存储和查询信息。这允许智能体随时间建立知识库，跨会话维护项目状态，并引用以前的工作而无需将所有内容保持在上下文中。
 
-__Sub-agent architectures__
+**Sub-agent architectures**
 
 **子智能体架构**
 

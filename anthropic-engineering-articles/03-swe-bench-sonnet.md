@@ -220,10 +220,9 @@ I've uploaded a python code repository in the directory /repo (not in /tmp/input
 
 <pr_description>
 linear_model.RidgeClassifierCV's Parameter store_cv_values issue
-#### Description
-Parameter store_cv_values error on sklearn.linear_model.RidgeClassifierCV
+#### Description | 描述
 
-#### Steps/Code to Reproduce
+#### Steps/Code to Reproduce | 重现步骤/代码
 import numpy as np
 from sklearn import linear_model as lm
 
@@ -235,11 +234,11 @@ y = np.random.normal(size = n)
 rr = lm.RidgeClassifierCV(alphas = np.arange(0.1, 1000, 0.1), normalize = True,
                                          store_cv_values = True).fit(x, y)
 
-#### Expected Results
+#### Expected Results | 预期结果
 Expected to get the usual ridge regression model output, keeping the cross validation predictions as attribute.
 
-#### Actual Results
-TypeError: __init__() got an unexpected keyword argument 'store_cv_values'
+#### Actual Results | 实际结果
+TypeError: *init*() got an unexpected keyword argument 'store_cv_values'
 
 lm.RidgeClassifierCV actually has no parameter store_cv_values, even though some attributes depends on it.
 ```
@@ -324,7 +323,7 @@ OBSERVATION:
 Traceback (most recent call last):
   File "/repo/reproduce_error.py", line 10, in <module>
     store_cv_values=True).fit(x, y)
-TypeError: __init__() got an unexpected keyword argument 'store_cv_values'
+TypeError: *init*() got an unexpected keyword argument 'store_cv_values'
 ```
 
 From here on, the model uses the Edit Tool to change the source code in the repository and reruns its script to verify whether the change has resolved the issue:
@@ -344,18 +343,18 @@ path:
 /repo/sklearn/linear_model/ridge.py
 
 old_str:
-    def __init__(self, alphas=(0.1, 1.0, 10.0), fit_intercept=True,
+    def *init*(self, alphas=(0.1, 1.0, 10.0), fit_intercept=True,
                  normalize=False, scoring=None, cv=None, class_weight=None):
-        super(RidgeClassifierCV, self).__init__(
+        super(RidgeClassifierCV, self).*init*(
             alphas=alphas, fit_intercept=fit_intercept, normalize=normalize,
             scoring=scoring, cv=cv)
         self.class_weight = class_weight
 
 new_str:
-    def __init__(self, alphas=(0.1, 1.0, 10.0), fit_intercept=True,
+    def *init*(self, alphas=(0.1, 1.0, 10.0), fit_intercept=True,
                  normalize=False, scoring=None, cv=None, class_weight=None,
                  store_cv_values=False):
-        super(RidgeClassifierCV, self).__init__(
+        super(RidgeClassifierCV, self).*init*(
             alphas=alphas, fit_intercept=fit_intercept, normalize=normalize,
             scoring=scoring, cv=cv, store_cv_values=store_cv_values)
         self.class_weight = class_weight
