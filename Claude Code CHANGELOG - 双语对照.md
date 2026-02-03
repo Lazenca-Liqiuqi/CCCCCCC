@@ -1,5 +1,171 @@
 # Claude Code 更新日志 - 双语对照
 
+## 2.1.25
+
+- Fixed beta header validation error for gateway users on Bedrock and Vertex, ensuring `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` avoids the error
+修复了 Bedrock 和 Vertex 上网关用户的 beta 标头验证错误，确保 `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` 可以避免该错误
+
+## 2.1.23
+
+- Added customizable spinner verbs setting (`spinnerVerbs`)
+添加了可自定义的加载动画动词设置（`spinnerVerbs`）
+
+- Fixed mTLS and proxy connectivity for users behind corporate proxies or using client certificates
+修复了企业代理后用户或使用客户端证书用户的 mTLS 和代理连接问题
+
+- Fixed per-user temp directory isolation to prevent permission conflicts on shared systems
+修复了每用户临时目录隔离，防止共享系统上的权限冲突
+
+- Fixed a race condition that could cause 400 errors when prompt caching scope was enabled
+修复了启用提示缓存范围时可能导致 400 错误的竞态条件
+
+- Fixed pending async hooks not being cancelled when headless streaming sessions ended
+修复了无头流会话结束时待处理的异步钩子未被取消的问题
+
+- Fixed tab completion not updating the input field when accepting a suggestion
+修复了接受建议时 tab 补全未更新输入字段的问题
+
+- Fixed ripgrep search timeouts silently returning empty results instead of reporting errors
+修复了 ripgrep 搜索超时时静默返回空结果而非报告错误的问题
+
+- Improved terminal rendering performance with optimized screen data layout
+通过优化屏幕数据布局改进了终端渲染性能
+
+- Changed Bash commands to show timeout duration alongside elapsed time
+将 Bash 命令更改为同时显示超时时长和已用时长
+
+- Changed merged pull requests to show a purple status indicator in the prompt footer
+将已合并的 PR 更改为在提示页脚显示紫色状态指示器
+
+- [IDE] Fixed model options displaying incorrect region strings for Bedrock users in headless mode
+[IDE] 修复了无头模式下 Bedrock 用户的模型选项显示错误区域字符串的问题
+
+## 2.1.22
+
+- Fixed structured outputs for non-interactive (-p) mode
+修复了非交互式（-p）模式下的结构化输出问题
+
+## 2.1.21
+
+- Added support for full-width (zenkaku) number input from Japanese IME in option selection prompts
+添加了对日语输入法全角（zenkaku）数字输入在选项选择提示中的支持
+
+- Fixed shell completion cache files being truncated on exit
+修复了 shell 补全缓存文件在退出时被截断的问题
+
+- Fixed API errors when resuming sessions that were interrupted during tool execution
+修复了恢复在工具执行期间被中断的会话时的 API 错误
+
+- Fixed auto-compact triggering too early on models with large output token limits
+修复了在大输出 token 限制的模型上自动压缩过早触发的问题
+
+- Fixed task IDs potentially being reused after deletion
+修复了任务 ID 在删除后可能被重用的问题
+
+- Fixed file search not working in VS Code extension on Windows
+修复了 VS Code 扩展在 Windows 上文件搜索不工作的问题
+
+- Improved read/search progress indicators to show "Reading…" while in progress and "Read" when complete
+改进了读取/搜索进度指示器，进行中显示"Reading…"，完成后显示"Read"
+
+- Improved Claude to prefer file operation tools (Read, Edit, Write) over bash equivalents (cat, sed, awk)
+改进了 Claude 的行为，使其优先使用文件操作工具（Read、Edit、Write）而非等效的 bash 命令（cat、sed、awk）
+
+- [VSCode] Added automatic Python virtual environment activation, ensuring `python` and `pip` commands use the correct interpreter (configurable via `claudeCode.usePythonEnvironment` setting)
+[VSCode] 添加了自动 Python 虚拟环境激活功能，确保 `python` 和 `pip` 命令使用正确的解释器（可通过 `claudeCode.usePythonEnvironment` 设置配置）
+
+- [VSCode] Fixed message action buttons having incorrect background colors
+[VSCode] 修复了消息操作按钮背景颜色不正确的问题
+
+## 2.1.20
+
+- Added arrow key history navigation in vim normal mode when cursor cannot move further
+添加了 vim 普通模式下光标无法继续移动时的方向键历史导航功能
+
+- Added external editor shortcut (Ctrl+G) to the help menu for better discoverability
+在帮助菜单中添加了外部编辑器快捷键（Ctrl+G），提高可发现性
+
+- Added PR review status indicator to the prompt footer, showing the current branch's PR state (approved, changes requested, pending, or draft) as a colored dot with a clickable link
+在提示页脚添加了 PR 审查状态指示器，以彩色圆点和可点击链接显示当前分支的 PR 状态（已批准、请求更改、待处理或草稿）
+
+- Added support for loading `CLAUDE.md` files from additional directories specified via `--add-dir` flag (requires setting `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1`)
+添加了从通过 `--add-dir` 标志指定的其他目录加载 `CLAUDE.md` 文件的支持（需要设置 `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1`）
+
+- Added ability to delete tasks via the `TaskUpdate` tool
+添加了通过 `TaskUpdate` 工具删除任务的功能
+
+- Fixed session compaction issues that could cause resume to load full history instead of the compact summary
+修复了会话压缩问题，该问题可能导致恢复时加载完整历史而非压缩摘要
+
+- Fixed agents sometimes ignoring user messages sent while actively working on a task
+修复了代理在积极处理任务时有时忽略用户消息的问题
+
+- Fixed wide character (emoji, CJK) rendering artifacts where trailing columns were not cleared when replaced by narrower characters
+修复了宽字符（表情符号、CJK）渲染瑕疵，该问题会导致尾部列在替换为较窄字符时未被清除
+
+- Fixed JSON parsing errors when MCP tool responses contain special Unicode characters
+修复了 MCP 工具响应包含特殊 Unicode 字符时的 JSON 解析错误
+
+- Fixed up/down arrow keys in multi-line and wrapped text input to prioritize cursor movement over history navigation
+修复了多行和换行文本输入中上下方向键优先执行光标移动而非历史导航的问题
+
+- Fixed draft prompt being lost when pressing UP arrow to navigate command history
+修复了按 UP 方向键导航命令历史时草稿提示丢失的问题
+
+- Fixed ghost text flickering when typing slash commands mid-input
+修复了输入中途输入斜杠命令时幽灵文本闪烁的问题
+
+- Fixed marketplace source removal not properly deleting settings
+修复了插件市场来源移除未正确删除设置的问题
+
+- Fixed duplicate output in some commands like `/context`
+修复了某些命令（如 `/context`）中的重复输出问题
+
+- Fixed task list sometimes showing outside the main conversation view
+修复了任务列表有时显示在主对话视图之外的问题
+
+- Fixed syntax highlighting for diffs occurring within multiline constructs like Python docstrings
+修复了 Python 文档字符串等多行构造中的差异语法高亮问题
+
+- Fixed crashes when cancelling tool use
+修复了取消工具使用时的崩溃问题
+
+- Improved `/sandbox` command UI to show dependency status with installation instructions when dependencies are missing
+改进了 `/sandbox` 命令 UI，在缺少依赖时显示依赖状态和安装说明
+
+- Improved thinking status text with a subtle shimmer animation
+为思考状态文本添加了微妙的微光动画效果
+
+- Improved task list to dynamically adjust visible items based on terminal height
+改进了任务列表，使其根据终端高度动态调整可见项目
+
+- Improved fork conversation hint to show how to resume the original session
+改进了分支对话提示，显示如何恢复原始会话
+
+- Changed collapsed read/search groups to show present tense ("Reading", "Searching for") while in progress, and past tense ("Read", "Searched for") when complete
+将折叠的读取/搜索组更改为进行中显示现在时（"Reading"、"Searching for"），完成后显示过去时（"Read"、"Searched for"）
+
+- Changed teammate messages to render with rich Markdown formatting (bold, code blocks, lists, etc.) instead of plain text
+将团队成员消息更改为使用富 Markdown 格式（粗体、代码块、列表等）渲染，而非纯文本
+
+- Changed `ToolSearch` results to appear as a brief notification instead of inline in the conversation
+将 `ToolSearch` 结果更改为以简短通知形式显示，而非对话中的内联显示
+
+- Changed the `/commit-push-pr` skill to automatically post PR URLs to Slack channels when configured via MCP tools
+将 `/commit-push-pr` 技能更改为在通过 MCP 工具配置时自动将 PR URL 发布到 Slack 频道
+
+- Changed the `/copy` command to be available to all users
+将 `/copy` 命令更改为对所有用户可用
+
+- Changed background agents to prompt for tool permissions before launching
+将后台代理更改为在启动前提示工具权限
+
+- Changed permission rules like `Bash(*)` to be accepted and treated as equivalent to `Bash`
+将 `Bash(*)` 等权限规则更改为被接受并视为与 `Bash` 等效
+
+- Changed config backups to be timestamped and rotated (keeping 5 most recent) to prevent data loss
+将配置备份更改为带时间戳并轮换（保留最近 5 个），以防止数据丢失
+
 ## 2.1.19
 
 - Added env var `CLAUDE_CODE_ENABLE_TASKS`, set to `false` to keep the old system temporarily
