@@ -1,5 +1,133 @@
 # Claude Code 更新日志 - 双语对照
 
+## 2.1.31
+
+- Added session resume hint on exit, showing how to continue your conversation later
+添加了退出时的会话恢复提示，展示稍后如何继续对话
+
+- Added support for full-width (zenkaku) space input from Japanese IME in checkbox selection
+添加了在复选框选择中支持日语输入法全角空格输入
+
+- Fixed PDF too large errors permanently locking up sessions, requiring users to start a new conversation
+修复了 PDF 过大错误永久锁定会话的问题，该问题曾要求用户开始新对话
+
+- Fixed bash commands incorrectly reporting failure with "Read-only file system" errors when sandbox mode was enabled
+修复了启用沙盒模式时 bash 命令错误报告"只读文件系统"失败的问题
+
+- Fixed a crash that made sessions unusable after entering plan mode when project config in `~/.claude.json` was missing default fields
+修复了当 `~/.claude.json` 中的项目配置缺少默认字段时，进入计划模式后导致会话无法使用的崩溃问题
+
+- Fixed `temperatureOverride` being silently ignored in the streaming API path, causing all streaming requests to use the default temperature (1) regardless of the configured override
+修复了 `temperatureOverride` 在流式 API 路径中被静默忽略的问题，该问题曾导致所有流式请求都使用默认温度（1），而不管配置的覆盖值
+
+- Fixed LSP shutdown/exit compatibility with strict language servers that reject null params
+修复了与拒绝 null 参数的严格语言服务器的 LSP 关闭/退出兼容性问题
+
+- Improved system prompts to more clearly guide the model toward using dedicated tools (Read, Edit, Glob, Grep) instead of bash equivalents (`cat`, `sed`, `grep`, `find`), reducing unnecessary bash command usage
+改进了系统提示，更清晰地引导模型使用专用工具（Read、Edit、Glob、Grep）而不是 bash 等效命令（`cat`、`sed`、`grep`、`find`），减少了不必要的 bash 命令使用
+
+- Improved PDF and request size error messages to show actual limits (100 pages, 20MB)
+改进了 PDF 和请求大小错误消息，显示实际限制（100 页，20MB）
+
+- Reduced layout jitter in the terminal when the spinner appears and disappears during streaming
+减少了流式传输期间加载动画出现和消失时终端中的布局抖动
+
+- Removed misleading Anthropic API pricing from model selector for third-party provider (Bedrock, Vertex, Foundry) users
+为第三方提供商（Bedrock、Vertex、Foundry）用户从模型选择器中移除了误导性的 Anthropic API 定价
+
+## 2.1.30
+
+- Added `pages` parameter to the Read tool for PDFs, allowing specific page ranges to be read (e.g., `pages: "1-5"`). Large PDFs (>10 pages) now return a lightweight reference when `@` mentioned instead of being inlined into context.
+为 Read 工具添加了 `pages` 参数用于 PDF，允许读取特定页面范围（例如 `pages: "1-5"`）。大型 PDF（>10 页）在 `@` 提到时现在返回轻量级引用，而不是内联到上下文中。
+
+- Added pre-configured OAuth client credentials for MCP servers that don't support Dynamic Client Registration (e.g., Slack). Use `--client-id` and `--client-secret` with `claude mcp add`.
+为不支持动态客户端注册的 MCP 服务器（例如 Slack）添加了预配置的 OAuth 客户端凭据。使用 `--client-id` 和 `--client-secret` 与 `claude mcp add` 一起使用。
+
+- Added `/debug` for Claude to help troubleshoot the current session
+为 Claude 添加了 `/debug` 命令以帮助排查当前会话问题
+
+- Added support for additional `git log` and `git show` flags in read-only mode (e.g., `--topo-order`, `--cherry-pick`, `--format`, `--raw`)
+在只读模式下添加了对额外 `git log` 和 `git show` 标志的支持（例如 `--topo-order`、`--cherry-pick`、`--format`、`--raw`）
+
+- Added token count, tool uses, and duration metrics to Task tool results
+为 Task 工具结果添加了令牌计数、工具使用和持续时间指标
+
+- Added reduced motion mode to the config
+为配置添加了减少动画模式
+
+- Fixed phantom "(no content)" text blocks appearing in API conversation history, reducing token waste and potential model confusion
+修复了 API 对话历史中出现的虚幻"(no content)"文本块，减少了令牌浪费和潜在的模型混淆
+
+- Fixed prompt cache not correctly invalidating when tool descriptions or input schemas changed, only when tool names changed
+修复了工具描述或输入架构更改时提示缓存未正确失效的问题，之前仅在工具名称更改时才失效
+
+- Fixed 400 errors that could occur after running `/login` when the conversation contained thinking blocks
+修复了当对话包含思考块时运行 `/login` 后可能发生的 400 错误
+
+- Fixed a hang when resuming sessions with corrupted transcript files containing `parentUuid` cycles
+修复了恢复包含 `parentUuid` 循环的损坏转录文件会话时的挂起问题
+
+- Fixed rate limit message showing incorrect "/upgrade" suggestion for Max 20x users when extra-usage is unavailable
+修复了当额外使用不可用时，Max 20x 用户的速率限制消息显示不正确的"/upgrade"建议
+
+- Fixed permission dialogs stealing focus while actively typing
+修复了在主动输入时权限对话框窃取焦点的问题
+
+- Fixed subagents not being able to access SDK-provided MCP tools because they were not synced to the shared application state
+修复了子智能体无法访问 SDK 提供的 MCP 工具的问题，因为它们未同步到共享应用程序状态
+
+- Fixed a regression where Windows users with a `.bashrc` file could not run bash commands
+修复了 Windows 用户拥有 `.bashrc` 文件时无法运行 bash 命令的回归问题
+
+- Improved memory usage for `--resume` (68% reduction for users with many sessions) by replacing the session index with lightweight stat-based loading and progressive enrichment
+通过用轻量级基于统计的加载和渐进式丰富替换会话索引，改进了 `--resume` 的内存使用（拥有许多会话的用户减少 68%）
+
+- Improved `TaskStop` tool to display the stopped command/task description in the result line instead of a generic "Task stopped" message
+改进了 `TaskStop` 工具，在结果行中显示已停止的命令/任务描述，而不是通用的"Task stopped"消息
+
+- Changed `/model` to execute immediately instead of being queued
+将 `/model` 更改为立即执行而不是排队
+
+- [VSCode] Added multiline input support to the "Other" text input in question dialogs (use Shift+Enter for new lines)
+[VSCode] 为问题对话框中的"Other"文本输入添加了多行输入支持（使用 Shift+Enter 换行）
+
+- [VSCode] Fixed duplicate sessions appearing in the session list when starting a new conversation
+[VSCode] 修复了开始新对话时会话列表中出现重复会话的问题
+
+## 2.1.29
+
+- Fixed startup performance issues when resuming sessions that have `saved_hook_context`
+修复了恢复具有 `saved_hook_context` 的会话时的启动性能问题
+
+## 2.1.27
+
+- Added tool call failures and denials to debug logs
+添加了工具调用失败和拒绝到调试日志
+
+- Fixed context management validation error for gateway users, ensuring `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` avoids the error
+修复了网关用户的上下文管理验证错误，确保 `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` 可以避免该错误
+
+- Added `--from-pr` flag to resume sessions linked to a specific GitHub PR number or URL
+添加了 `--from-pr` 标志以恢复链接到特定 GitHub PR 编号或 URL 的会话
+
+- Sessions are now automatically linked to PRs when created via `gh pr create`
+现在通过 `gh pr create` 创建会话时会自动链接到 PR
+
+- Fixed /context command not displaying colored output
+修复了 /context 命令不显示彩色输出的问题
+
+- Fixed status bar duplicating background task indicator when PR status was shown
+修复了显示 PR 状态时状态栏重复显示后台任务指示器的问题
+
+- Windows: Fixed bash command execution failing for users with `.bashrc` files
+Windows：修复了拥有 `.bashrc` 文件的用户 bash 命令执行失败的问题
+
+- Windows: Fixed console windows flashing when spawning child processes
+Windows：修复了生成子进程时控制台窗口闪烁的问题
+
+- VSCode: Fixed OAuth token expiration causing 401 errors after extended sessions
+VSCode：修复了 OAuth 令牌过期在长时间会话后导致 401 错误的问题
+
 ## 2.1.25
 
 - Fixed beta header validation error for gateway users on Bedrock and Vertex, ensuring `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` avoids the error
