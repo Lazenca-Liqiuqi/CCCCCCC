@@ -105,6 +105,12 @@ Claude Code Chinese Commentary Collection/
 - 新翻译文章应直接遵循 `.claude/rules/translation-format.md` 规范
 - 翻译完成后可请求 Codex 审查确保质量
 
+## 版本
+
+**当前版本**：0.2.1
+
+详见 [CHANGELOG.md](../CHANGELOG.md)
+
 ## 资源
 
 - [Claude Code GitHub](https://github.com/anthropics/claude-code)
