@@ -2,7 +2,7 @@
 
 > Anthropic 与 Claude Code 中文指南合集
 
-## 项目背景
+## 项目背景信息
 
 Claude Code Chinese Commentary Collection 是一个专注于 Anthropic 技术文档中文翻译的项目。本项目为中文开发者提供高质量的 AI 辅助编程工具指南，包括：
 
@@ -19,6 +19,7 @@ Claude Code Chinese Commentary Collection/
 │   ├── commands/                              # 自定义命令
 │   ├── rules/                                 # 项目规则
 │   │   └── translation-format.md              # 翻译格式规范
+│   ├── CLAUDE.md                              # 项目提示词
 │   └── review-request.md                      # 审查请求模板
 ├── anthropic-engineering-articles/            # Anthropic 工程文章翻译（独立 Git 仓库）
 │   ├── 01-contextual-retrieval.md             # 上下文检索技术
@@ -47,13 +48,6 @@ Claude Code Chinese Commentary Collection/
 └── LAST_CLAUDE_PROGRESS.md                    # 上一次工作进度记录
 ```
 
-### 目录说明
-
-- **`.claude/`**：Claude Code 工作配置，包含规则、翻译模板和审查请求
-- **`anthropic-engineering-articles/`**：Anthropic 官方工程博客文章的中文翻译
-- **`Claude Code CHANGELOG - 双语对照.md`**：Claude Code 官方更新日志的双语对照版本
-- **项目记忆文件**：`CLAUDE.md`、`README.md`、`CHANGELOG.md`、`TASKS.json`、`LAST_CLAUDE_PROGRESS.md`
-
 ## 技术栈与技术路线
 
 ### 翻译工作流程
@@ -76,60 +70,51 @@ Claude Code Chinese Commentary Collection/
 
 项目已完成所有 18 篇 Anthropic Engineering 文章的翻译工作，文章编号统一为 ID 01-18。
 
-### 已完成内容
+**已完成**：
+- [x] 翻译 18/18 篇文章（100%）
+- [x] 文章编号统一为 01-18
+- [x] 创建翻译格式规范 `.claude/rules/translation-format.md`
+- [x] 建立 Codex 审查协作机制
+- [x] 统一所有文章排版风格
 
-- **翻译 18/18 篇章**（100%）✅
-  - ID 01: Introducing Contextual Retrieval（上下文检索）
-  - ID 02: Building Effective Agents（构建有效的智能体）
-  - ID 03: SWE-bench Sonnet（SWE-bench 基准测试）
-  - ID 04: The "think" tool（"think" 工具）
-  - ID 05: Claude Code Best Practices（Claude Code 最佳实践）
-  - ID 06: Multi-Agent Research System（多智能体研究系统）
-  - ID 07: Desktop Extensions（桌面扩展）
-  - ID 08: Writing Tools（写作工具）
-  - ID 09: A Postmortem of Three Recent Issues（问题复盘）
-  - ID 10: Effective Context Engineering for AI Agents（上下文工程）
-  - ID 11: Building Agents with the Claude Agent SDK（Agent SDK）
-  - ID 12: Equipping Agents for the Real World with Agent Skills（Agent 技能）
-  - ID 13: Claude Code Sandboxing（Claude Code 沙盒）
-  - ID 14: Code Execution with MCP（使用 MCP 执行代码）
-  - ID 15: Effective Harnesses for Long-Running Agents（长运行智能体）
-  - ID 16: Introducing Advanced Tool Use（高级工具使用）
-  - ID 17: Demystifying Evals for AI Agents（评估详解）
-  - ID 18: Designing AI Resistant Technical Evaluations（AI 抗拒性评估）
-
-- **文件编号统一**
-  - 所有文章文件重编号为 01-18
-  - Git 已识别为 rename 操作
-
-- **创建翻译格式规范**
-  - 文件：`.claude/rules/translation-format.md`
-  - 包含：标题、正文、列表、图片、表格、代码块、链接等格式规范
-  - 基于实际修复经验的常见问题清单
-  - 质量检查清单
-
-- **建立 Codex 审查协作机制**
-  - 审查请求模板：`.claude/review-request.md`
-  - 审查报告：`.claude/review-report.md`
-
-### 项目里程碑
-
-- 🎉 **所有 Engineering 文章翻译完成！**
+**项目里程碑**：
+- 🎉 所有 Engineering 文章翻译完成！
 - 📚 涵盖智能体、上下文检索、MCP、Agent SDK 等核心技术
-- 🔄 文章编号统一规范
+- 📐 排版格式全部统一
 
-### 未来计划
+## 工作阶段
 
-- 持续跟进 Claude Code 新版本更新
-- 根据需要翻译新的 Engineering 文章
-- 完善项目文档和总结
+### 阶段 1: 翻译准备期
+- [x] 创建项目结构
+- [x] 制定翻译格式规范
+- [x] 建立 Codex 审查协作机制
 
-## TODO
+### 阶段 2: 翻译执行期
+- [x] ID 01: Introducing Contextual Retrieval（上下文检索）
+- [x] ID 02: Building Effective Agents（构建有效的智能体）
+- [x] ID 03: SWE-bench Sonnet（SWE-bench 基准测试）
+- [x] ID 04: The "think" tool（"think" 工具）
+- [x] ID 05: Claude Code Best Practices（Claude Code 最佳实践）
+- [x] ID 06: Multi-Agent Research System（多智能体研究系统）
+- [x] ID 07: Desktop Extensions（桌面扩展）
+- [x] ID 08: Writing Tools（写作工具）
+- [x] ID 09: A Postmortem of Three Recent Issues（问题复盘）
+- [x] ID 10: Effective Context Engineering for AI Agents（上下文工程）
+- [x] ID 11: Building Agents with the Claude Agent SDK（Agent SDK）
+- [x] ID 12: Equipping Agents for the Real World with Agent Skills（Agent 技能）
+- [x] ID 13: Claude Code Sandboxing（Claude Code 沙盒）
+- [x] ID 14: Code Execution with MCP（使用 MCP 执行代码）
+- [x] ID 15: Effective Harnesses for Long-Running Agents（长运行智能体）
+- [x] ID 16: Introducing Advanced Tool Use（高级工具使用）
+- [x] ID 17: Demystifying Evals for AI Agents（评估详解）
+- [x] ID 18: Designing AI Resistant Technical Evaluations（AI 抗拒性评估）
 
-### 翻译任务
-- ✅ 所有 18 篇 Engineering 文章翻译完成
-- 🔄 持续跟进 Claude Code 新版本更新
-- 📊 根据需要翻译新文章
+### 阶段 3: 翻译完成期
+- [x] 文章编号统一为 01-18
+- [x] 排版风格统一（标题、粗体、双语格式）
+- [ ] 持续跟进 Claude Code 新版本更新
+- [ ] 根据需要翻译新的 Engineering 文章
+- [ ] 完善项目文档和总结
 
 ### 注意事项
 - 新翻译文章应直接遵循 `.claude/rules/translation-format.md` 规范

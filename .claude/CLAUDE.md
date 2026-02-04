@@ -9,9 +9,31 @@
 ```
 Claude Code Chinese Commentary Collection/
 ├── .claude/                                    # Claude Code 配置目录
-├── anthropic-engineering-articles/            # Anthropic 工程文章翻译
+│   ├── commands/                              # 自定义命令
+│   ├── rules/                                 # 项目规则
+│   │   └── translation-format.md              # 翻译格式规范
+│   ├── CLAUDE.md                              # 项目提示词
+│   └── review-request.md                      # 审查请求模板
+├── anthropic-engineering-articles/            # Anthropic 工程文章翻译（独立 Git 仓库）
+│   ├── 01-contextual-retrieval.md             # 上下文检索技术
+│   ├── 02-building-effective-agents.md        # 构建有效智能体
+│   ├── 03-swe-bench-sonnet.md                 # SWE-bench 基准测试
+│   ├── 04-claude-think-tool.md                # "think" 工具
+│   ├── 05-claude-code-best-practices.md       # Claude Code 最佳实践
+│   ├── 06-multi-agent-research-system.md      # 多智能体研究系统
+│   ├── 07-desktop-extensions.md               # 桌面扩展
+│   ├── 08-writing-tools-for-agents.md         # 写作工具
+│   ├── 09-a-postmortem-of-three-recent-issues.md  # 问题复盘
+│   ├── 10-effective-context-engineering-for-ai-agents.md  # 上下文工程
+│   ├── 11-agent-sdk.md                        # Agent SDK
+│   ├── 12-agent-skills.md                     # Agent 技能
+│   ├── 13-claude-code-sandboxing.md           # Claude Code 沙盒
+│   ├── 14-code-execution-with-mcp.md          # 使用 MCP 执行代码
+│   ├── 15-effective-harnesses-for-long-running-agents.md  # 长运行智能体
+│   ├── 16-advanced-tool-use.md                # 高级工具使用
+│   ├── 17-demystifying-evals-for-ai-agents.md # 评估详解
+│   └── 18-AI-resistant-technical-evaluations.md  # AI 抗拒性评估
 ├── Claude Code CHANGELOG - 双语对照.md        # Claude Code 更新日志双语版
-├── CLAUDE.md                                  # 项目提示词（本文件）
 ├── README.md                                  # 项目说明文档
 ├── CHANGELOG.md                               # 项目更新日志
 ├── TASKS.json                                 # 阶段性任务清单
@@ -34,41 +56,50 @@ Claude Code Chinese Commentary Collection/
 项目已完成所有 18 篇 Engineering 文章的翻译工作，文章编号统一为 ID 01-18。
 
 **已完成**：
-- ✅ 翻译 18/18 篇文章（100%）
-- ✅ 文章编号统一为 01-18
-- ✅ 创建翻译格式规范 `.claude/rules/translation-format.md`
-- ✅ 建立 Codex 审查协作机制
+- [x] 翻译 18/18 篇文章（100%）
+- [x] 文章编号统一为 01-18
+- [x] 创建翻译格式规范 `.claude/rules/translation-format.md`
+- [x] 建立 Codex 审查协作机制
+- [x] 统一所有文章排版风格
 
 **项目里程碑**：
 - 🎉 所有 Engineering 文章翻译完成！
 - 📚 涵盖智能体、上下文检索、MCP、Agent SDK 等核心技术
+- 📐 排版格式全部统一
 
-## TODO
+## 工作阶段
 
-### 翻译任务
-- ✅ ID 01: Contextual Retrieval（上下文检索）
-- ✅ ID 02: Building Effective Agents（构建有效的智能体）
-- ✅ ID 03: SWE-bench Sonnet（SWE-bench 基准测试）
-- ✅ ID 04: The "think" tool（"think" 工具）
-- ✅ ID 05: Claude Code Best Practices（Claude Code 最佳实践）
-- ✅ ID 06: Multi-Agent Research System（多智能体研究系统）
-- ✅ ID 07: Desktop Extensions（桌面扩展）
-- ✅ ID 08: Writing Tools（写作工具）
-- ✅ ID 09: Postmortem（问题复盘）
-- ✅ ID 10: Context Engineering（上下文工程）
-- ✅ ID 11: Agent SDK（Agent SDK）
-- ✅ ID 12: Agent Skills（Agent 技能）
-- ✅ ID 13: Claude Code Sandboxing（Claude Code 沙盒）
-- ✅ ID 14: Code Execution with MCP（使用 MCP 执行代码）
-- ✅ ID 15: Long-Running Agents（长运行智能体）
-- ✅ ID 16: Advanced Tool Use（高级工具使用）
-- ✅ ID 17: Demystifying Evals（评估详解）
-- ✅ ID 18: AI Resistant Evaluations（AI 抗拒性评估）
+### 阶段 1: 翻译准备期
+- [x] 创建项目结构
+- [x] 制定翻译格式规范
+- [x] 建立 Codex 审查协作机制
 
-### 未来计划
-- 📊 持续跟进 Claude Code 新版本更新
-- 📖 完善项目文档和总结
-- 🔄 根据需要翻译新的 Engineering 文章
+### 阶段 2: 翻译执行期
+- [x] ID 01: Contextual Retrieval（上下文检索）
+- [x] ID 02: Building Effective Agents（构建有效的智能体）
+- [x] ID 03: SWE-bench Sonnet（SWE-bench 基准测试）
+- [x] ID 04: The "think" tool（"think" 工具）
+- [x] ID 05: Claude Code Best Practices（Claude Code 最佳实践）
+- [x] ID 06: Multi-Agent Research System（多智能体研究系统）
+- [x] ID 07: Desktop Extensions（桌面扩展）
+- [x] ID 08: Writing Tools（写作工具）
+- [x] ID 09: Postmortem（问题复盘）
+- [x] ID 10: Context Engineering（上下文工程）
+- [x] ID 11: Agent SDK（Agent SDK）
+- [x] ID 12: Agent Skills（Agent 技能）
+- [x] ID 13: Claude Code Sandboxing（Claude Code 沙盒）
+- [x] ID 14: Code Execution with MCP（使用 MCP 执行代码）
+- [x] ID 15: Long-Running Agents（长运行智能体）
+- [x] ID 16: Advanced Tool Use（高级工具使用）
+- [x] ID 17: Demystifying Evals（评估详解）
+- [x] ID 18: AI Resistant Evaluations（AI 抗拒性评估）
+
+### 阶段 3: 翻译完成期
+- [x] 文章编号统一为 01-18
+- [x] 排版风格统一（标题、粗体、双语格式）
+- [ ] 持续跟进 Claude Code 新版本更新
+- [ ] 根据需要翻译新的 Engineering 文章
+- [ ] 完善项目文档和总结
 
 ### 注意事项
 - 新翻译文章应直接遵循 `.claude/rules/translation-format.md` 规范
