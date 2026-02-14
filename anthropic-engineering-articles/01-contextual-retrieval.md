@@ -14,7 +14,7 @@ In this post, we outline a method that dramatically improves the retrieval step 
 
 You can easily deploy your own Contextual Retrieval solution with Claude with our [cookbook](https://docs.anthropic.com/en/docs/build-with-claude/contextual-retrieval).
 
-您可以使用我们的 [cookbook](https://docs.anthropic.com/en/docs/build-with-claude/contextual-retrieval) 轻松部署自己的上下文检索解决方案。
+您可以使用我们的 [cookbook](https://platform.claude.com/cookbook/capabilities-contextual-embeddings-guide) 轻松部署自己的上下文检索解决方案。
 
 ---
 
@@ -70,22 +70,19 @@ RAG solutions can more accurately retrieve the most applicable chunks by combini
 RAG 解决方案可以通过使用以下步骤结合嵌入和 BM25 技术来更准确地检索最适用的块：
 
 1. Break down the knowledge base (the "corpus" of documents) into smaller chunks of text, usually no more than a few hundred tokens;
-将知识库（文档的"语料库"）分解为较小的文本块，通常不超过几百个 token；
-
+  将知识库（文档的"语料库"）分解为较小的文本块，通常不超过几百个 token；
 2. Create TF-IDF encodings and semantic embeddings for these chunks;
-为这些块创建 TF-IDF 编码和语义嵌入；
-
+  为这些块创建 TF-IDF 编码和语义嵌入；
 3. Use BM25 to find top chunks based on exact matches;
-使用 BM25 基于精确匹配找到顶级块；
-
+  使用 BM25 基于精确匹配找到顶级块；
 4. Use embeddings to find top chunks based on semantic similarity;
-使用嵌入基于语义相似性找到顶级块；
-
+  使用嵌入基于语义相似性找到顶级块；
 5. Combine and deduplicate results from (3) and (4) using rank fusion techniques;
-使用排序融合技术结合和去重（3）和（4）的结果；
-
+  使用排序融合技术结合和去重（3）和（4）的结果；
 6. Add the top-K chunks to the prompt to generate the response.
-将前 K 个块添加到提示中以生成响应。
+  将前 K 个块添加到提示中以生成响应。
+
+> 说白了就是既进行精确匹配, 又进行嵌入式的语义搜索
 
 By leveraging both BM25 and embedding models, traditional RAG systems can provide more comprehensive and accurate results, balancing precise term matching with broader semantic understanding.
 
