@@ -1,5 +1,263 @@
 # Claude Code 更新日志 - 双语对照
 
+## 2.1.42
+
+- Improved startup performance by deferring Zod schema construction
+通过延迟 Zod schema 构建改进了启动性能
+
+- Improved prompt cache hit rates by moving date out of system prompt
+通过将日期移出系统提示改进了提示缓存命中率
+
+- Added one-time Opus 4.6 effort callout for eligible users
+为符合条件的用户添加了一次性 Opus 4.6 调用提示
+
+- Fixed /resume showing interrupt messages as session titles
+修复了 /resume 将中断消息显示为会话标题的问题
+
+- Fixed image dimension limit errors to suggest /compact
+修复了图片尺寸限制错误，现在会建议使用 /compact
+
+## 2.1.41
+
+- Added guard against launching Claude Code inside another Claude Code session
+添加了防止在另一个 Claude Code 会话中启动 Claude Code 的保护机制
+
+- Fixed Agent Teams using wrong model identifier for Bedrock, Vertex, and Foundry customers
+修复了 Agent Teams 为 Bedrock、Vertex 和 Foundry 客户使用错误模型标识符的问题
+
+- Fixed a crash when MCP tools return image content during streaming
+修复了 MCP 工具在流式传输期间返回图片内容时的崩溃问题
+
+- Fixed overzealous bash sandbox that incorrectly blocked harmless commands like `ls`
+修复了过于严格的 bash 沙盒错误阻止 `ls` 等无害命令的问题
+
+- Fixed interactive git commands being incorrectly allowed in non-interactive mode
+修复了交互式 git 命令在非交互模式下被错误允许的问题
+
+- Fixed headless mode not displaying agent teammates' output
+修复了无头模式不显示智能体队友输出的问题
+
+- Fixed headless mode repeating system warnings when resuming a session
+修复了无头模式在恢复会话时重复显示系统警告的问题
+
+- Fixed hooks with `timeout` specified ignoring the timeout value
+修复了指定了 `timeout` 的钩子忽略超时值的问题
+
+- Fixed hooks not being able to log at `debug` level
+修复了钩子无法在 `debug` 级别记录日志的问题
+
+- Fixed OpenTelemetry spans for agent teammates not being nested under the parent span
+修复了智能体队友的 OpenTelemetry span 未嵌套在父 span 下的问题
+
+- Fixed `claude mcp list` always showing JSON for OAuth MCP servers
+修复了 `claude mcp list` 总是为 OAuth MCP 服务器显示 JSON 的问题
+
+- Fixed Telemetry setting being cleared after using `--print`
+修复了使用 `--print` 后遥测设置被清除的问题
+
+- Fixed "UNAUTHORIZED" being shown to Bedrock/Vertex users when `CLAUDE_CODE_USE_BEDROCK` or `CLAUDE_CODE_USE_VERTEX` was set
+修复了设置 `CLAUDE_CODE_USE_BEDROCK` 或 `CLAUDE_CODE_USE_VERTEX` 时向 Bedrock/Vertex 用户显示 "UNAUTHORIZED" 的问题
+
+- Fixed `/cost` displaying the wrong cost for Bedrock/Vertex users
+修复了 `/cost` 为 Bedrock/Vertex 用户显示错误成本的问题
+
+- Fixed `/compact` sometimes freezing when there were conversation errors
+修复了当存在对话错误时 `/compact` 有时会冻结的问题
+
+- Fixed a hang when starting headless mode in a git repository without a globally installed `claude` executable
+修复了在没有全局安装 `claude` 可执行文件的 git 仓库中启动无头模式时的挂起问题
+
+- Fixed rare cursor misplacement when re-rendering the chat
+修复了重新渲染聊天时光标错位的罕见问题
+
+- Fixed JSON output mode not working with the `--help` flag
+修复了 JSON 输出模式与 `--help` 标志不兼容的问题
+
+- Fixed long transcript names wrapping and breaking the layout
+修复了长转录名称换行破坏布局的问题
+
+- Fixed slash commands and mentions not being highlighted when the cursor is before them
+修复了当光标在斜杠命令和提及之前时不高亮显示的问题
+
+- Improved output format for `claude mcp add` command
+改进了 `claude mcp add` 命令的输出格式
+
+- Improved chat output rendering performance
+改进了聊天输出渲染性能
+
+- Improved error message when using `/compact` without auto-compact enabled
+改进了未启用自动压缩时使用 `/compact` 的错误消息
+
+- [VSCode] Improved response streaming UI to show Claude Code activity in real time
+[VSCode] 改进了响应流式 UI，实时显示 Claude Code 活动
+
+- [VSCode] Fixed usage numbers including tool results in the wrong category
+[VSCode] 修复了使用量数字将工具结果包含在错误类别中的问题
+
+- [VSCode] Fixed CLAUDE.md files not being recognized when located in deeply nested subdirectories
+[VSCode] 修复了位于深层嵌套子目录中的 CLAUDE.md 文件未被识别的问题
+
+## 2.1.39
+
+- Improved terminal rendering performance
+改进了终端渲染性能
+
+- Fixed fatal errors being swallowed instead of displayed
+修复了致命错误被静默吞没而不显示的问题
+
+- Fixed process hanging after session close
+修复了会话关闭后进程挂起的问题
+
+- Fixed character loss at terminal screen boundary
+修复了终端屏幕边界处字符丢失的问题
+
+- Fixed blank lines in verbose transcript view
+修复了详细转录视图中的空白行问题
+
+## 2.1.38
+
+- Fixed VS Code terminal scroll-to-top regression introduced in 2.1.37
+修复了 2.1.37 引入的 VS Code 终端滚动到顶部回归问题
+
+- Fixed Tab key queueing slash commands instead of autocompleting
+修复了 Tab 键排队斜杠命令而不是自动补全的问题
+
+- Fixed output text flickering during streaming
+修复了流式传输期间输出文本闪烁的问题
+
+- Fixed MCP OAuth callback failing on systems with restricted localhost access
+修复了在本地主机访问受限的系统上 MCP OAuth 回调失败的问题
+
+- Fixed empty lines in some selection dialogs
+修复了某些选择对话框中的空行问题
+
+- Fixed confusing error message when headless mode runs out of turns
+修复了无头模式用完轮次时令人困惑的错误消息
+
+- Fixed spawning agent teammates sometimes failing with "Error: agentId is required"
+修复了生成智能体队友有时失败并显示 "Error: agentId is required" 的问题
+
+## 2.1.37
+
+- Fixed an issue where /fast was not immediately available after enabling /extra-usage
+修复了启用 /extra-usage 后 /fast 无法立即可用的问题
+
+## 2.1.36
+
+- Fast mode is now available for Opus 4.6
+快速模式现在可用于 Opus 4.6
+
+## 2.1.34
+
+- Fixed a crash when agent teams setting changed between renders
+修复了智能体团队设置在渲染之间更改时的崩溃问题
+
+- Fixed a bug where commands excluded from sandboxing could bypass the Bash ask permission rule
+修复了从沙盒中排除的命令可以绕过 Bash 询问权限规则的错误
+
+## 2.1.33
+
+- Fixed agent teammate sessions in tmux to send and receive messages
+修复了 tmux 中的智能体队友会话发送和接收消息的问题
+
+- Fixed warnings about agent teams not being available on your current plan
+修复了关于智能体团队在当前计划上不可用的警告
+
+- Added `TeammateIdle` and `TaskCompleted` hook events for multi-agent workflows
+为多智能体工作流添加了 `TeammateIdle` 和 `TaskCompleted` 钩子事件
+
+- Added `disablePromptCaching` flag to the `claude` config for networks that don't support it
+为不支持提示缓存的网络在 `claude` 配置中添加了 `disablePromptCaching` 标志
+
+- Fixed MCP tools not being available to subagents
+修复了子智能体无法使用 MCP 工具的问题
+
+- Fixed fire-and-forget agent teammates not being displayed in the chat
+修复了即发即弃的智能体队友不显示在聊天中的问题
+
+- Fixed `--verbose` mode with agent teammates causing errors
+修复了带智能体队友的 `--verbose` 模式导致错误的问题
+
+- Fixed rare crash when resuming sessions with agent teammates
+修复了恢复带智能体队友会话时的罕见崩溃问题
+
+- Fixed agent teammates ignoring instructions in `CLAUDE.md` files
+修复了智能体队友忽略 `CLAUDE.md` 文件中指令的问题
+
+- Fixed agent teammates not respecting configured permissions
+修复了智能体队友不遵守配置权限的问题
+
+- Fixed "claude" command not being found in VS Code terminal after changing agent teams setting
+修复了更改智能体团队设置后 VS Code 终端中找不到 "claude" 命令的问题
+
+- Fixed handling of `CLAUDE.md` files with non-UTF-8 encoding
+修复了处理非 UTF-8 编码的 `CLAUDE.md` 文件的问题
+
+- Fixed internal `setModel` call not supporting custom model IDs
+修复了内部 `setModel` 调用不支持自定义模型 ID 的问题
+
+- Fixed bash commands waiting for background tasks to complete even when `run_in_background` is true
+修复了即使 `run_in_background` 为 true，bash 命令仍等待后台任务完成的问题
+
+- Fixed version update notification showing for every new version instead of just major updates
+修复了版本更新通知为每个新版本显示而不是仅为主要更新显示的问题
+
+- Improved stability when updating the agent teams setting during an active session
+改进了在活动会话期间更新智能体团队设置的稳定性
+
+- Improved warning when background tasks are still running on session exit
+改进了会话退出时后台任务仍在运行的警告
+
+- Removed outdated cross-session memory reminder
+移除了过时的跨会话记忆提醒
+
+- Updated token usage display to more clearly show thinking vs. non-thinking tokens
+更新了 token 使用量显示，更清晰地区分思考 token 和非思考 token
+
+- Updated pricing display to show per-token cost and include thinking token costs
+更新了定价显示，显示每个 token 的成本并包含思考 token 成本
+
+## 2.1.32
+
+- Claude Opus 4.6 is now available!
+Claude Opus 4.6 现已可用！
+
+- Added research preview agent teams feature for multi-agent collaboration
+添加了用于多智能体协作的研究预览版智能体团队功能
+
+- Claude now automatically records and recalls memories as it works
+Claude 现在会在工作时自动记录和回忆记忆
+
+- Added `/compact` command to manually trigger context compaction
+添加了 `/compact` 命令以手动触发上下文压缩
+
+- Added `/status` command to show current session information
+添加了 `/status` 命令以显示当前会话信息
+
+- Added streaming and real-time output for headless mode
+为无头模式添加了流式传输和实时输出
+
+- Added conversation summarization to session resume (improves context management)
+为会话恢复添加了对话摘要（改进上下文管理）
+
+- Added improved detection of context limits (token limit 90% reached)
+添加了改进的上下文限制检测（达到 token 限制 90%）
+
+- Added `anthropic-beta` header support for `CLAUDE_CODE_CUSTOM_API_HEADERS`
+为 `CLAUDE_CODE_CUSTOM_API_HEADERS` 添加了 `anthropic-beta` 标头支持
+
+- Fixed TTY detection issue causing incorrect line wrapping in headless mode
+修复了导致无头模式错误换行的 TTY 检测问题
+
+- Fixed non-interactive mode not respecting `--max-tokens` flag
+修复了非交互模式不遵守 `--max-tokens` 标志的问题
+
+- Fixed `claude --help` not displaying all available commands
+修复了 `claude --help` 不显示所有可用命令的问题
+
+- Fixed interactive commands in bash being allowed when they should be blocked
+修复了 bash 中的交互式命令在被阻止时仍被允许的问题
+
 ## 2.1.31
 
 - Added session resume hint on exit, showing how to continue your conversation later
