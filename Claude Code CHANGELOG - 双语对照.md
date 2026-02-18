@@ -1,5 +1,71 @@
 # Claude Code 更新日志 - 双语对照
 
+## 2.1.45
+
+- Added support for Claude Sonnet 4.6
+添加了对 Claude Sonnet 4.6 的支持
+
+- Added support for reading `enabledPlugins` and `extraKnownMarketplaces` from `--add-dir` directories
+添加了从 `--add-dir` 目录读取 `enabledPlugins` 和 `extraKnownMarketplaces` 的支持
+
+- Added `spinnerTipsOverride` setting to customize spinner tips — configure `tips` with an array of custom tip strings, and optionally set `excludeDefault: true` to show only your custom tips instead of the built-in ones
+添加了 `spinnerTipsOverride` 设置以自定义加载提示 —— 使用字符串数组配置 `tips`，并可选设置 `excludeDefault: true` 以仅显示自定义提示而非内置提示
+
+- Added `SDKRateLimitInfo` and `SDKRateLimitEvent` types to the SDK, enabling consumers to receive rate limit status updates including utilization, reset times, and overage information
+向 SDK 添加了 `SDKRateLimitInfo` 和 `SDKRateLimitEvent` 类型，使使用者能够接收速率限制状态更新，包括使用率、重置时间和超额信息
+
+- Fixed Agent Teams teammates failing on Bedrock, Vertex, and Foundry by propagating API provider environment variables to tmux-spawned processes (anthropics/claude-code#23561)
+修复了 Agent Teams 队友在 Bedrock、Vertex 和 Foundry 上失败的问题，通过将 API 提供商环境变量传递给 tmux 生成的进程 (anthropics/claude-code#23561)
+
+- Fixed sandbox "operation not permitted" errors when writing temporary files on macOS by using the correct per-user temp directory (anthropics/claude-code#21654)
+修复了 macOS 上写入临时文件时的沙盒"操作不允许"错误，通过使用正确的每用户临时目录 (anthropics/claude-code#21654)
+
+- Fixed Task tool (backgrounded agents) crashing with a `ReferenceError` on completion (anthropics/claude-code#22087)
+修复了 Task 工具（后台代理）在完成时因 `ReferenceError` 崩溃的问题 (anthropics/claude-code#22087)
+
+- Fixed autocomplete suggestions not being accepted on Enter when images are pasted in the input
+修复了当输入框粘贴图片时按 Enter 键无法接受自动完成建议的问题
+
+- Fixed skills invoked by subagents incorrectly appearing in main session context after compaction
+修复了子代理调用的技能在压缩后错误地出现在主会话上下文中的问题
+
+- Fixed excessive `.claude.json.backup` files accumulating on every startup
+修复了每次启动时累积过多 `.claude.json.backup` 文件的问题
+
+- Fixed plugin-provided commands, agents, and hooks not being available immediately after installation without requiring a restart
+修复了插件提供的命令、代理和钩子在安装后无法立即可用而需要重启的问题
+
+- Improved startup performance by removing eager loading of session history for stats caching
+通过移除用于统计缓存的会话历史预加载，改进了启动性能
+
+- Improved memory usage for shell commands that produce large output — RSS no longer grows unboundedly with command output size
+改进了产生大量输出的 shell 命令的内存使用 —— RSS 不再随命令输出大小无限增长
+
+- Improved collapsed read/search groups to show the current file or search pattern being processed beneath the summary line while active
+改进了折叠的读取/搜索组，在活动时于摘要行下方显示正在处理的当前文件或搜索模式
+
+- [VSCode] Improved permission destination choice (project/user/session) to persist across sessions
+[VSCode] 改进了权限目标选择（项目/用户/会话），使其在会话间持久保存
+
+## 2.1.44
+
+- Fixed ENAMETOOLONG errors for deeply-nested directory paths
+修复了深层嵌套目录路径的 ENAMETOOLONG 错误
+
+- Fixed auth refresh errors
+修复了身份验证刷新错误
+
+## 2.1.43
+
+- Fixed AWS auth refresh hanging indefinitely by adding a 3-minute timeout
+通过添加 3 分钟超时修复了 AWS 身份验证刷新无限期挂起的问题
+
+- Fixed spurious warnings for non-agent markdown files in `.claude/agents/` directory
+修复了 `.claude/agents/` 目录中非代理 markdown 文件的虚假警告问题
+
+- Fixed structured-outputs beta header being sent unconditionally on Vertex/Bedrock
+修复了在 Vertex/Bedrock 上无条件发送 structured-outputs beta 标头的问题
+
 ## 2.1.42
 
 - Improved startup performance by deferring Zod schema construction
@@ -28,74 +94,62 @@
 - Fixed a crash when MCP tools return image content during streaming
 修复了 MCP 工具在流式传输期间返回图片内容时的崩溃问题
 
-- Fixed overzealous bash sandbox that incorrectly blocked harmless commands like `ls`
-修复了过于严格的 bash 沙盒错误阻止 `ls` 等无害命令的问题
+- Fixed /resume session previews showing raw XML tags instead of readable command names
+修复了 /resume 会话预览显示原始 XML 标签而非可读命令名称的问题
 
-- Fixed interactive git commands being incorrectly allowed in non-interactive mode
-修复了交互式 git 命令在非交互模式下被错误允许的问题
+- Improved model error messages for Bedrock/Vertex/Foundry users with fallback suggestions
+改进了 Bedrock/Vertex/Foundry 用户的模型错误消息，增加了回退建议
 
-- Fixed headless mode not displaying agent teammates' output
-修复了无头模式不显示智能体队友输出的问题
+- Fixed plugin browse showing misleading "Space to Toggle" hint for already-installed plugins
+修复了插件浏览对已安装插件显示误导性的"Space to Toggle"提示的问题
 
-- Fixed headless mode repeating system warnings when resuming a session
-修复了无头模式在恢复会话时重复显示系统警告的问题
+- Fixed hook blocking errors (exit code 2) not showing stderr to the user
+修复了 hook 阻塞错误（退出码 2）不向用户显示 stderr 的问题
 
-- Fixed hooks with `timeout` specified ignoring the timeout value
-修复了指定了 `timeout` 的钩子忽略超时值的问题
+- Added `speed` attribute to OTel events and trace spans for fast mode visibility
+为 OTel 事件和跟踪 span 添加了 `speed` 属性，用于快速模式可见性
 
-- Fixed hooks not being able to log at `debug` level
-修复了钩子无法在 `debug` 级别记录日志的问题
+- Added `claude auth login`, `claude auth status`, and `claude auth logout` CLI subcommands
+添加了 `claude auth login`、`claude auth status` 和 `claude auth logout` CLI 子命令
 
-- Fixed OpenTelemetry spans for agent teammates not being nested under the parent span
-修复了智能体队友的 OpenTelemetry span 未嵌套在父 span 下的问题
+- Added Windows ARM64 (win32-arm64) native binary support
+添加了 Windows ARM64 (win32-arm64) 原生二进制支持
 
-- Fixed `claude mcp list` always showing JSON for OAuth MCP servers
-修复了 `claude mcp list` 总是为 OAuth MCP 服务器显示 JSON 的问题
+- Improved `/rename` to auto-generate session name from conversation context when called without arguments
+改进了 `/rename`，在无参数调用时自动从对话上下文生成会话名称
 
-- Fixed Telemetry setting being cleared after using `--print`
-修复了使用 `--print` 后遥测设置被清除的问题
+- Improved narrow terminal layout for prompt footer
+改进了提示页脚的窄终端布局
 
-- Fixed "UNAUTHORIZED" being shown to Bedrock/Vertex users when `CLAUDE_CODE_USE_BEDROCK` or `CLAUDE_CODE_USE_VERTEX` was set
-修复了设置 `CLAUDE_CODE_USE_BEDROCK` 或 `CLAUDE_CODE_USE_VERTEX` 时向 Bedrock/Vertex 用户显示 "UNAUTHORIZED" 的问题
+- Fixed file resolution failing for @-mentions with anchor fragments (e.g., `@README.md#installation`)
+修复了带锚点片段的 @-提及（如 `@README.md#installation`）文件解析失败的问题
 
-- Fixed `/cost` displaying the wrong cost for Bedrock/Vertex users
-修复了 `/cost` 为 Bedrock/Vertex 用户显示错误成本的问题
+- Fixed FileReadTool blocking the process on FIFOs, `/dev/stdin`, and large files
+修复了 FileReadTool 在 FIFO、`/dev/stdin` 和大文件上阻塞进程的问题
 
-- Fixed `/compact` sometimes freezing when there were conversation errors
-修复了当存在对话错误时 `/compact` 有时会冻结的问题
+- Fixed background task notifications not being delivered in streaming Agent SDK mode
+修复了流式 Agent SDK 模式下后台任务通知未送达的问题
 
-- Fixed a hang when starting headless mode in a git repository without a globally installed `claude` executable
-修复了在没有全局安装 `claude` 可执行文件的 git 仓库中启动无头模式时的挂起问题
+- Fixed cursor jumping to end on each keystroke in classifier rule input
+修复了分类器规则输入中每次按键光标跳到末尾的问题
 
-- Fixed rare cursor misplacement when re-rendering the chat
-修复了重新渲染聊天时光标错位的罕见问题
+- Fixed markdown link display text being dropped for raw URL
+修复了原始 URL 的 markdown 链接显示文本被丢弃的问题
 
-- Fixed JSON output mode not working with the `--help` flag
-修复了 JSON 输出模式与 `--help` 标志不兼容的问题
+- Fixed auto-compact failure error notifications being shown to users
+修复了向用户显示自动压缩失败错误通知的问题
 
-- Fixed long transcript names wrapping and breaking the layout
-修复了长转录名称换行破坏布局的问题
+- Fixed permission wait time being included in subagent elapsed time display
+修复了权限等待时间被包含在子代理耗时显示中的问题
 
-- Fixed slash commands and mentions not being highlighted when the cursor is before them
-修复了当光标在斜杠命令和提及之前时不高亮显示的问题
+- Fixed proactive ticks firing while in plan mode
+修复了计划模式下主动触发器触发的问题
 
-- Improved output format for `claude mcp add` command
-改进了 `claude mcp add` 命令的输出格式
+- Fixed clear stale permission rules when settings change on disk
+修复了磁盘上设置更改时清除过时权限规则的问题
 
-- Improved chat output rendering performance
-改进了聊天输出渲染性能
-
-- Improved error message when using `/compact` without auto-compact enabled
-改进了未启用自动压缩时使用 `/compact` 的错误消息
-
-- [VSCode] Improved response streaming UI to show Claude Code activity in real time
-[VSCode] 改进了响应流式 UI，实时显示 Claude Code 活动
-
-- [VSCode] Fixed usage numbers including tool results in the wrong category
-[VSCode] 修复了使用量数字将工具结果包含在错误类别中的问题
-
-- [VSCode] Fixed CLAUDE.md files not being recognized when located in deeply nested subdirectories
-[VSCode] 修复了位于深层嵌套子目录中的 CLAUDE.md 文件未被识别的问题
+- Fixed hook blocking errors showing stderr content in UI
+修复了 hook 阻塞错误在 UI 中显示 stderr 内容的问题
 
 ## 2.1.39
 
@@ -122,20 +176,20 @@
 - Fixed Tab key queueing slash commands instead of autocompleting
 修复了 Tab 键排队斜杠命令而不是自动补全的问题
 
-- Fixed output text flickering during streaming
-修复了流式传输期间输出文本闪烁的问题
+- Fixed bash permission matching for commands using environment variable wrappers
+修复了使用环境变量包装器的命令的 bash 权限匹配问题
 
-- Fixed MCP OAuth callback failing on systems with restricted localhost access
-修复了在本地主机访问受限的系统上 MCP OAuth 回调失败的问题
+- Fixed text between tool uses disappearing when not using streaming
+修复了不使用流式传输时工具使用之间的文本消失的问题
 
-- Fixed empty lines in some selection dialogs
-修复了某些选择对话框中的空行问题
+- Fixed duplicate sessions when resuming in VS Code extension
+修复了在 VS Code 扩展中恢复会话时出现重复会话的问题
 
-- Fixed confusing error message when headless mode runs out of turns
-修复了无头模式用完轮次时令人困惑的错误消息
+- Improved heredoc delimiter parsing to prevent command smuggling
+改进了 heredoc 分隔符解析以防止命令注入
 
-- Fixed spawning agent teammates sometimes failing with "Error: agentId is required"
-修复了生成智能体队友有时失败并显示 "Error: agentId is required" 的问题
+- Blocked writes to `.claude/skills` directory in sandbox mode
+在沙盒模式下阻止对 `.claude/skills` 目录的写入
 
 ## 2.1.37
 
@@ -144,8 +198,8 @@
 
 ## 2.1.36
 
-- Fast mode is now available for Opus 4.6
-快速模式现在可用于 Opus 4.6
+- Fast mode is now available for Opus 4.6. Learn more at https://code.claude.com/docs/en/fast-mode
+快速模式现在可用于 Opus 4.6。了解更多：https://code.claude.com/docs/en/fast-mode
 
 ## 2.1.34
 
@@ -166,97 +220,82 @@
 - Added `TeammateIdle` and `TaskCompleted` hook events for multi-agent workflows
 为多智能体工作流添加了 `TeammateIdle` 和 `TaskCompleted` 钩子事件
 
-- Added `disablePromptCaching` flag to the `claude` config for networks that don't support it
-为不支持提示缓存的网络在 `claude` 配置中添加了 `disablePromptCaching` 标志
+- Added support for restricting which sub-agents can be spawned via `Task(agent_type)` syntax in agent "tools" frontmatter
+添加了通过 agent "tools" frontmatter 中的 `Task(agent_type)` 语法限制可生成子智能体的支持
 
-- Fixed MCP tools not being available to subagents
-修复了子智能体无法使用 MCP 工具的问题
+- Added `memory` frontmatter field support for agents, enabling persistent memory with `user`, `project`, or `local` scope
+为智能体添加了 `memory` frontmatter 字段支持，启用 `user`、`project` 或 `local` 作用域的持久记忆
 
-- Fixed fire-and-forget agent teammates not being displayed in the chat
-修复了即发即弃的智能体队友不显示在聊天中的问题
+- Added plugin name to skill descriptions and `/skills` menu for better discoverability
+在技能描述和 `/skills` 菜单中添加了插件名称，提高可发现性
 
-- Fixed `--verbose` mode with agent teammates causing errors
-修复了带智能体队友的 `--verbose` 模式导致错误的问题
+- Fixed an issue where submitting a new message while the model was in extended thinking would interrupt the thinking phase
+修复了在模型处于扩展思考时提交新消息会中断思考阶段的问题
 
-- Fixed rare crash when resuming sessions with agent teammates
-修复了恢复带智能体队友会话时的罕见崩溃问题
+- Fixed an API error that could occur when aborting mid-stream, where whitespace text combined with a thinking block would bypass normalization and produce an invalid request
+修复了中止流式传输时可能发生的 API 错误，空白文本与思考块结合会绕过规范化并产生无效请求
 
-- Fixed agent teammates ignoring instructions in `CLAUDE.md` files
-修复了智能体队友忽略 `CLAUDE.md` 文件中指令的问题
+- Fixed API proxy compatibility issue where 404 errors on streaming endpoints no longer triggered non-streaming fallback
+修复了 API 代理兼容性问题，流式端点的 404 错误不再触发非流式回退
 
-- Fixed agent teammates not respecting configured permissions
-修复了智能体队友不遵守配置权限的问题
+- Fixed an issue where proxy settings configured via `settings.json` environment variables were not applied to WebFetch and other HTTP requests on the Node.js build
+修复了通过 `settings.json` 环境变量配置的代理设置未应用于 Node.js 构建上的 WebFetch 和其他 HTTP 请求的问题
 
-- Fixed "claude" command not being found in VS Code terminal after changing agent teams setting
-修复了更改智能体团队设置后 VS Code 终端中找不到 "claude" 命令的问题
+- Fixed `/resume` session picker showing raw XML markup instead of clean titles for sessions started with slash commands
+修复了 `/resume` 会话选择器对以斜杠命令开始的会话显示原始 XML 标记而非清晰标题的问题
 
-- Fixed handling of `CLAUDE.md` files with non-UTF-8 encoding
-修复了处理非 UTF-8 编码的 `CLAUDE.md` 文件的问题
+- Improved error messages for API connection failures — now shows specific cause (e.g., ECONNREFUSED, SSL errors) instead of generic "Connection error"
+改进了 API 连接失败的错误消息 — 现在显示具体原因（如 ECONNREFUSED、SSL 错误）而非通用"Connection error"
 
-- Fixed internal `setModel` call not supporting custom model IDs
-修复了内部 `setModel` 调用不支持自定义模型 ID 的问题
+- Errors from invalid managed settings are now surfaced
+来自无效托管设置的错误现在会被显示
 
-- Fixed bash commands waiting for background tasks to complete even when `run_in_background` is true
-修复了即使 `run_in_background` 为 true，bash 命令仍等待后台任务完成的问题
+- VSCode: Added support for remote sessions, allowing OAuth users to browse and resume sessions from claude.ai
+VSCode：添加了对远程会话的支持，允许 OAuth 用户从 claude.ai 浏览和恢复会话
 
-- Fixed version update notification showing for every new version instead of just major updates
-修复了版本更新通知为每个新版本显示而不是仅为主要更新显示的问题
+- VSCode: Added git branch and message count to the session picker, with support for searching by branch name
+VSCode：在会话选择器中添加了 git 分支和消息计数，支持按分支名搜索
 
-- Improved stability when updating the agent teams setting during an active session
-改进了在活动会话期间更新智能体团队设置的稳定性
-
-- Improved warning when background tasks are still running on session exit
-改进了会话退出时后台任务仍在运行的警告
-
-- Removed outdated cross-session memory reminder
-移除了过时的跨会话记忆提醒
-
-- Updated token usage display to more clearly show thinking vs. non-thinking tokens
-更新了 token 使用量显示，更清晰地区分思考 token 和非思考 token
-
-- Updated pricing display to show per-token cost and include thinking token costs
-更新了定价显示，显示每个 token 的成本并包含思考 token 成本
+- VSCode: Fixed scroll-to-bottom under-scrolling on initial session load and session switch
+VSCode：修复了初始会话加载和会话切换时滚动到底部不足的问题
 
 ## 2.1.32
 
 - Claude Opus 4.6 is now available!
 Claude Opus 4.6 现已可用！
 
-- Added research preview agent teams feature for multi-agent collaboration
-添加了用于多智能体协作的研究预览版智能体团队功能
+- Added research preview agent teams feature for multi-agent collaboration (token-intensive feature, requires setting CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1)
+添加了用于多智能体协作的研究预览版智能体团队功能（token 消耗密集型功能，需设置 CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1）
 
 - Claude now automatically records and recalls memories as it works
 Claude 现在会在工作时自动记录和回忆记忆
 
-- Added `/compact` command to manually trigger context compaction
-添加了 `/compact` 命令以手动触发上下文压缩
+- Added "Summarize from here" to the message selector, allowing partial conversation summarization
+在消息选择器中添加了"从此处摘要"功能，允许部分对话摘要
 
-- Added `/status` command to show current session information
-添加了 `/status` 命令以显示当前会话信息
+- Skills defined in `.claude/skills/` within additional directories (`--add-dir`) are now loaded automatically
+在附加目录（`--add-dir`）中的 `.claude/skills/` 里定义的技能现在会自动加载
 
-- Added streaming and real-time output for headless mode
-为无头模式添加了流式传输和实时输出
+- Fixed `@` file completion showing incorrect relative paths when running from a subdirectory
+修复了从子目录运行时 `@` 文件补全显示错误相对路径的问题
 
-- Added conversation summarization to session resume (improves context management)
-为会话恢复添加了对话摘要（改进上下文管理）
+- Updated --resume to re-use --agent value specified in previous conversation by default
+更新了 --resume 默认重用上一次对话中指定的 --agent 值
 
-- Added improved detection of context limits (token limit 90% reached)
-添加了改进的上下文限制检测（达到 token 限制 90%）
+- Fixed: Bash tool no longer throws "Bad substitution" errors when heredocs contain JavaScript template literals like `${index + 1}`, which previously interrupted tool execution
+修复了：Bash 工具不再在 heredocs 包含 JavaScript 模板字面量（如 `${index + 1}`）时抛出"Bad substitution"错误，该错误之前会中断工具执行
 
-- Added `anthropic-beta` header support for `CLAUDE_CODE_CUSTOM_API_HEADERS`
-为 `CLAUDE_CODE_CUSTOM_API_HEADERS` 添加了 `anthropic-beta` 标头支持
+- Skill character budget now scales with context window (2% of context), so users with larger context windows can see more skill descriptions without truncation
+技能字符预算现在根据上下文窗口扩展（上下文的 2%），因此具有更大上下文窗口的用户可以看到更多技能描述而不被截断
 
-- Fixed TTY detection issue causing incorrect line wrapping in headless mode
-修复了导致无头模式错误换行的 TTY 检测问题
+- Fixed Thai/Lao spacing vowels (สระ า, ำ) not rendering correctly in the input field
+修复了泰语/老挝语元音（สระ า, ำ）在输入字段中无法正确渲染的问题
 
-- Fixed non-interactive mode not respecting `--max-tokens` flag
-修复了非交互模式不遵守 `--max-tokens` 标志的问题
+- VSCode: Fixed slash commands incorrectly being executed when pressing Enter with preceding text in the input field
+VSCode：修复了在输入字段中有前置文本时按 Enter 错误执行斜杠命令的问题
 
-- Fixed `claude --help` not displaying all available commands
-修复了 `claude --help` 不显示所有可用命令的问题
-
-- Fixed interactive commands in bash being allowed when they should be blocked
-修复了 bash 中的交互式命令在被阻止时仍被允许的问题
+- VSCode: Added spinner when loading past conversations list
+VSCode：添加了加载历史对话列表时的加载动画
 
 ## 2.1.31
 
