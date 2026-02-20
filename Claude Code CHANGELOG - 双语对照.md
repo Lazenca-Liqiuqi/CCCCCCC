@@ -1,5 +1,302 @@
 # Claude Code 更新日志 - 双语对照
 
+## 2.1.49
+
+- Improved MCP OAuth authentication with step-up auth support and discovery caching, reducing redundant network requests during server connections
+改进了 MCP OAuth 认证，支持阶梯式认证和发现缓存，减少了服务器连接期间的冗余网络请求
+
+- Added `--worktree` (`-w`) flag to start Claude in an isolated git worktree
+添加了 `--worktree` (`-w`) 标志，用于在隔离的 git 工作树中启动 Claude
+
+- Subagents support `isolation: "worktree"` for working in a temporary git worktree
+子代理支持 `isolation: "worktree"`，可在临时 git 工作树中工作
+
+- Added Ctrl+F keybinding to kill background agents (two-press confirmation)
+添加了 Ctrl+F 快捷键来终止后台代理（需按两次确认）
+
+- Agent definitions support `background: true` to always run as a background task
+代理定义支持 `background: true`，可始终作为后台任务运行
+
+- Plugins can ship `settings.json` for default configuration
+插件可以附带 `settings.json` 提供默认配置
+
+- Fixed file-not-found errors to suggest corrected paths when the model drops the repo folder
+修复了文件未找到错误，当模型遗漏仓库文件夹时会建议修正后的路径
+
+- Fixed Ctrl+C and ESC being silently ignored when background agents are running and the main thread is idle. Pressing twice within 3 seconds now kills all background agents.
+修复了 Ctrl+C 和 ESC 在后台代理运行且主线程空闲时被静默忽略的问题。现在在 3 秒内按两次可终止所有后台代理
+
+- Fixed prompt suggestion cache regression that reduced cache hit rates.
+修复了导致缓存命中率下降的提示建议缓存回归问题
+
+- Fixed `plugin enable` and `plugin disable` to auto-detect the correct scope when `--scope` is not specified, instead of always defaulting to user scope
+修复了 `plugin enable` 和 `plugin disable` 在未指定 `--scope` 时自动检测正确作用域的问题，不再始终默认为用户作用域
+
+- Simple mode (`CLAUDE_CODE_SIMPLE`) now includes the file edit tool in addition to the Bash tool, allowing direct file editing in simple mode.
+简单模式（`CLAUDE_CODE_SIMPLE`）现在除了 Bash 工具外还包含文件编辑工具，允许在简单模式下直接编辑文件
+
+- Permission suggestions are now populated when safety checks trigger an ask response, enabling SDK consumers to display permission options
+当安全检查触发询问响应时，现在会填充权限建议，使 SDK 使用者能够显示权限选项
+
+- Sonnet 4.5 with 1M context is being removed from the Max plan in favor of our frontier Sonnet 4.6 model, which now has 1M context. Please switch in /model.
+具有 1M 上下文的 Sonnet 4.5 正从 Max 计划中移除，取而代之的是我们的前沿 Sonnet 4.6 模型，该模型现在也具有 1M 上下文。请在 /model 中切换
+
+- Fixed verbose mode not updating thinking block display when toggled via `/config` — memo comparators now correctly detect verbose changes
+修复了通过 `/config` 切换时详细模式不更新思考块显示的问题 —— 记忆比较器现在正确检测详细模式变更
+
+- Fixed unbounded WASM memory growth during long sessions by periodically resetting the tree-sitter parser
+通过定期重置 tree-sitter 解析器，修复了长时间会话期间 WASM 内存无限增长的问题
+
+- Fixed potential rendering issues caused by stale yoga layout references
+修复了由过时的 yoga 布局引用导致的潜在渲染问题
+
+- Improved performance in non-interactive mode (`-p`) by skipping unnecessary API calls during startup
+通过在启动期间跳过不必要的 API 调用，改进了非交互模式（`-p`）的性能
+
+- Improved performance by caching authentication failures for HTTP and SSE MCP servers, avoiding repeated connection attempts to servers requiring auth
+通过缓存 HTTP 和 SSE MCP 服务器的认证失败，改进了性能，避免重复尝试连接需要认证的服务器
+
+- Fixed unbounded memory growth during long-running sessions caused by Yoga WASM linear memory never shrinking
+修复了长时间运行会话中由于 Yoga WASM 线性内存从不收缩导致的内存无限增长问题
+
+- SDK model info now includes `supportsEffort`, `supportedEffortLevels`, and `supportsAdaptiveThinking` fields so consumers can discover model capabilities.
+SDK 模型信息现在包含 `supportsEffort`、`supportedEffortLevels` 和 `supportsAdaptiveThinking` 字段，使使用者能够发现模型能力
+
+- Added `ConfigChange` hook event that fires when configuration files change during a session, enabling enterprise security auditing and optional blocking of settings changes.
+添加了 `ConfigChange` 钩子事件，当配置文件在会话期间更改时触发，支持企业安全审计和可选的设置更改阻止
+
+- Improved startup performance by caching MCP auth failures to avoid redundant connection attempts
+通过缓存 MCP 认证失败以避免冗余连接尝试，改进了启动性能
+
+- Improved startup performance by reducing HTTP calls for analytics token counting
+通过减少用于分析令牌计数的 HTTP 调用，改进了启动性能
+
+- Improved startup performance by batching MCP tool token counting into a single API call
+通过将 MCP 工具令牌计数批量处理为单个 API 调用，改进了启动性能
+
+- Fixed `disableAllHooks` setting to respect managed settings hierarchy — non-managed settings can no longer disable managed hooks set by policy (#26637)
+修复了 `disableAllHooks` 设置以遵守托管设置层级 —— 非托管设置不再能禁用由策略设置的托管钩子 (#26637)
+
+- Fixed `--resume` session picker showing raw XML tags for sessions that start with commands like `/clear`. Now correctly falls through to the session ID fallback.
+修复了 `--resume` 会话选择器为以 `/clear` 等命令开头的会话显示原始 XML 标签的问题。现在正确回退到会话 ID 备选方案
+
+- Improved permission prompts for path safety and working directory blocks to show the reason for the restriction instead of a bare prompt with no context
+改进了路径安全和工作目录阻止的权限提示，显示限制的原因而非无上下文的裸提示
+
+## 2.1.47
+
+- Fixed FileWriteTool line counting to preserve intentional trailing blank lines instead of stripping them with `trimEnd()`.
+修复了 FileWriteTool 行计数问题，现在保留有意添加的尾部空行，而不是用 `trimEnd()` 去除它们
+
+- Fixed Windows terminal rendering bugs caused by `os.EOL` (`\r\n`) in display code — line counts now show correct values instead of always showing 1 on Windows.
+修复了由显示代码中的 `os.EOL` (`\r\n`) 导致的 Windows 终端渲染错误 —— 行计数现在显示正确值，而不是在 Windows 上始终显示 1
+
+- Improved VS Code plan preview: auto-updates as Claude iterates, enables commenting only when the plan is ready for review, and keeps the preview open when rejecting so Claude can revise.
+改进了 VS Code 计划预览：随着 Claude 迭代自动更新，仅在计划准备好审查时启用评论，并在拒绝时保持预览打开以便 Claude 修订
+
+- Fixed a bug where bold and colored text in markdown output could shift to the wrong characters on Windows due to `\r\n` line endings.
+修复了 markdown 输出中的粗体和彩色文本在 Windows 上由于 `\r\n` 行尾而可能偏移到错误字符的错误
+
+- Fixed compaction failing when conversation contains many PDF documents by stripping document blocks alongside images before sending to the compaction API (anthropics/claude-code#26188)
+修复了当对话包含许多 PDF 文档时压缩失败的问题，通过在发送到压缩 API 之前去除文档块和图片 (anthropics/claude-code#26188)
+
+- Improved memory usage in long-running sessions by releasing API stream buffers, agent context, and skill state after use
+通过在使用后释放 API 流缓冲区、代理上下文和技能状态，改进了长时间运行会话的内存使用
+
+- Improved startup performance by deferring SessionStart hook execution, reducing time-to-interactive by ~500ms.
+通过延迟 SessionStart 钩子执行改进了启动性能，将交互时间减少了约 500ms
+
+- Fixed an issue where bash tool output was silently discarded on Windows when using MSYS2 or Cygwin shells.
+修复了在 Windows 上使用 MSYS2 或 Cygwin shell 时 bash 工具输出被静默丢弃的问题
+
+- Improved performance of `@` file mentions - file suggestions now appear faster by pre-warming the index on startup and using session-based caching with background refresh.
+改进了 `@` 文件提及的性能 —— 文件建议现在出现得更快，通过在启动时预热索引并使用带后台刷新的基于会话的缓存
+
+- Improved memory usage by trimming agent task message history after tasks complete
+通过在任务完成后修剪代理任务消息历史，改进了内存使用
+
+- Improved memory usage during long agent sessions by eliminating O(n²) message accumulation in progress updates
+通过消除进度更新中的 O(n²) 消息累积，改进了长时间代理会话的内存使用
+
+- Fixed the bash permission classifier to validate that returned match descriptions correspond to actual input rules, preventing hallucinated descriptions from incorrectly granting permissions
+修复了 bash 权限分类器以验证返回的匹配描述对应于实际输入规则，防止幻觉描述错误地授予权限
+
+- Fixed user-defined agents only loading one file on NFS/FUSE filesystems that report zero inodes (anthropics/claude-code#26044)
+修复了用户定义的代理在报告零 inode 的 NFS/FUSE 文件系统上只加载一个文件的问题 (anthropics/claude-code#26044)
+
+- Fixed plugin agent skills silently failing to load when referenced by bare name instead of fully-qualified plugin name (anthropics/claude-code#25834)
+修复了当通过裸名称而非完全限定的插件名称引用时，插件代理技能静默加载失败的问题 (anthropics/claude-code#25834)
+
+- Search patterns in collapsed tool results are now displayed in quotes for clarity
+折叠工具结果中的搜索模式现在以引号显示以提高清晰度
+
+- Windows: Fixed CWD tracking temp files never being cleaned up, causing them to accumulate indefinitely (anthropics/claude-code#17600)
+Windows：修复了 CWD 跟踪临时文件从未被清理，导致它们无限期累积的问题 (anthropics/claude-code#17600)
+
+- Use `ctrl+f` to kill all background agents instead of double-pressing ESC. Background agents now continue running when you press ESC to cancel the main thread, giving you more control over agent lifecycle.
+使用 `ctrl+f` 终止所有后台代理，而不是双击 ESC。当你按 ESC 取消主线程时，后台代理现在继续运行，让你对代理生命周期有更多控制
+
+- Fixed API 400 errors ("thinking blocks cannot be modified") that occurred in sessions with concurrent agents, caused by interleaved streaming content blocks preventing proper message merging.
+修复了在具有并发代理的会话中出现的 API 400 错误（"思考块无法修改"），由交错的流式内容块阻止正确的消息合并引起
+
+- Simplified teammate navigation to use only Shift+Down (with wrapping) instead of both Shift+Up and Shift+Down.
+简化了队友导航，仅使用 Shift+Down（带循环）而不是同时使用 Shift+Up 和 Shift+Down
+
+- Fixed an issue where a single file write/edit error would abort all other parallel file write/edit operations. Independent file mutations now complete even when a sibling fails.
+修复了单个文件写入/编辑错误会中止所有其他并行文件写入/编辑操作的问题。独立的文件变更现在即使同级失败也能完成
+
+- Added `last_assistant_message` field to Stop and SubagentStop hook inputs, providing the final assistant response text so hooks can access it without parsing transcript files.
+向 Stop 和 SubagentStop 钩子输入添加了 `last_assistant_message` 字段，提供最终的助手响应文本，以便钩子可以访问它而无需解析转录文件
+
+- Fixed custom session titles set via `/rename` being lost after resuming a conversation (anthropics/claude-code#23610)
+修复了通过 `/rename` 设置的自定义会话标题在恢复对话后丢失的问题 (anthropics/claude-code#23610)
+
+- Fixed collapsed read/search hint text overflowing on narrow terminals by truncating from the start.
+修复了折叠的读取/搜索提示文本在窄终端上溢出的问题，通过从头开始截断
+
+- Fixed an issue where bash commands with backslash-newline continuation lines (e.g., long commands split across multiple lines with `\`) would produce spurious empty arguments, potentially breaking command execution.
+修复了带有反斜杠换行续行的 bash 命令（例如，用 `\` 分割成多行的长命令）会产生虚假空参数，可能破坏命令执行的问题
+
+- Fixed built-in slash commands (`/help`, `/model`, `/compact`, etc.) being hidden from the autocomplete dropdown when many user skills are installed (anthropics/claude-code#22020)
+修复了当安装了许多用户技能时，内置斜杠命令（`/help`、`/model`、`/compact` 等）被隐藏在自动完成下拉列表中的问题 (anthropics/claude-code#22020)
+
+- Fixed MCP servers not appearing in the MCP Management Dialog after deferred loading
+修复了 MCP 服务器在延迟加载后不出现在 MCP 管理对话框中的问题
+
+- Fixed session name persisting in status bar after `/clear` command (anthropics/claude-code#26082)
+修复了 `/clear` 命令后会话名称在状态栏中持久存在的问题 (anthropics/claude-code#26082)
+
+- Fixed crash when a skill's `name` or `description` in SKILL.md frontmatter is a bare number (e.g., `name: 3000`) — the value is now properly coerced to a string (anthropics/claude-code#25837)
+修复了当 SKILL.md frontmatter 中技能的 `name` 或 `description` 是裸数字（例如 `name: 3000`）时的崩溃问题 —— 该值现在正确地被强制转换为字符串 (anthropics/claude-code#25837)
+
+- Fixed /resume silently dropping sessions when the first message exceeds 16KB or uses array-format content (anthropics/claude-code#25721)
+修复了当第一条消息超过 16KB 或使用数组格式内容时 /resume 静默丢弃会话的问题 (anthropics/claude-code#25721)
+
+- Added `chat:newline` keybinding action for configurable multi-line input (anthropics/claude-code#26075)
+添加了 `chat:newline` 快捷键动作用于可配置的多行输入 (anthropics/claude-code#26075)
+
+- Added `added_dirs` to the statusline JSON `workspace` section, exposing directories added via `/add-dir` to external scripts (anthropics/claude-code#26096)
+向状态栏 JSON `workspace` 部分添加了 `added_dirs`，将通过 `/add-dir` 添加的目录暴露给外部脚本 (anthropics/claude-code#26096)
+
+- Fixed `claude doctor` misclassifying mise and asdf-managed installations as native installs (anthropics/claude-code#26033)
+修复了 `claude doctor` 将 mise 和 asdf 管理的安装错误分类为原生安装的问题 (anthropics/claude-code#26033)
+
+- Fixed zsh heredoc failing with "read-only file system" error in sandboxed commands (anthropics/claude-code#25990)
+修复了 zsh heredoc 在沙盒命令中以"只读文件系统"错误失败的问题 (anthropics/claude-code#25990)
+
+- Fixed agent progress indicator showing inflated tool use count (anthropics/claude-code#26023)
+修复了代理进度指示器显示虚高的工具使用计数的问题 (anthropics/claude-code#26023)
+
+- Fixed image pasting not working on WSL2 systems where Windows copies images as BMP format (anthropics/claude-code#25935)
+修复了在 Windows 以 BMP 格式复制图片的 WSL2 系统上图片粘贴不起作用的问题 (anthropics/claude-code#25935)
+
+- Fixed background agent results returning raw transcript data instead of the agent's final answer (anthropics/claude-code#26012)
+修复了后台代理结果返回原始转录数据而不是代理最终答案的问题 (anthropics/claude-code#26012)
+
+- Fixed Warp terminal incorrectly prompting for Shift+Enter setup when it supports it natively (anthropics/claude-code#25957)
+修复了 Warp 终端在原生支持 Shift+Enter 时错误地提示设置的问题 (anthropics/claude-code#25957)
+
+- Fixed CJK wide characters causing misaligned timestamps and layout elements in the TUI (anthropics/claude-code#26084)
+修复了 CJK 宽字符导致 TUI 中时间戳和布局元素错位的问题 (anthropics/claude-code#26084)
+
+- Fixed custom agent `model` field in `.claude/agents/*.md` being ignored when spawning team teammates (anthropics/claude-code#26064)
+修复了在生成团队队友时 `.claude/agents/*.md` 中自定义代理 `model` 字段被忽略的问题 (anthropics/claude-code#26064)
+
+- Fixed plan mode being lost after context compaction, causing the model to switch from planning to implementation mode (anthropics/claude-code#26061)
+修复了上下文压缩后计划模式丢失，导致模型从计划模式切换到实现模式的问题 (anthropics/claude-code#26061)
+
+- Fixed `alwaysThinkingEnabled: true` in settings.json not enabling thinking mode on Bedrock and Vertex providers (anthropics/claude-code#26074)
+修复了 settings.json 中的 `alwaysThinkingEnabled: true` 在 Bedrock 和 Vertex 提供商上不启用思考模式的问题 (anthropics/claude-code#26074)
+
+- Fixed `tool_decision` OTel telemetry event not being emitted in headless/SDK mode (anthropics/claude-code#26059)
+修复了 `tool_decision` OTel 遥测事件在无头/SDK 模式下不被发送的问题 (anthropics/claude-code#26059)
+
+- Fixed session name being lost after context compaction — renamed sessions now preserve their custom title through compaction (anthropics/claude-code#26121)
+修复了上下文压缩后会话名称丢失的问题 —— 重命名的会话现在通过压缩保留其自定义标题 (anthropics/claude-code#26121)
+
+- Increased initial session count in resume picker from 10 to 50 for faster session discovery (anthropics/claude-code#26123)
+将恢复选择器中的初始会话计数从 10 增加到 50，以加快会话发现 (anthropics/claude-code#26123)
+
+- Windows: fixed worktree session matching when drive letter casing differs (anthropics/claude-code#26123)
+Windows：修复了驱动器号大小写不同时的工作树会话匹配问题 (anthropics/claude-code#26123)
+
+- Fixed `/resume <session-id>` failing to find sessions whose first message exceeds 16KB (anthropics/claude-code#25920)
+修复了 `/resume <session-id>` 无法找到第一条消息超过 16KB 的会话的问题 (anthropics/claude-code#25920)
+
+- Fixed "Always allow" on multiline bash commands creating invalid permission patterns that corrupt settings (anthropics/claude-code#25909)
+修复了在多行 bash 命令上"始终允许"创建损坏设置的无效权限模式的问题 (anthropics/claude-code#25909)
+
+- Fixed React crash (error #31) when a skill's `argument-hint` in SKILL.md frontmatter uses YAML sequence syntax (e.g., `[topic: foo | bar]`) — the value is now properly coerced to a string (anthropics/claude-code#25826)
+修复了当 SKILL.md frontmatter 中技能的 `argument-hint` 使用 YAML 序列语法（例如 `[topic: foo | bar]`）时的 React 崩溃（错误 #31）—— 该值现在正确地被强制转换为字符串 (anthropics/claude-code#25826)
+
+- Fixed crash when using `/fork` on sessions that used web search — null entries in search results from transcript deserialization are now handled gracefully (anthropics/claude-code#25811)
+修复了在使用了 Web 搜索的会话上使用 `/fork` 时的崩溃问题 —— 转录反序列化中搜索结果的空条目现在被优雅地处理 (anthropics/claude-code#25811)
+
+- Fixed read-only git commands triggering FSEvents file watcher loops on macOS by adding --no-optional-locks flag (anthropics/claude-code#25750)
+通过添加 --no-optional-locks 标志修复了只读 git 命令在 macOS 上触发 FSEvents 文件监视器循环的问题 (anthropics/claude-code#25750)
+
+- Fixed custom agents and skills not being discovered when running from a git worktree — project-level `.claude/agents/` and `.claude/skills/` from the main repository are now included (anthropics/claude-code#25816)
+修复了从 git 工作树运行时自定义代理和技能不被发现的问题 —— 主仓库中项目级的 `.claude/agents/` 和 `.claude/skills/` 现在被包括 (anthropics/claude-code#25816)
+
+- Fixed non-interactive subcommands like `claude doctor` and `claude plugin validate` being blocked inside nested Claude sessions (anthropics/claude-code#25803)
+修复了 `claude doctor` 和 `claude plugin validate` 等非交互子命令在嵌套 Claude 会话中被阻止的问题 (anthropics/claude-code#25803)
+
+- Windows: Fixed the same CLAUDE.md file being loaded twice when drive letter casing differs between paths (anthropics/claude-code#25756)
+Windows：修复了当路径间驱动器号大小写不同时同一个 CLAUDE.md 文件被加载两次的问题 (anthropics/claude-code#25756)
+
+- Fixed inline code spans in markdown being incorrectly parsed as bash commands (anthropics/claude-code#25792)
+修复了 markdown 中的内联代码 span 被错误地解析为 bash 命令的问题 (anthropics/claude-code#25792)
+
+- Fixed teammate spinners not respecting custom spinnerVerbs from settings (anthropics/claude-code#25748)
+修复了队友加载动画不遵守设置中的自定义 spinnerVerbs 的问题 (anthropics/claude-code#25748)
+
+- Fixed shell commands permanently failing after a command deletes its own working directory (anthropics/claude-code#26136)
+修复了命令删除自己的工作目录后 shell 命令永久失败的问题 (anthropics/claude-code#26136)
+
+- Fixed hooks (PreToolUse, PostToolUse) silently failing to execute on Windows by using Git Bash instead of cmd.exe (anthropics/claude-code#25981)
+通过使用 Git Bash 而不是 cmd.exe 修复了钩子（PreToolUse、PostToolUse）在 Windows 上静默执行失败的问题 (anthropics/claude-code#25981)
+
+- Fixed LSP `findReferences` and other location-based operations returning results from gitignored files (e.g., `node_modules/`, `venv/`) (anthropics/claude-code#26051)
+修复了 LSP `findReferences` 和其他基于位置的操作返回来自 gitignored 文件（例如 `node_modules/`、`venv/`）的结果的问题 (anthropics/claude-code#26051)
+
+- Moved config backup files from home directory root to `~/.claude/backups/` to reduce home directory clutter (anthropics/claude-code#26130)
+将配置备份文件从主目录根目录移动到 `~/.claude/backups/` 以减少主目录混乱 (anthropics/claude-code#26130)
+
+- Fixed sessions with large first prompts (>16KB) disappearing from the /resume list (anthropics/claude-code#26140)
+修复了具有大首次提示（>16KB）的会话从 /resume 列表中消失的问题 (anthropics/claude-code#26140)
+
+- Fixed shell functions with double-underscore prefixes (e.g., `__git_ps1`) not being preserved across shell sessions (anthropics/claude-code#25824)
+修复了带有双下划线前缀（例如 `__git_ps1`）的 shell 函数在 shell 会话之间不被保留的问题 (anthropics/claude-code#25824)
+
+- Fixed spinner showing "0 tokens" counter before any tokens have been received (anthropics/claude-code#26105)
+修复了在接收到任何令牌之前加载动画显示"0 令牌"计数器的问题 (anthropics/claude-code#26105)
+
+- VSCode: Fixed conversation messages appearing dimmed while the AskUserQuestion dialog is open (anthropics/claude-code#26078)
+VSCode：修复了当 AskUserQuestion 对话框打开时对话消息显示为暗淡的问题 (anthropics/claude-code#26078)
+
+- Fixed background tasks failing in git worktrees due to remote URL resolution reading from worktree-specific gitdir instead of the main repository config (anthropics/claude-code#26065)
+修复了由于远程 URL 解析从工作树特定的 gitdir 而不是主仓库配置读取导致 git 工作树中后台任务失败的问题 (anthropics/claude-code#26065)
+
+- Fixed Right Alt key leaving visible `[25~` escape sequence residue in the input field on Windows/Git Bash terminals (anthropics/claude-code#25943)
+修复了右 Alt 键在 Windows/Git Bash 终端的输入字段中留下可见的 `[25~` 转义序列残留的问题 (anthropics/claude-code#25943)
+
+- The `/rename` command now updates the terminal tab title by default (anthropics/claude-code#25789)
+`/rename` 命令现在默认更新终端标签标题 (anthropics/claude-code#25789)
+
+- Fixed Edit tool silently corrupting Unicode curly quotes (\u201c\u201d \u2018\u2019) by replacing them with straight quotes when making edits (anthropics/claude-code#26141)
+修复了编辑工具在进行编辑时通过将 Unicode 弯引号（\u201c\u201d \u2018\u2019）替换为直引号而静默损坏它们的问题 (anthropics/claude-code#26141)
+
+- Fixed OSC 8 hyperlinks only being clickable on the first line when link text wraps across multiple terminal lines.
+修复了 OSC 8 超链接仅在链接文本跨多个终端行换行时的第一行可点击的问题
+
+## 2.1.46
+
+- Fixed orphaned CC processes after terminal disconnect on macOS
+修复了 macOS 上终端断开后孤立的 CC 进程问题
+
+- Added support for using claude.ai MCP connectors in Claude Code
+添加了在 Claude Code 中使用 claude.ai MCP 连接器的支持
+
 ## 2.1.45
 
 - Added support for Claude Sonnet 4.6
