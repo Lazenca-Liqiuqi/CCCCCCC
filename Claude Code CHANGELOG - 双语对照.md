@@ -1,5 +1,82 @@
 # Claude Code 更新日志 - 双语对照
 
+## 2.1.50
+
+- Added support for `startupTimeout` configuration for LSP servers
+添加了对 LSP 服务器 `startupTimeout` 配置的支持
+
+- Added `WorktreeCreate` and `WorktreeRemove` hook events, enabling custom VCS setup and teardown when agent worktree isolation creates or removes worktrees.
+添加了 `WorktreeCreate` 和 `WorktreeRemove` 钩子事件，当代理工作树隔离创建或删除工作树时，支持自定义 VCS 设置和清理
+
+- Fixed a bug where resumed sessions could be invisible when the working directory involved symlinks, because the session storage path was resolved at different times during startup. Also fixed session data loss on SSH disconnect by flushing session data before hooks and analytics in the graceful shutdown sequence.
+修复了当工作目录涉及符号链接时恢复的会话可能不可见的错误，因为会话存储路径在启动期间的不同时间被解析。同时通过在优雅关闭序列中的钩子和分析之前刷新会话数据，修复了 SSH 断开时的会话数据丢失问题
+
+- Linux: Fixed native modules not loading on systems with glibc older than 2.30 (e.g., RHEL 8)
+Linux：修复了原生模块在 glibc 版本低于 2.30 的系统上无法加载的问题（例如 RHEL 8）
+
+- Fixed memory leak in agent teams where completed teammate tasks were never garbage collected from session state
+修复了 Agent Teams 中的内存泄漏问题，已完成的队友任务从未从会话状态中被垃圾回收
+
+- Fixed `CLAUDE_CODE_SIMPLE` to fully strip down skills, session memory, custom agents, and CLAUDE.md token counting
+修复了 `CLAUDE_CODE_SIMPLE` 以完全精简技能、会话内存、自定义代理和 CLAUDE.md 令牌计数
+
+- Fixed `/mcp reconnect` freezing the CLI when given a server name that doesn't exist
+修复了当给定的服务器名称不存在时 `/mcp reconnect` 冻结 CLI 的问题
+
+- Fixed memory leak where completed task state objects were never removed from AppState
+修复了已完成的任务状态对象从未从 AppState 中移除的内存泄漏问题
+
+- Added support for `isolation: worktree` in agent definitions, allowing agents to declaratively run in isolated git worktrees.
+添加了代理定义中对 `isolation: worktree` 的支持，允许代理声明式地在隔离的 git 工作树中运行
+
+- `CLAUDE_CODE_SIMPLE` mode now also disables MCP tools, attachments, hooks, and CLAUDE.md file loading for a fully minimal experience.
+`CLAUDE_CODE_SIMPLE` 模式现在还会禁用 MCP 工具、附件、钩子和 CLAUDE.md 文件加载，以提供完全最小化的体验
+
+- Fixed bug where MCP tools were not discovered when tool search is enabled and a prompt is passed in as a launch argument
+修复了当启用工具搜索并将提示作为启动参数传递时 MCP 工具未被发现的问题
+
+- Improved memory usage during long sessions by clearing internal caches after compaction
+通过在压缩后清理内部缓存，改进了长时间会话的内存使用
+
+- Added `claude agents` CLI command to list all configured agents
+添加了 `claude agents` CLI 命令来列出所有配置的代理
+
+- Improved memory usage during long sessions by clearing large tool results after they have been processed
+通过在处理完成后清理大型工具结果，改进了长时间会话的内存使用
+
+- Fixed a memory leak where LSP diagnostic data was never cleaned up after delivery, causing unbounded memory growth in long sessions
+修复了 LSP 诊断数据在传递后从未被清理的内存泄漏问题，导致长时间会话中内存无限增长
+
+- Fixed a memory leak where completed task output was not freed from memory, reducing memory usage in long sessions with many tasks
+修复了已完成的任务输出未从内存中释放的内存泄漏问题，减少了具有许多任务的长时间会话的内存使用
+
+- Improved startup performance for headless mode (`-p` flag) by deferring Yoga WASM and UI component imports
+通过延迟 Yoga WASM 和 UI 组件导入，改进了无头模式（`-p` 标志）的启动性能
+
+- Fixed prompt suggestion cache regression that reduced cache hit rates
+修复了导致缓存命中率下降的提示建议缓存回归问题
+
+- Fixed unbounded memory growth in long sessions by capping file history snapshots
+通过限制文件历史快照，修复了长时间会话中的内存无限增长问题
+
+- Added `CLAUDE_CODE_DISABLE_1M_CONTEXT` environment variable to disable 1M context window support
+添加了 `CLAUDE_CODE_DISABLE_1M_CONTEXT` 环境变量以禁用 1M 上下文窗口支持
+
+- Opus 4.6 (fast mode) now includes the full 1M context window
+Opus 4.6（快速模式）现在包含完整的 1M 上下文窗口
+
+- VSCode: Added `/extra-usage` command support in VS Code sessions
+VSCode：在 VS Code 会话中添加了 `/extra-usage` 命令支持
+
+- Fixed memory leak where TaskOutput retained recent lines after cleanup
+修复了 TaskOutput 在清理后仍保留最近行的内存泄漏问题
+
+- Fixed memory leak in CircularBuffer where cleared items were retained in the backing array
+修复了 CircularBuffer 中已清理项目仍保留在后备数组中的内存泄漏问题
+
+- Fixed memory leak in shell command execution where ChildProcess and AbortController references were retained after cleanup
+修复了 shell 命令执行中 ChildProcess 和 AbortController 引用在清理后仍被保留的内存泄漏问题
+
 ## 2.1.49
 
 - Improved MCP OAuth authentication with step-up auth support and discovery caching, reducing redundant network requests during server connections
