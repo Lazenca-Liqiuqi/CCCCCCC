@@ -2,6 +2,12 @@
 
 > Anthropic 与 Claude Code 中文指南合集
 
+## 项目全称
+
+本项目全称为：**Claude Code & Codex Chinese Commentary Collection**。
+
+为便于仓库管理与命名长度控制，仓库短名可使用简写形式，但文档与对外说明统一使用上述全称。
+
 ## 项目背景信息
 
 Claude Code Chinese Commentary Collection 是一个专注于 Anthropic 技术文档中文翻译的项目。本项目为中文开发者提供高质量的 AI 辅助编程工具指南，包括：
