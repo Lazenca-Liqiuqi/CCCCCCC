@@ -1,4 +1,4 @@
-# Claude Code Chinese Commentary Collection
+# CCCCCCC
 
 > Anthropic 与 Claude Code 中文指南合集
 
@@ -10,7 +10,7 @@
 
 ## 项目背景信息
 
-Claude Code Chinese Commentary Collection 是一个专注于 Anthropic 技术文档中文翻译的项目。本项目为中文开发者提供高质量的 AI 辅助编程工具指南，包括：
+CCCCCCC（Claude Code & Codex Chinese Commentary Collection）是一个专注于 Anthropic 技术文档中文翻译的项目。本项目为中文开发者提供高质量的 AI 辅助编程工具指南，包括：
 
 - **Claude Code 更新日志**：双语对照版本，及时跟踪最新功能更新
 - **Anthropic 工程文章**：深入理解 AI 代理、上下文工程、MCP 协议等核心技术
@@ -20,7 +20,7 @@ Claude Code Chinese Commentary Collection 是一个专注于 Anthropic 技术文
 ## 目录结构
 
 ```
-Claude Code Chinese Commentary Collection/
+CCCCCCC/
 ├── .claude/                                    # Claude Code 配置目录
 │   ├── commands/                              # 自定义命令
 │   ├── rules/                                 # 项目规则
