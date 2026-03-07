@@ -1,6 +1,6 @@
 # CCCCCCC
 
-> Anthropic 与 Claude Code 中文指南合集
+> Anthropic、Claude Code 与 Codex 中文资料合集
 
 ## 项目全称
 
@@ -10,71 +10,58 @@
 
 ## 项目背景信息
 
-CCCCCCC（Claude Code & Codex Chinese Commentary Collection）是一个专注于 Anthropic 技术文档中文翻译的项目。本项目为中文开发者提供高质量的 AI 辅助编程工具指南，包括：
+CCCCCCC（Claude Code & Codex Chinese Commentary Collection）是一个整理 Anthropic、Claude Code 与 Codex 中文资料的项目。本项目为中文开发者提供高质量的 AI 辅助编程工具指南，包括：
 
-- **Claude Code 更新日志**：双语对照版本，及时跟踪最新功能更新
-- **Anthropic 工程文章**：深入理解 AI 代理、上下文工程、MCP 协议等核心技术
+- **Claude Code 更新日志**：双语对照版本，跟踪重要版本变化
+- **Anthropic 工程文章**：帮助理解 AI 代理、上下文工程、MCP 协议等核心技术
+- **Codex CLI 资料**：补充 Codex 使用说明与工作流参考
 
-项目致力于降低中文开发者学习 Anthropic 技术栈的门槛，促进 AI 辅助编程的普及与应用。
+项目当前已经把“项目记忆入口”从 Claude 风格迁移到 Codex 风格，统一使用 `AGENTS.md`、`README.md`、`CHANGELOG.md` 和 `LAST_RUN.md`。
 
 ## 目录结构
 
-```
+```text
 CCCCCCC/
-├── .claude/                                    # Claude Code 配置目录
-│   ├── commands/                              # 自定义命令
-│   ├── rules/                                 # 项目规则
-│   │   └── translation-format.md              # 翻译格式规范
-│   ├── CLAUDE.md                              # 项目提示词
-│   └── review-request.md                      # 审查请求模板
-├── anthropic-engineering-articles/            # Anthropic 工程文章翻译（独立 Git 仓库）
-│   ├── 01-contextual-retrieval.md             # 上下文检索技术
-│   ├── 02-building-effective-agents.md        # 构建有效智能体
-│   ├── 03-swe-bench-sonnet.md                 # SWE-bench 基准测试
-│   ├── 04-claude-think-tool.md                # "think" 工具
-│   ├── 05-claude-code-best-practices.md       # Claude Code 最佳实践
-│   ├── 06-multi-agent-research-system.md      # 多智能体研究系统
-│   ├── 07-desktop-extensions.md               # 桌面扩展
-│   ├── 08-writing-tools-for-agents.md         # 写作工具
-│   ├── 09-a-postmortem-of-three-recent-issues.md  # 问题复盘
-│   ├── 10-effective-context-engineering-for-ai-agents.md  # 上下文工程
-│   ├── 11-agent-sdk.md                        # Agent SDK
-│   ├── 12-agent-skills.md                     # Agent 技能
-│   ├── 13-claude-code-sandboxing.md           # Claude Code 沙盒
-│   ├── 14-code-execution-with-mcp.md          # 使用 MCP 执行代码
-│   ├── 15-effective-harnesses-for-long-running-agents.md  # 长运行智能体
-│   ├── 16-advanced-tool-use.md                # 高级工具使用
-│   ├── 17-demystifying-evals-for-ai-agents.md # 评估详解
-│   └── 18-AI-resistant-technical-evaluations.md  # AI 抗拒性评估
-├── Claude Code CHANGELOG - 双语对照.md        # Claude Code 更新日志双语版
-├── CLAUDE.md                                  # 项目提示词
+├── AGENTS.md                                  # Codex 项目记忆入口
 ├── README.md                                  # 项目说明文档（本文件）
 ├── CHANGELOG.md                               # 项目更新日志
-├── TASKS.json                                 # 阶段性任务清单
-└── LAST_CLAUDE_PROGRESS.md                    # 上一次工作进度记录
+├── LAST_RUN.md                                # 上一次工作总结
+├── .claude/                                   # Claude Code 辅助配置与模板
+│   ├── commands/                              # 自定义命令
+│   ├── rules/                                 # 翻译规则
+│   │   └── translation-format.md              # 翻译格式规范
+│   ├── review-request.md                      # 审查请求模板
+│   └── review-report.md                       # 审查报告模板
+├── claude-code相关/
+│   ├── Claude Code CHANGELOG - 双语对照.md    # Claude Code 更新日志双语版
+│   └── anthropic-engineering-articles/
+│       ├── AGENTS.md                          # 子目录记忆入口
+│       └── 01-18 系列文章                     # Anthropic Engineering 文章翻译
+└── codex相关/
+    └── codex_cli_help.md                      # Codex CLI 中文整理
 ```
 
 ## 技术栈与技术路线
 
-### 翻译工作流程
+### 资料整理流程
 
 1. **术语管理**：维护 `.claude/rules/translation-format.md` 确保翻译一致性
-2. **翻译模板**：使用 `.claude/review-request.md` 规范翻译请求
+2. **模板复用**：保留 `.claude/review-request.md` 等模板支持资料整理
 3. **双语对照**：采用原文与译文对照的格式，便于理解与学习
 4. **质量保证**：遵循格式规范，确保专业术语翻译的准确性
-5. **Codex 审查**：建立审查协作机制，保证翻译质量
+5. **项目记忆**：统一通过 `AGENTS.md` 与 `LAST_RUN.md` 维护 Codex 工作上下文
 
-### 版本控制
+### 资料组织
 
-- **独立仓库**：`anthropic-engineering-articles/` 为独立 Git 仓库
-- **版本跟踪**：每个翻译文章独立提交，便于版本管理与回溯
-- **更新跟进**：通过自定义命令持续跟进 Claude Code 新版本
+- **主题分组**：`claude-code相关/` 与 `codex相关/` 分别承载不同主题资料
+- **翻译沉淀**：Anthropic Engineering 文章集中保存在 `claude-code相关/anthropic-engineering-articles/`
+- **辅助配置**：`.claude/` 保留翻译规则与审查模板，但不再承担项目记忆入口职责
 
 ## 当前状态
 
-**翻译完成期** 🎉
+**结构迁移期**
 
-项目已完成所有 18 篇 Anthropic Engineering 文章的翻译工作，文章编号统一为 ID 01-18。
+Anthropic Engineering 文章翻译已经完成，当前重点转为资料结构整理与 Codex 记忆体系迁移。
 
 **已完成**：
 - [x] 翻译 18/18 篇文章（100%）
@@ -82,11 +69,12 @@ CCCCCCC/
 - [x] 创建翻译格式规范 `.claude/rules/translation-format.md`
 - [x] 建立 Codex 审查协作机制
 - [x] 统一所有文章排版风格
+- [x] 建立根目录 `AGENTS.md` / `LAST_RUN.md`
 
 **项目里程碑**：
-- 🎉 所有 Engineering 文章翻译完成！
-- 📚 涵盖智能体、上下文检索、MCP、Agent SDK 等核心技术
-- 📐 排版格式全部统一
+- 所有 Engineering 文章翻译完成
+- 涵盖智能体、上下文检索、MCP、Agent SDK 等核心技术
+- 项目记忆入口已切换为 Codex 体系
 
 ## 工作阶段
 
@@ -115,15 +103,17 @@ CCCCCCC/
 - [x] ID 17: Demystifying Evals for AI Agents（评估详解）
 - [x] ID 18: Designing AI Resistant Technical Evaluations（AI 抗拒性评估）
 
-### 阶段 3: 翻译完成期
+### 阶段 3: 结构迁移与维护期
 - [x] 文章编号统一为 01-18
 - [x] 排版风格统一（标题、粗体、双语格式）
+- [x] 项目记忆入口迁移到 Codex 体系
 - [ ] 持续跟进 Claude Code 新版本更新
-- [ ] 根据需要翻译新的 Engineering 文章
-- [ ] 完善项目文档和总结
+- [ ] 根据需要补充新的 Codex 资料
+- [ ] 持续清理旧路径和旧命名引用
 
 ### 注意事项
 - 新翻译文章应直接遵循 `.claude/rules/translation-format.md` 规范
+- 项目状态更新优先写入 `AGENTS.md` 和 `LAST_RUN.md`
 - 翻译完成后可请求 Codex 审查确保质量
 
 ## 资源
@@ -149,8 +139,14 @@ CCCCCCC/
 
 ## 贡献
 
-欢迎提交 Issue 和 Pull Request 来改进本项目！
+欢迎提交 Issue 和 Pull Request 来改进本项目。
 
 ## 许可
 
 本项目翻译内容遵循原文许可协议。原文版权归 Anthropic 所有。
+# 项目记忆组件
+
+- 当前生效的根项目记忆文件是 `AGENTS.md`
+- 当前生效的会话续接文件是 `LAST_RUN.md`
+- `claude-code相关/anthropic-engineering-articles/AGENTS.md` 是子目录局部记忆文件
+- `.claude/` 目录目前只保留辅助模板与翻译规则，不再作为根项目记忆入口

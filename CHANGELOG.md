@@ -5,6 +5,21 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
 
+## Unreleased
+
+### 变更
+
+- **项目记忆体系迁移**：将当前工作记忆入口切换为 Codex 风格
+  - 新增根目录 `AGENTS.md`
+  - 新增根目录 `LAST_RUN.md`
+  - 新增 `claude-code相关/anthropic-engineering-articles/AGENTS.md`
+  - 停用旧的 `CLAUDE.md` / `LAST_CLAUDE_PROGRESS.md` 作为项目记忆入口
+
+### 文档
+
+- **README 同步**：更新为 `claude-code相关/` 与 `codex相关/` 的实际目录结构
+- **记忆入口说明统一**：明确 `.claude/` 仅保留辅助配置与模板角色
+
 ## 0.2.1 2026-02-04 排版统一与项目记忆优化
 
 ### 变更
@@ -144,3 +159,10 @@
 
 - 统一项目文档格式，提升可维护性
 - 为后续翻译工作提供清晰的指导
+## Unreleased
+
+### Changed
+
+- 项目记忆入口切换为根目录 `AGENTS.md` 与 `LAST_RUN.md`
+- `claude-code相关/anthropic-engineering-articles/AGENTS.md` 作为子目录局部记忆文件启用
+- `.claude/` 目录保留为辅助模板与规则目录，不再作为根项目记忆入口

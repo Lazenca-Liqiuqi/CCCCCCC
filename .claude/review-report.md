@@ -1,7 +1,7 @@
 # 翻译格式审查报告（ID02 - 第一轮审查）
 
 时间：2026-01-26 21:56  
-审查目标：`anthropic-engineering-articles/markdown/02-contextual-retrieval.md`
+审查目标：`claude-code相关/anthropic-engineering-articles/02-building-effective-agents.md`
 
 ## 结论
 
